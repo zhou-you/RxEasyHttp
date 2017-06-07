@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="zhouyou_copyright">
+    <module2copyright>
+      <element module="All" copyright="zhouyou_copyright" />
+    </module2copyright>
+  </settings>
+</component>

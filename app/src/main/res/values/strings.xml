@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">RxEasyHttp</string>
+    <string name="cache_name">网络请求+缓存</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">手机号/邮箱</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="basic_settings">设置</string>
+    <string name="basic_help">帮助</string>
+    <string name="basic_string_help_text">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。\n\n最后点击两次后退按钮，即可返回。</string>
+    <string name="basic_quit">退出</string>
+    <string name="get_permission">"权限申请"</string>
+    <string name="quit">退出</string>
+    <string name="settings">去设置</string>
+</resources>
