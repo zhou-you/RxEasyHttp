@@ -43,7 +43,8 @@ public class MyApplication extends Application {
         app = this;
         EasyHttp.init(this);
 
-        String Url = "这里涉及到安全我把url去掉了，demo都是调试通的";
+        //这里涉及到安全我把url去掉了，demo都是调试通的
+        String Url = "http://www.xxx.com";
         
         //设置请求头
         HttpHeaders headers = new HttpHeaders();

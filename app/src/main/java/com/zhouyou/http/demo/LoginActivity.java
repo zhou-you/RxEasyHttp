@@ -36,6 +36,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.demo.constant.AppConstant;
@@ -43,8 +44,6 @@ import com.zhouyou.http.demo.constant.ComParamContact;
 import com.zhouyou.http.demo.model.AuthModel;
 import com.zhouyou.http.demo.model.LoginCache;
 import com.zhouyou.http.demo.model.LoginInfo;
-import com.zhouyou.http.demo.permissions.Permission;
-import com.zhouyou.http.demo.permissions.RxPermissions;
 import com.zhouyou.http.demo.token.TokenManager;
 import com.zhouyou.http.demo.utils.MD5;
 import com.zhouyou.http.demo.utils.Validator;
@@ -58,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private TextView serverinfo;
+    RxPermissions rxPermissions;
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mEmailView.setText("18688994275");
         mPasswordView.setText("123456");
-
+        rxPermissions = new RxPermissions(this);
         autoLogin();
     }
 
@@ -205,22 +205,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean isTest1() {
-        RxPermissions.getInstance(this)
-                .requestEach(PERMISSIONS).subscribe(new Action1<Permission>() {
-            @Override
-            public void call(Permission permission) {
-                if (permission.granted) {
-                    Toast.makeText(LoginActivity.this,
-                            "###############",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(LoginActivity.this,
-                            "Permission denied, can't enable the camera",
-                            Toast.LENGTH_SHORT).show();
-                    showMissingPermissionDialog();
-                }
-            }
-        });
+       rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+               .subscribe(new Action1<Boolean>() {
+                   @Override
+                   public void call(Boolean aBoolean) {
+                       if(aBoolean){
+                           Toast.makeText(LoginActivity.this,
+                                   "权限获取成功",
+                                   Toast.LENGTH_SHORT).show();
+                       }else {
+                           showMissingPermissionDialog();
+                       }
+                   }
+               });
         return true;
     }
 
