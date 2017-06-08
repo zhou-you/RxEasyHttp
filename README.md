@@ -1214,3 +1214,12 @@ public class MyApplication extends Application {
 5.loadCache  key=如果设置了缓存，会看到缓存的key，开启了网络缓存功能才会输出。
 6.loadCache result=从缓存里读取的结果，开启了网络缓存功能才会输出。
 7.save status => true保存缓存的状态
+## 混淆
+```
+-dontwarn okio.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+-dontwarn javax.annotation.**
+-keep com.zhouyou.http.model
+-keep com.zhouyou.http.cache.model
+```
