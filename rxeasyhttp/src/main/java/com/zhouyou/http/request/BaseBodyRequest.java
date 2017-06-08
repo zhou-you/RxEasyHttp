@@ -16,8 +16,6 @@
 
 package com.zhouyou.http.request;
 
-import android.support.annotation.NonNull;
-
 import com.zhouyou.http.body.ProgressResponseCallBack;
 import com.zhouyou.http.body.RequestBodyUtils;
 import com.zhouyou.http.body.UploadProgressRequestBody;
@@ -207,7 +205,6 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         }
     }
 
-    @NonNull
     private RequestBody getRequestBody(HttpParams.FileWrapper fileWrapper) {
         RequestBody requestBody = null;
         if (fileWrapper.file instanceof File) {

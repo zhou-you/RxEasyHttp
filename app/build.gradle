@@ -31,12 +31,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    })*/
     compile project(':rxeasyhttp')
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar'
-    testCompile 'junit:junit:4.12'
+    //testCompile 'junit:junit:4.12'
 }
