@@ -58,10 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private TextView serverinfo;
     RxPermissions rxPermissions;
-    private static final String[] PERMISSIONS = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-    };
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
