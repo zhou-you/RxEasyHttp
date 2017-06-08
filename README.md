@@ -1,47 +1,50 @@
 ## RxEasyHttp
 
 本库是一款基于Retrofit、RxJava、okhttp实现简单易用的网络请求框架，结合android平台特性的网络封装库,采用api链式调用一点到底,集成cookie管理,多种缓存模式,极简https配置,上传下载进度显示,请求错误自动重试,请求携带token、时间戳、签名sign动态配置,自动登录成功后请求重发功能,3种层次的参数设置默认全局局部,默认标准ApiResult同时可以支持自定义的数据结构，已经能满足现在的大部分网络请求。
-注：Retrofit和Rxjava是当下非常火爆的开源框架，均来自神一般的Square公司。本库就不介绍Retrofit和Rxjava的用法。
+*注：Retrofit和Rxjava是当下非常火爆的开源框架，均来自神一般的Square公司。本库就不介绍Retrofit和Rxjava的用法。*
 
 ## 为什么会封装此库？
 网上好的开源网络库像Volley、async-http、okhttp、retrofit等都非常强大，但是实际应用中我们不会直接去使用，一般都会根据自己的业务再封装一层，这样更方便快捷，又能统一处理业务共性的东西例如：统一的数据结构（code、msg、data）、token处理、网络异常等情况。在使用retrofit来请求网络的时候，项目的需求越来越多，api也随之越来越多，一个普通的应用api一般也在100+左右。如果把这些api放在一个ApiService内会很臃肿，不利于查看api.如果采用模块的方式对api进行分类，每个模块对应若干个api.以retrofit的使用方式又需要创建若干个ApiService，这种方式维护方便，但是模块增多了，类也增多了很多。对于懒人来说就想通过一个URL就能回调你所需要的数据，什么ApiService都不想理会，同时又可以很快的与自己的业务相关联，就类似于代替你在开源网络库基础上再封装一层的作用，于是本库就应运而生。
 
 ## 特点
-比Retrofit使用更简单、更易用。
-采用链式调用一点到底
-加入基础ApiService，减少Api冗余
-支持动态配置和自定义底层框架Okhttpclient、Retrofit.
-支持多种方式访问网络GET、POST、PUT、DELETE等请求协议
-支持网络缓存,六种缓存策略可选,涵盖大多数业务场景
-支持固定添加header和动态添加header
-支持添加全局参数和动态添加局部参数
-支持文件下载、多文件上传和表单提交数据
-支持文件请求、上传、下载的进度回调、错误回调，也可以自定义回调
-支持默认、全局、局部三个层次的配置功能
-支持任意数据结构的自动解析
-支持添加动态参数例如timeStamp时间戳、token、签名sign
-支持自定义的扩展API
-支持多个请求合并
-支持Cookie管理
-支持异步、同步请求
-支持Https、自签名网站Https的访问、双向验证
-支持失败重试机制，可以指定重试次数、重试间隔时间
-支持根据ky删除网络缓存和清空网络缓存
-提供默认的标准ApiResult解析和回调，并且可自定义ApiResult
-支持取消数据请求，取消订阅，带有对话框的请求不需要手动取消请求，对话框消失会自动取消请求
-支持请求数据结果采用回调和订阅两种方式
-api设计上结合http协议和android平台特点来实现,loading对话框,实时进度条显示
-返回结果和异常统一处理
-结合RxJava，线程智能控制
+- 比Retrofit使用更简单、更易用。
+- 采用链式调用一点到底
+- 加入基础ApiService，减少Api冗余
+- 支持动态配置和自定义底层框架Okhttpclient、Retrofit.
+- 支持多种方式访问网络GET、POST、PUT、DELETE等请求协议
+- 支持网络缓存,六种缓存策略可选,涵盖大多数业务场景
+- 支持固定添加header和动态添加header
+- 支持添加全局参数和动态添加局部参数
+- 支持文件下载、多文件上传和表单提交数据
+- 支持文件请求、上传、下载的进度回调、错误回调，也可以自定义回调
+- 支持默认、全局、局部三个层次的配置功能
+- 支持任意数据结构的自动解析
+- 支持添加动态参数例如timeStamp时间戳、token、签名sign
+- 支持自定义的扩展API
+- 支持多个请求合并
+- 支持Cookie管理
+- 支持异步、同步请求
+- 支持Https、自签名网站Https的访问、双向验证
+- 支持失败重试机制，可以指定重试次数、重试间隔时间
+- 支持根据ky删除网络缓存和清空网络缓存
+- 提供默认的标准ApiResult解析和回调，并且可自定义ApiResult
+- 支持取消数据请求，取消订阅，带有对话框的请求不需要手动取消请求，对话框消失会自动取消请求
+- 支持请求数据结果采用回调和订阅两种方式
+- api设计上结合http协议和android平台特点来实现,loading对话框,实时进度条显示
+- 返回结果和异常统一处理
+- 结合RxJava，线程智能控制
 
 
 
 ## 联系方式
 邮箱地址： 478319399@qq.com
+
 QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及时）
+
 本群旨在为使用我的[github](https://github.com/zhou-you)项目的人提供方便，如果遇到问题欢迎在群里提问。一个人的能力也有限，希望一起学习一起进步。
+
 关注我的[github](https://github.com/zhou-you)，了解我的最新项目。关注我的[博客](http://blog.csdn.net/zhouy478319399)，阅读我的最新文章。
-#####欢迎加入QQ交流群
+##### 欢迎加入QQ交流群
 ![](http://img.blog.csdn.net/20170601165330238)
 ## 版本说明
 #### 当前版本
@@ -58,9 +61,11 @@ dependencies {
 }
 ```
 以下是最新版本的版本号，如果你想使用以前的版本，请点击这里，历史版本。
+
 Latest release: [https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/](https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/)
 ## 权限说明
 如果使用本库实现文件下载到SD卡、或者配置了缓存数据到SD卡，你必须要考虑到Android6.0及以上系统的运行时权限，给大家推荐两个权限库：
+
 [AndPermission](https://github.com/yanzhenjie/AndPermission)  
 [RxPermissions](https://github.com/tbruyelle/RxPermissions) 
 
@@ -96,7 +101,7 @@ public class MyApplication extends Application {
 ```
 
 ## 默认初始化
-如果使用默认始化后，一切采用默认设置。如果你需要配置全局超时时间、缓存、Cookie、底层为OkHttp的话，请看高级初始化。
+如果使用默认始化后，一切采用默认设置。如果你需要配置全局超时时间、缓存、Cookie、底层为OkHttp的话，请看[高级初始化](https://github.com/zhou-you/RxEasyHttp#高级初始化)。
 ```
 public class MyApplication extends Application {
 
@@ -218,9 +223,9 @@ public class MyApplication extends Application {
 
 
 ### 通用功能配置
-1.包含一次普通请求所有能配置的参数，真实使用时不需要配置这么多，按自己的需要选择性的使用即可
-2.以下配置全部是单次请求配置，不会影响全局配置，没有配置的仍然是使用全局参数。
-3.为单个请求设置超时，比如涉及到文件的需要设置读写等待时间多一点。
+1.包含一次普通请求所有能配置的参数，真实使用时不需要配置这么多，按自己的需要选择性的使用即可<br/>
+2.以下配置全部是单次请求配置，不会影响全局配置，没有配置的仍然是使用全局参数。<br/>
+3.为单个请求设置超时，比如涉及到文件的需要设置读写等待时间多一点。<br/>
 完整参数GET示例：
 ```
 EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
@@ -296,7 +301,7 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
 ### 普通网络请求
 **支持get/post/delete/put等**
 链式调用的终点请求的执行方式有：execute(Class<T> clazz) 、execute(Type type)、execute(CallBack<T> callBack)三种方式，都是针对标准的ApiResult
-**execute(CallBack<T> callBack)**
+#### execute(CallBack<T> callBack)
 1.EasyHttp（**推荐**）
 示例：
 ```
@@ -338,7 +343,7 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
                     }
                 });
 ```
-**execute(Class<T> clazz)和execute(Type type)**
+#### execute(Class<T> clazz)和execute(Type type)
 execute(Class<T> clazz)和execute(Type type)功能基本一样，execute(Type type)主要是针对集合不能直接传递Class
 ```
 HeEasyHttp.get(url)
