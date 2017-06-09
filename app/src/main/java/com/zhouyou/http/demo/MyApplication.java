@@ -44,9 +44,7 @@ public class MyApplication extends Application {
         EasyHttp.init(this);
 
         //这里涉及到安全我把url去掉了，demo都是调试通的
-        //String Url = "http://www.xxx.com";
-        //String Url = "https://dp.clife.net";
-        String Url = "https://api.clife.cn";
+        String Url = "http://www.xxx.com";
         
         //设置请求头
         HttpHeaders headers = new HttpHeaders();
