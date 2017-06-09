@@ -27,7 +27,7 @@ public abstract class DownloadProgressCallBack<T> extends CallBack<T> {
     }
 
     @Override
-    public void onSuccee(T response) {
+    public void onSuccess(T response) {
         
     }
 

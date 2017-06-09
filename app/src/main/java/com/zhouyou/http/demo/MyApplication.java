@@ -44,7 +44,9 @@ public class MyApplication extends Application {
         EasyHttp.init(this);
 
         //这里涉及到安全我把url去掉了，demo都是调试通的
-        String Url = "http://www.xxx.com";
+        //String Url = "http://www.xxx.com";
+        //String Url = "https://dp.clife.net";
+        String Url = "https://api.clife.cn";
         
         //设置请求头
         HttpHeaders headers = new HttpHeaders();
@@ -53,7 +55,7 @@ public class MyApplication extends Application {
         HttpParams params = new HttpParams();
         params.put("appId", AppConstant.APPID);
         EasyHttp.getInstance()
-                .debug("RxEasyHttp", true)
+                .debug("RxEasyHttp", false)
                 .setReadTimeOut(60 * 1000)
                 .setWriteTimeOut(60 * 1000)
                 .setConnectTimeout(60 * 1000)

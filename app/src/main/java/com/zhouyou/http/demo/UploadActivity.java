@@ -86,7 +86,7 @@ public class UploadActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         showToast(response);
                     }
                 });
@@ -118,7 +118,7 @@ public class UploadActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         showToast(response);
                     }
                 });
@@ -161,7 +161,7 @@ public class UploadActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         showToast(response);
                     }
                 });
@@ -187,7 +187,7 @@ public class UploadActivity extends AppCompatActivity {
                 .params("avatar", file, file.getName(), mUIProgressResponseCallBack)
                 .execute(new ProgressDialogCallBack<String>(mProgressDialog, true, true) {
             @Override
-            public void onSuccee(String response) {
+            public void onSuccess(String response) {
                 showToast(response);
             }
 

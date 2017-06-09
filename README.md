@@ -273,7 +273,7 @@ EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                       //请求成功
                     }
                 });
@@ -320,7 +320,7 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         if (response != null) showToast(response.toString());
                     }
                 });
@@ -338,7 +338,7 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
 
                     }
                 });
@@ -374,7 +374,7 @@ Subscription subscription = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         showToast(response.toString());
                     }
                 });
@@ -405,7 +405,7 @@ ProgressDialogCallBack带有进度框的请求，可以设置对话框消失是�
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                        //请求失败
                     }
                 });
@@ -542,7 +542,7 @@ EasyHttp.post("v1/app/chairdressing/news/favorite")
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         showToast(response);
                     }
                 });
@@ -608,7 +608,7 @@ final UIProgressResponseCallBack listener = new UIProgressResponseCallBack() {
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         showToast(response);
                     }
                 });
@@ -786,7 +786,7 @@ new CallBack<T>() {
                     }
 
                     @Override
-                    public void onSuccee(T t) {
+                    public void onSuccess(T t) {
                        //请求成功
                     }
                 }
@@ -802,7 +802,7 @@ new SimpleCallBack<T>() {
                     }
 
                     @Override
-                    public void onSuccee(T t) {
+                    public void onSuccess(T t) {
                         //请求成功
                     }
                 }
@@ -964,7 +964,7 @@ public class CustomDiskConverter implements IDiskConverter {
                     }
 
                     @Override
-                    public void onSuccee(CacheResult<SkinTestResult> cacheResult) {
+                    public void onSuccess(CacheResult<SkinTestResult> cacheResult) {
                         HttpLog.i(cacheResult.toString());
                         String from = "";
                         if (cacheResult.isFromCache) {
@@ -1171,7 +1171,7 @@ EasyHttp.get(url)
                     }
 
                     @Override
-                    public void onSuccee(ResultBean response) {
+                    public void onSuccess(ResultBean response) {
                         //请求成功
                     }
                 }) {

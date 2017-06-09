@@ -62,7 +62,7 @@ public class CallBackSubsciber<T> extends BaseSubscriber<T> {
     public void onNext(T t) {
         Utils.checkNotNull(t, "CallBackSubsciber onNext t==null");
         if (callBack != null) {
-            callBack.onSuccee(t);
+            callBack.onSuccess(t);
         }
     }
 

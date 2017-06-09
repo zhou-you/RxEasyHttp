@@ -104,7 +104,7 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
                     }
 
                     @Override
-                    public void onSuccee(CacheResult<SkinTestResult> cacheResult) {
+                    public void onSuccess(CacheResult<SkinTestResult> cacheResult) {
                         HttpLog.i(cacheResult.toString());
                         String from = "";
                         if (cacheResult.isFromCache) {

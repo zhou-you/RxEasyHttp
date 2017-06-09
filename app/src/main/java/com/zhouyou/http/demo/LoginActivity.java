@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(AuthModel authModel) {
+                    public void onSuccess(AuthModel authModel) {
                         showToast("登录成功！");
                         //授权类信息存入缓存
                         TokenManager.getInstance().setAuthModel(authModel);

@@ -35,7 +35,7 @@ public abstract class CallBack<T> implements IType<T>{
 
     public abstract void onError(ApiException e);
 
-    public abstract void onSuccee(T response);
+    public abstract void onSuccess(T response);
 
     @Override
     public Type getType() {

@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         if (response != null) showToast(response.toString());
                     }
                 });
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         if (response != null) showToast(response.toString());
                     }
                 });*/
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(String response) {
+                    public void onSuccess(String response) {
                         showToast(response);
                     }
                 });
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         showToast("请求成功：" + response.toString());
                     }
                 });
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         showToast(response.toString());
                     }
                 });
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         showToast(response.toString());
                     }
                 });
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(SkinTestResult response) {
+                    public void onSuccess(SkinTestResult response) {
                         showToast(response.toString());
                     }
                 });
@@ -388,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(ResultBean response) {
+                    public void onSuccess(ResultBean response) {
                         if (response != null) showToast(response.toString());
                     }
                 }) {
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onSuccee(List<SectionItem> response) {
+                    public void onSuccess(List<SectionItem> response) {
                         if (response != null) showToast(response.toString());
                     }
                 });*/

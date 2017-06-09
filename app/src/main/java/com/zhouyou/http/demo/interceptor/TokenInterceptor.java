@@ -117,7 +117,7 @@ public class TokenInterceptor extends BaseExpiredInterceptor {
                     }
 
                     @Override
-                    public void onSuccee(AuthModel response) {
+                    public void onSuccess(AuthModel response) {
                         TokenManager.getInstance().setAuthModel(response);
                         authModel = response;
                     }
@@ -314,7 +314,7 @@ public class TokenInterceptor extends BaseExpiredInterceptor {
                     }
 
                     @Override
-                    public void onSuccee(AuthModel response) {
+                    public void onSuccess(AuthModel response) {
                         if (response != null) {
                             TokenManager.getInstance().setAuthModel(response);
                             authModel = response;
