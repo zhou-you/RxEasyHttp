@@ -47,7 +47,7 @@ QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及
 ![](http://img.blog.csdn.net/20170609093543947)![](http://img.blog.csdn.net/20170609092405916)
 ## 版本说明
 #### 当前版本
-V1.0.3 初始版本
+V1.0.4 修复了回调单词拼写错误
 #### 更新日志
 [点击查看更新日志](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 ## 用法介绍
