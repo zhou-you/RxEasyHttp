@@ -190,9 +190,11 @@ public final class EasyHttp {
      * 并不是框架错误,如果不想每次打印,这里可以关闭异常显示
      */
     public EasyHttp debug(String tag, boolean isPrintException) {
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tag, isPrintException);
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        okHttpClientBuilder.addInterceptor(loggingInterceptor);
+        if(isPrintException){
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tag, isPrintException);
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            okHttpClientBuilder.addInterceptor(loggingInterceptor);
+        }
         HttpLog.customTagPrefix = "RxEasyHttp_";
         HttpLog.allowE = isPrintException;
         HttpLog.allowD = isPrintException;
