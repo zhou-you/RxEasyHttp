@@ -52,6 +52,7 @@ V1.0.3 初始版本
 ## 用法介绍
 目前只支持主流开发工具AndtoidStudio的使用，没有提供Eclipse使用方式.
 本项目Demo的网络请求的服务器地址为了安全，把url去掉了，但是Demo程序中的示例都是ok的
+#### 点击下载Demo  [RxEasyHttp-Demo](https://github.com/zhou-you/RxEasyHttp/blob/master/RxEasyHttp-Demo.apk?raw=true)
 #### build.gradle设置
 ```
 dependencies {
