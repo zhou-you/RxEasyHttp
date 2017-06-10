@@ -57,10 +57,10 @@ V1.0.4 修复了回调单词拼写错误
 #### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:1.0.3'
+ compile 'com.zhouyou:rxeasyhttp:1.0.4'
 }
 ```
-以下是最新版本的版本号，如果你想使用以前的版本，请点击这里，历史版本。
+以下是最新版本的版本号，如果你想使用以前的版本，请点击下面地址。
 
 Latest release: [https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/](https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/)
 ## 权限说明
@@ -292,7 +292,6 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
  params.put("appId", AppConstant.APPID);
  .addCommonParams(params)//设置全局公共参数
 #### http请求头
-.upObject(object)//上传对象object
 .headers(HttpHeaders headers) 
 .headers("header2","header2Value")//添加参数键值对
 
@@ -346,7 +345,7 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
 #### execute(Class<T> clazz)和execute(Type type)
 execute(Class<T> clazz)和execute(Type type)功能基本一样，execute(Type type)主要是针对集合不能直接传递Class
 ```
-HeEasyHttp.get(url)
+EasyHttp.get(url)
                 .params("param1", "paramValue1")
                 .execute(SkinTestResult.class)//非常简单直接传目标class
                 //.execute(new TypeToken<List<SectionItem>>() {}.getType())//Type类型
