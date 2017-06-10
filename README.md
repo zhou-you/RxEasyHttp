@@ -39,7 +39,6 @@
 QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及时）
 本群旨在为使用我的[github](https://github.com/zhou-you)项目的人提供方便，如果遇到问题欢迎在群里提问。一个人的能力也有限，希望一起学习一起进步。
 关注我的[github](https://github.com/zhou-you)，了解我的最新项目。关注我的[博客](http://blog.csdn.net/zhouy478319399)，阅读我的最新文章。
-如果觉得不错请start支持
 ##### 欢迎加入QQ交流群
 ![](http://img.blog.csdn.net/20170601165330238)
 ## 演示（请star支持）
@@ -60,7 +59,7 @@ dependencies {
  compile 'com.zhouyou:rxeasyhttp:1.0.4'
 }
 ```
-以下是最新版本的版本号，如果你想使用以前的版本，请点击下面地址。
+想查看所有版本，请点击下面地址。
 
 Latest release: [https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/](https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/)
 ## 权限说明
