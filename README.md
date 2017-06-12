@@ -1234,4 +1234,4 @@ public class MyApplication extends Application {
 
 #### 感谢以下小朋友：
 
-** 光乐5￥ **
+光乐5￥
