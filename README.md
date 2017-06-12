@@ -1233,4 +1233,4 @@ public class MyApplication extends Application {
 ![微信支付](http://img.blog.csdn.net/20170609153122885) ![支付宝支付](http://img.blog.csdn.net/20170609153227885)
 
 #### 感谢以下小朋友：
-**++光乐5￥++**
+==光乐5￥==
