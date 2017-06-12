@@ -56,7 +56,7 @@ V1.0.4 修复了回调单词拼写错误
 #### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:1.0.4'
+ compile 'com.zhouyou:rxeasyhttp:1.0.5'
 }
 ```
 想查看所有版本，请点击下面地址。
@@ -882,7 +882,7 @@ new ProgressSubscriber<T>(this, mProgressDialog) {
 优点：相对于SerializableDiskConverter转换器，存储的对象不需要进行序列化
 缺点：就是存储和读取都要使用Gson进行转换，object->String->Object的给一个过程，相对来说每次都要转换性能略低，但是性能基本忽略不计
 
-目前提供了七种CacheMode缓存模式,每种缓存模式都可以指定对应的CacheTime,将复杂常用的业务场景封装在里面，让你不用关心缓存的具体实现，而专注于数据的处理
+目前提供了八种CacheMode缓存模式,每种缓存模式都可以指定对应的CacheTime,将复杂常用的业务场景封装在里面，让你不用关心缓存的具体实现，而专注于数据的处理
 
 - NO_CACHE：不使用缓存,该模式下,cacheKey,cacheTime 等参数均无效
 - DEFAULT：按照HTTP协议的默认缓存规则，走OKhttp的Cache缓存
@@ -891,6 +891,7 @@ new ProgressSubscriber<T>(this, mProgressDialog) {
 - ONLYREMOTE：仅加载网络，但数据依然会被缓存
 - ONLYCACHE：只读取缓存，缓存没有会返回null
 - CACHEANDREMOTE:先使用缓存，不管是否存在，仍然请求网络，CallBack会回调两次.
+- CACHEANDREMOTEDISTINCT:先使用缓存，不管是否存在，仍然请求网络，CallBack回调不一定是两次，如果发现请求的网络数据和缓存数据是一样的，就不会再返回网络的回调,既回调一次。否则不相同仍然会回调两次。（目的是为了防止数据没有发生变化，也需要回调两次导致界面无用的重复刷新）
 
 *注：无论对于哪种缓存模式，都可以指定一个cacheKey，建议针对不同需要缓存的页面设置不同的cacheKey，如果相同，会导致数据覆盖。*
 
