@@ -1231,3 +1231,6 @@ public class MyApplication extends Application {
 乐于赞赏，感谢朋友们的支持和鼓励，让我们一起努力做一些好东西! 
 可以使用「微信」「支付宝」客户端赞赏：
 ![微信支付](http://img.blog.csdn.net/20170609153122885) ![支付宝支付](http://img.blog.csdn.net/20170609153227885)
+
+#### 感谢以下小朋友：
+**++光乐5￥++**
