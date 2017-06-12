@@ -484,6 +484,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
             case ONLYREMOTE:
             case ONLYCACHE:
             case CACHEANDREMOTE:
+            case CACHEANDREMOTEDISTINCT:
                 interceptors.add(new NoCacheInterceptor());
                 if (diskConverter == null) {
                     final RxCache.Builder tempRxCacheBuilder = rxCacheBuilder;

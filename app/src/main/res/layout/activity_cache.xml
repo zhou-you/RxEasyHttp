@@ -19,8 +19,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="okhttp默认缓存"
             android:gravity="center"
+            android:text="okhttp默认缓存"
             android:textAllCaps="false"
             />
 
@@ -34,8 +34,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="自定义缓存方式"
             android:gravity="center"
+            android:text="自定义缓存方式"
             android:textAllCaps="false"
             />
 
@@ -72,6 +72,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="加载缓存和网络"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/cache_remote_distinct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="加载缓存和网络(distinct模式)"
             android:textAllCaps="false"/>
 
         <Button

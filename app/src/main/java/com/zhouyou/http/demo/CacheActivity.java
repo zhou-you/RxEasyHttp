@@ -48,6 +48,7 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.only_remote).setOnClickListener(this);
         findViewById(R.id.only_cache).setOnClickListener(this);
         findViewById(R.id.cache_remote).setOnClickListener(this);
+        findViewById(R.id.cache_remote_distinct).setOnClickListener(this);
     }
 
     CacheMode cacheMode;
@@ -73,6 +74,12 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.cache_remote:/** 先使用缓存，不管是否存在，仍然请求网络，会回调两次（自定义缓存Rxcache）*/
                 cacheMode = CacheMode.CACHEANDREMOTE;
+                break;
+            case R.id.cache_remote_distinct:
+                /** 先使用缓存，不管是否存在，仍然请求网络，
+                 有缓存先显示缓存，等网络请求数据回来后发现和缓存是一样的就不会再返回，否则数据不一样会继续返回。
+                 （目的是为了防止数据是一致的也会刷新两次界面）（自定义缓存Rxcache）*/
+                cacheMode = CacheMode.CACHEANDREMOTEDISTINCT;
                 break;
         }
         requestCahce();

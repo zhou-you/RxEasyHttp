@@ -54,7 +54,13 @@ public enum CacheMode {
     /**
      * 先使用缓存，不管是否存在，仍然请求网络，会回调两次
      */
-    CACHEANDREMOTE("CacheAndRemoteStrategy");
+    CACHEANDREMOTE("CacheAndRemoteStrategy"),
+    /**
+     * 先使用缓存，不管是否存在，仍然请求网络，会先把缓存回调给你，
+     * 等网络请求回来发现数据是一样的就不会再返回，否则再返回
+     * （这样做的目的是防止数据是一样的你也需要刷新界面）
+     */
+    CACHEANDREMOTEDISTINCT("CacheAndRemoteDistinctStrategy");
 
     private final String className;
 
