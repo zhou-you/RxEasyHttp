@@ -46,7 +46,11 @@ QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及
 ![](http://img.blog.csdn.net/20170609093543947)![](http://img.blog.csdn.net/20170609092405916)
 ## 版本说明
 #### 当前版本
-V1.0.4 修复了回调单词拼写错误
+
+V1.0.5 
+- 新增缓存模式CACHEANDREMOTEDISTINCT
+- 修复只配置默认初始化不配置高级初始化RxJavaCallAdapterFactory会导致网络访问失败问题
+
 #### 更新日志
 [点击查看更新日志](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 ## 用法介绍
@@ -169,7 +173,6 @@ public class MyApplication extends Application {
                 //配置https的域名匹配规则，不需要就不要加入，使用不当会导致https握手失败
                 //.setHostnameVerifier(new SafeHostnameVerifier())
                 //.addConverterFactory(GsonConverterFactory.create(gson))//本框架没有采用Retrofit的Gson转化，所以不用配置
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addCommonHeaders(headers)//设置全局公共头
                 .addCommonParams(params)//设置全局公共参数
                 //.addNetworkInterceptor(new NoCacheInterceptor())//设置网络拦截器

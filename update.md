@@ -1,7 +1,8 @@
 ## 更新日志
-### 2017-06-12
+### 2017-06-13
 V1.0.5
 - 新增缓存模式CACHEANDREMOTEDISTINCT
+- 修复只配置默认初始化不配置高级初始化RxJavaCallAdapterFactory会导致网络访问失败问题
 
 ### 2017-06-09
 V1.0.4
