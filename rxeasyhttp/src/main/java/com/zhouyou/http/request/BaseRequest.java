@@ -53,6 +53,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.functions.Action1;
 
 import static com.zhouyou.http.EasyHttp.getRxCache;
@@ -509,6 +510,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
             okHttpClientBuilder.cache(cache);
         }
         final Retrofit.Builder retrofitBuilder = generateRetrofit();
+        retrofitBuilder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());//增加RxJavaCallAdapterFactory
         okHttpClient = okHttpClientBuilder.build();
         retrofitBuilder.client(okHttpClient);
         retrofit = retrofitBuilder.build();
