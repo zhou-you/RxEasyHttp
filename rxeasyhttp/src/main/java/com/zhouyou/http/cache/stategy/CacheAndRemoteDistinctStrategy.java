@@ -22,6 +22,7 @@ import com.zhouyou.http.cache.model.CacheResult;
 
 import java.lang.reflect.Type;
 
+import okhttp3.internal.Util;
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -47,7 +48,7 @@ public final class CacheAndRemoteDistinctStrategy extends BaseStrategy {
 
                     @Override
                     public String call(CacheResult<T> result) {
-                        return result.data.toString();
+                        return  Util.md5Hex(result.data.toString());
                     }
                 });
     }
