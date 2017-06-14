@@ -23,6 +23,7 @@ import com.zhouyou.http.utils.Utils;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 
@@ -49,10 +50,11 @@ public abstract class CallBackProxy<T extends ApiResult<R>, R> implements IType<
         Type typeArguments = null;
         if (mCallBack != null) {
             Type rawType = mCallBack.getRawType();//如果用户的信息是返回List需单独处理
-            if (List.class.isAssignableFrom(Utils.getClass(rawType, 0))) {
-                typeArguments = rawType;
-            } else {
+            if (List.class.isAssignableFrom(Utils.getClass(rawType, 0))||Map.class.isAssignableFrom(Utils.getClass(rawType, 0))) {
                 typeArguments = mCallBack.getType();
+            } else {
+                Type type = mCallBack.getType();
+                typeArguments = Utils.getClass(type, 0);
             }
         }
         if (typeArguments == null) {

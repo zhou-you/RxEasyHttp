@@ -190,7 +190,7 @@ public class Utils {
      * @param <T>
      * @return
      */
-    public static <T> Class<T> findNeedClass(Class<T> cls) {
+    public static <T> Type findNeedClass(Class<T> cls) {
         //以下代码是通过泛型解析实际参数,泛型必须传
         Type genType = cls.getGenericSuperclass();
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
@@ -203,8 +203,7 @@ public class Utils {
         } else {//这个类似是:SkinTestResult  1层
             finalNeedType = type;
         }
-        final Class clazz = getClass(finalNeedType, 0);
-        return clazz;
+        return finalNeedType;
     }
 
     /**
