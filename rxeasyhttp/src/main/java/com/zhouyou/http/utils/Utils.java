@@ -146,6 +146,27 @@ public class Utils {
         }
     }
 
+    public static Type getType(Type type, int i) {
+        if (type instanceof ParameterizedType) { // 处理泛型类型     
+            return getGenericType((ParameterizedType) type, i);
+        } else if (type instanceof TypeVariable) {
+            return getType(((TypeVariable) type).getBounds()[0], 0); // 处理泛型擦拭对象     
+        } else {// class本身也是type，强制转型     
+            return type;
+        }
+    }
+    
+    public static Type getParameterizedType(Type type, int i) {
+        if (type instanceof ParameterizedType) { // 处理泛型类型    
+            Type genericType = ((ParameterizedType) type).getActualTypeArguments()[i];
+            return genericType;
+        } else if (type instanceof TypeVariable) {
+            return getType(((TypeVariable) type).getBounds()[0], 0); // 处理泛型擦拭对象     
+        } else {// class本身也是type，强制转型     
+            return type;
+        }
+    }
+
     public static Class getGenericClass(ParameterizedType parameterizedType, int i) {
         Type genericClass = parameterizedType.getActualTypeArguments()[i];
         if (genericClass instanceof ParameterizedType) { // 处理多级泛型     
@@ -208,7 +229,6 @@ public class Utils {
 
     /**
      * 普通类反射获取泛型方式，获取最顶层的类型
-     *
      */
     public static <T> Type findRawType(Class<T> cls) {
         Type genType = cls.getGenericSuperclass();

@@ -18,6 +18,7 @@ package com.zhouyou.http;
 
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.zhouyou.http.cache.RxCache;
 import com.zhouyou.http.cache.converter.IDiskConverter;
@@ -190,12 +191,13 @@ public final class EasyHttp {
      * 并不是框架错误,如果不想每次打印,这里可以关闭异常显示
      */
     public EasyHttp debug(String tag, boolean isPrintException) {
+        String tempTag = TextUtils.isEmpty(tag)?"RxEasyHttp_":tag;
         if(isPrintException){
-            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tag, isPrintException);
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tempTag, isPrintException);
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             okHttpClientBuilder.addInterceptor(loggingInterceptor);
         }
-        HttpLog.customTagPrefix = "RxEasyHttp_";
+        HttpLog.customTagPrefix = tempTag;
         HttpLog.allowE = isPrintException;
         HttpLog.allowD = isPrintException;
         HttpLog.allowI = isPrintException;

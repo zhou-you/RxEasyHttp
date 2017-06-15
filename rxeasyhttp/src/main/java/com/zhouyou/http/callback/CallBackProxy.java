@@ -17,6 +17,7 @@
 package com.zhouyou.http.callback;
 
 import com.google.gson.internal.$Gson$Types;
+import com.zhouyou.http.cache.model.CacheResult;
 import com.zhouyou.http.model.ApiResult;
 import com.zhouyou.http.utils.Utils;
 
@@ -50,8 +51,11 @@ public abstract class CallBackProxy<T extends ApiResult<R>, R> implements IType<
         Type typeArguments = null;
         if (mCallBack != null) {
             Type rawType = mCallBack.getRawType();//如果用户的信息是返回List需单独处理
-            if (List.class.isAssignableFrom(Utils.getClass(rawType, 0))||Map.class.isAssignableFrom(Utils.getClass(rawType, 0))) {
+            if (List.class.isAssignableFrom(Utils.getClass(rawType, 0)) || Map.class.isAssignableFrom(Utils.getClass(rawType, 0))) {
                 typeArguments = mCallBack.getType();
+            } else if (CacheResult.class.isAssignableFrom(Utils.getClass(rawType, 0))) {
+                Type type = mCallBack.getType();
+                typeArguments = Utils.getParameterizedType(type, 0);
             } else {
                 Type type = mCallBack.getType();
                 typeArguments = Utils.getClass(type, 0);
