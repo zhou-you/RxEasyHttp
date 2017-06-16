@@ -31,6 +31,7 @@ import com.zhouyou.http.utils.HttpLog;
 import com.zhouyou.http.utils.Utils;
 
 import java.io.File;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import rx.Observable;
@@ -124,7 +125,14 @@ public final class RxCache {
             @Override
             public Observable<CacheResult<T>> call(Observable<T> apiResultObservable) {
                 HttpLog.i("cackeKey=" + RxCache.this.cacheKey);
-                return strategy.execute(RxCache.this, RxCache.this.cacheKey, RxCache.this.cacheTime, apiResultObservable, type);
+                Type tempType = type;
+                if (type instanceof ParameterizedType) {//自定义ApiResult
+                    Class<T> cls = (Class) ((ParameterizedType) type).getRawType();
+                    if (CacheResult.class.isAssignableFrom(cls)) {
+                        tempType = Utils.getParameterizedType(type, 0);
+                    }
+                }
+                return strategy.execute(RxCache.this, RxCache.this.cacheKey, RxCache.this.cacheTime, apiResultObservable, tempType);
             }
         };
     }
