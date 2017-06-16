@@ -102,7 +102,6 @@ public final class EasyHttp {
 
     private EasyHttp() {
         okHttpClientBuilder = new OkHttpClient.Builder();
-        okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder.hostnameVerifier(new DefaultHostnameVerifier());
         okHttpClientBuilder.connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
         okHttpClientBuilder.readTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
