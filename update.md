@@ -1,4 +1,9 @@
 ## 更新日志
+### 2017-06-16
+V1.0.6
+- 修复重复初始化问题okhttpclient.Build()
+- 修复带有缓存的CacheResult返回list集合解析异常问题
+
 ### 2017-06-13
 V1.0.5
 - 新增缓存模式CACHEANDREMOTEDISTINCT
