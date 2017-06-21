@@ -41,6 +41,7 @@ import retrofit2.adapter.rxjava.HttpException;
  */
 public class ApiException extends Exception {
     //对应HTTP的状态码
+    private static final int BADREQUEST = 400;
     private static final int UNAUTHORIZED = 401;
     private static final int FORBIDDEN = 403;
     private static final int NOT_FOUND = 404;
@@ -89,8 +90,9 @@ public class ApiException extends Exception {
         ApiException ex;
         if (e instanceof HttpException) {
             HttpException httpException = (HttpException) e;
-            ex = new ApiException(e, ERROR.HTTP_ERROR);
-            switch (httpException.code()) {
+            ex = new ApiException(httpException, httpException.code());
+            /*switch (httpException.code()) {
+                case BADREQUEST:
                 case UNAUTHORIZED:
                 case FORBIDDEN:
                 case NOT_FOUND:
@@ -100,9 +102,10 @@ public class ApiException extends Exception {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    ex.message = "网络错误";
+                    ex.message = "网络错误,Code:"+httpException.code()+" ,err:"+httpException.getMessage();
                     break;
-            }
+            }*/
+            ex.message = httpException.getMessage();
             return ex;
         } else if (e instanceof ServerException) {
             ServerException resultException = (ServerException) e;
