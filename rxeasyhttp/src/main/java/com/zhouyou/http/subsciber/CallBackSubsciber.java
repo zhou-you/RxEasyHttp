@@ -21,7 +21,6 @@ import android.content.Context;
 import com.zhouyou.http.callback.CallBack;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.exception.ApiException;
-import com.zhouyou.http.utils.Utils;
 
 
 /**
@@ -60,7 +59,7 @@ public class CallBackSubsciber<T> extends BaseSubscriber<T> {
 
     @Override
     public void onNext(T t) {
-        Utils.checkNotNull(t, "CallBackSubsciber onNext t==null");
+        //Utils.checkNotNull(t, "CallBackSubsciber onNext t==null");
         if (callBack != null) {
             callBack.onSuccess(t);
         }
