@@ -72,9 +72,9 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
 
     @Override
     public void onCompleted() {
-        if (callBack != null) {
-            //callBack.onComplete();
-        }
+        /*if (callBack != null) {
+            callBack.onComplete();
+        }*/
     }
 
     @Override
