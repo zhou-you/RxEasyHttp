@@ -47,9 +47,9 @@ QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及
 ## 版本说明
 #### 当前版本
 
-V1.0.6 
-- 修复重复初始化问题okhttpclient.Build()
-- 修复带有缓存的CacheResult返回list集合解析异常问题
+V1.0.8 
+- 优化了异常返回
+- 优化了允许data返回为null
 
 #### 更新日志
 [点击查看更新日志](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
@@ -60,7 +60,7 @@ V1.0.6
 #### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:1.0.6'
+ compile 'com.zhouyou:rxeasyhttp:1.0.8'
 }
 ```
 想查看所有版本，请点击下面地址。
