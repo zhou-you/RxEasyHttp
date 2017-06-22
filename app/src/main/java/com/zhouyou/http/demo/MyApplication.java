@@ -42,7 +42,9 @@ public class MyApplication extends Application {
         EasyHttp.init(this);
 
         //这里涉及到安全我把url去掉了，demo都是调试通的
-        String Url = "http://www.xxx.com";
+        //String Url = "http://www.xxx.com";
+        //String Url = "https://dp.clife.net";
+        String Url = "https://api.clife.cn";
         
         //设置请求头
         HttpHeaders headers = new HttpHeaders();
@@ -51,7 +53,7 @@ public class MyApplication extends Application {
         HttpParams params = new HttpParams();
         params.put("appId", AppConstant.APPID);
         EasyHttp.getInstance()
-                .debug("RxEasyHttp", false)
+                .debug("RxEasyHttp", true)
                 .setReadTimeOut(60 * 1000)
                 .setWriteTimeOut(60 * 1000)
                 .setConnectTimeout(60 * 1000)
@@ -64,7 +66,7 @@ public class MyApplication extends Application {
                 .setCacheVersion(1)//缓存版本为1
                 .setHostnameVerifier(new UnSafeHostnameVerifier(Url))//全局访问规则
                 .setCertificates()//信任所有证书
-                //.addConverterFactory(GsonConverterFactory.create(gson))//本框架没有采用Retrofit的Gson转化，所有不用配置
+                //.addConverterFactory(GsonConverterFactory.create(gson))//本框架没有采用Retrofit的Gson转化，所以不用配置
                 .addCommonHeaders(headers)//设置全局公共头
                 .addCommonParams(params)//设置全局公共参数
                 .addInterceptor(new CustomSignInterceptor());//添加参数签名拦截器
