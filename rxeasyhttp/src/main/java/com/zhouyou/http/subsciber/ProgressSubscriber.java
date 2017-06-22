@@ -141,7 +141,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     @Override
     public void onError(ApiException e) {
         dismissProgress();
-        int errCode = e.getCode();
+        //int errCode = e.getCode();
         /*if (errCode == ApiException.ERROR.TIMEOUT_ERROR) {
             ToastUtil.showToast(contextWeakReference.get(), "网络中断，请检查您的网络状态");
         } else if (errCode == ApiException.ERROR.NETWORD_ERROR) {

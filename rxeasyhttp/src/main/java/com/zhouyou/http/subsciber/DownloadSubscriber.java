@@ -93,7 +93,7 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
     private boolean writeResponseBodyToDisk(String path, String name, Context context, okhttp3.ResponseBody body) {
         HttpLog.d("contentType:>>>>" + body.contentType().toString());
         if (!TextUtils.isEmpty(name)) {//text/html; charset=utf-8
-            String type = "";
+            String type;
             if (!name.contains(".")) {
                 type = body.contentType().toString();
                 if (type.equals(APK_CONTENTTYPE)) {
@@ -115,7 +115,7 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
             path = context.getExternalFilesDir(null) + File.separator + name;
         } else {
             File file = new File(path);
-            if (file != null && !file.exists()) {
+            if (!file.exists()) {
                 file.mkdirs();
             }
             path = path + File.separator + name;
@@ -175,7 +175,7 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                 HttpLog.i("file downloaded: " + fileSizeDownloaded + " of " + fileSize);
 
                 if (callBack != null) {
-                    final String finalName = name;
+                    //final String finalName = name;
                     final String finalPath = path;
                     Observable.just(finalPath).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<String>() {
                         @Override
