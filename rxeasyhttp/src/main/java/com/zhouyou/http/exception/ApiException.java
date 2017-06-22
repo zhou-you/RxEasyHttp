@@ -56,7 +56,7 @@ public class ApiException extends Exception {
 
     public static final int UNKNOWN = 1000;
     public static final int PARSE_ERROR = 1001;
-    public String message;
+    private String message;
 
 
     public ApiException(Throwable throwable, int code) {
@@ -109,8 +109,8 @@ public class ApiException extends Exception {
             return ex;
         } else if (e instanceof ServerException) {
             ServerException resultException = (ServerException) e;
-            ex = new ApiException(resultException, resultException.errCode);
-            ex.message = resultException.message;
+            ex = new ApiException(resultException, resultException.getErrCode());
+            ex.message = resultException.getMessage();
             return ex;
         } else if (e instanceof JsonParseException
                 || e instanceof JSONException
@@ -151,6 +151,15 @@ public class ApiException extends Exception {
             return ex;
         }
     }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    /*public String getErrMessage() {
+        return message;
+    }*/
 
     /**
      * 约定异常

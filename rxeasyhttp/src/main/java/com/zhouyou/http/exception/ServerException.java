@@ -23,8 +23,8 @@ package com.zhouyou.http.exception;
  * 版本： v1.0<br>
  */
 public class ServerException extends RuntimeException {
-    public int errCode;
-    public String message;
+    private int errCode;
+    private String message;
 
     public ServerException(int errCode, String msg) {
         super(msg);
@@ -34,5 +34,10 @@ public class ServerException extends RuntimeException {
 
     public int getErrCode() {
         return errCode;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }
