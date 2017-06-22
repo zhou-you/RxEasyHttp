@@ -29,7 +29,7 @@ public class FileUtils {
     * @param fileName 必须是完整文件名（文件名+格式）
     */
     public static void getFileFromAsset(Context context,String fileName) {
-        InputStream fileStream = null;
+        InputStream fileStream;
         try {
             //获取指定Assets文件流
             fileStream = context.getResources().getAssets().open(fileName);
