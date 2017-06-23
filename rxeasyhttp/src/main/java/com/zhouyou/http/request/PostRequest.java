@@ -56,7 +56,7 @@ public class PostRequest extends BaseBodyRequest<PostRequest> {
         });
     }
     
-    public <T> Observable<T> execute(CallClazzProxy<ApiResult<T>, T> proxy) {
+    public <T> Observable<T> execute(CallClazzProxy<? extends ApiResult<T>, T> proxy) {
         return build().generateBody()
                 .map(new ApiResultFunc(proxy.getType()))
                 .compose(isSyncRequest ? RxSchedulers._main() : RxSchedulers._io_main())
