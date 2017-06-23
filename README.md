@@ -1148,7 +1148,7 @@ public class CustomApiResult<T> extends ApiResult<T> {
 }
 ```
 那么你的网络请求可以这样写
-##### 自定义回调方式（通过CallBackProxy代理）
+##### 自定义ApiResult回调方式（通过CallBackProxy代理）
 ```
 EasyHttp.get(url)
                 .readTimeOut(30 * 1000)//局部定义读超时
@@ -1190,7 +1190,7 @@ EasyHttp.get(url)
 ```
 
 通过以上改造，再次调用时直接使用CallBack，不用再关注CallBackProxy，是不是明显简单很多了，具体请看代码Demo!!!
-##### 自定义订阅方式（通过CallClazzProxy代理）
+##### 自定义ApiResult订阅方式（通过CallClazzProxy代理）
 ```
 Observable<ResultBean> observable = EasyHttp.get("/mobile/get")
                 .readTimeOut(30 * 1000)//局部定义读超时
