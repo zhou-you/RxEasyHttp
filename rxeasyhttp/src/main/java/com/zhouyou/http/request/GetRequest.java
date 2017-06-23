@@ -45,20 +45,7 @@ public class GetRequest extends BaseRequest<GetRequest> {
     public GetRequest(String url) {
         super(url);
     }
-
-    /*public <T> Observable<T> execute(Class<T> clazz) {
-        return build().apiManager.get(url, params.urlParamsMap)
-                .map(new ApiResultFunc(clazz))
-                .compose(isSyncRequest ? RxSchedulers._main() : RxSchedulers._io_main())
-                .compose(rxCache.transformer(cacheMode, clazz))
-                .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay))
-                .compose(new Observable.Transformer<CacheResult<T>, T>() {
-                    @Override
-                    public Observable<T> call(Observable<CacheResult<T>> cacheResultObservable) {
-                        return cacheResultObservable.map(new CacheResultFunc<T>());
-                    }
-                });
-    }*/
+    
     public <T> Observable<T> execute(Class<T> clazz) {
         return execute(new CallClazzProxy<ApiResult<T>, T>(clazz) {
         });

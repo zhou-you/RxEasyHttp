@@ -21,12 +21,15 @@ import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.cache.model.CacheResult;
 import com.zhouyou.http.callback.CallBack;
 import com.zhouyou.http.callback.CallBackProxy;
+import com.zhouyou.http.callback.CallClazzProxy;
 import com.zhouyou.http.func.ApiResultFunc;
 import com.zhouyou.http.func.CacheResultFunc;
 import com.zhouyou.http.func.RetryExceptionFunc;
 import com.zhouyou.http.model.ApiResult;
 import com.zhouyou.http.subsciber.CallBackSubsciber;
 import com.zhouyou.http.utils.RxSchedulers;
+
+import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
 import rx.Observable;
@@ -44,10 +47,20 @@ public class PostRequest extends BaseBodyRequest<PostRequest> {
     }
 
     public <T> Observable<T> execute(Class<T> clazz) {
+        return execute(new CallClazzProxy<ApiResult<T>, T>(clazz) {
+        });
+    }
+
+    public <T> Observable<T> execute(Type type) {
+        return execute(new CallClazzProxy<ApiResult<T>, T>(type) {
+        });
+    }
+    
+    public <T> Observable<T> execute(CallClazzProxy<ApiResult<T>, T> proxy) {
         return build().generateBody()
-                .map(new ApiResultFunc(clazz))
+                .map(new ApiResultFunc(proxy.getType()))
                 .compose(isSyncRequest ? RxSchedulers._main() : RxSchedulers._io_main())
-                .compose(rxCache.transformer(cacheMode, clazz))
+                .compose(rxCache.transformer(cacheMode, proxy.getCallType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay))
                 .compose(new Observable.Transformer<CacheResult<T>, T>() {
                     @Override
