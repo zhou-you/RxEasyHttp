@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.CallBack;
-import com.zhouyou.http.callback.CallBackProxy;
+import com.zhouyou.http.callback.CallClazzProxy;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.demo.Api.LoginService;
@@ -364,7 +364,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCustomApiResult(View view) {
-        EasyHttp.get("/mobile/get")
+        //:方式一
+        /*EasyHttp.get("/mobile/get")
                 .readTimeOut(30 * 1000)//局部定义读超时
                 .writeTimeOut(30 * 1000)
                 .connectTimeout(30 * 1000)
@@ -392,7 +393,29 @@ public class MainActivity extends AppCompatActivity {
                         if (response != null) showToast(response.toString());
                     }
                 }) {
+                });*/
+        //:方式二
+        Observable<ResultBean> observable = EasyHttp.get("/mobile/get")
+                .readTimeOut(30 * 1000)//局部定义读超时
+                .writeTimeOut(30 * 1000)
+                .baseUrl("http://apis.juhe.cn")
+                .params("phone", "18688994275")
+                .params("dtype", "json")
+                .params("key", "5682c1f44a7f486e40f9720d6c97ffe4")
+                .execute(new CallClazzProxy<CustomApiResult<ResultBean>, ResultBean>(ResultBean.class) {
                 });
+        observable.subscribe(new ProgressSubscriber<ResultBean>(this, mProgressDialog) {
+            @Override
+            public void onError(ApiException e) {
+                super.onError(e);
+                showToast(e.getMessage());
+            }
+
+            @Override
+            public void onNext(ResultBean result) {
+                showToast(result.toString());
+            }
+        });
 
     }
 

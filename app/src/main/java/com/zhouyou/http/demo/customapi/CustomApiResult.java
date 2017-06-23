@@ -63,17 +63,17 @@ public class CustomApiResult<T> extends ApiResult<T> {
         result = data;
     }
 
-   /* @Override
+    @Override
     public boolean isOk() {
-        return error_code==200;//如果不是0表示成功，请重写isOk()方法。
-    }*/
+        return getCode()==0;//如果不是0表示成功，请重写isOk()方法。
+    }
 
     @Override
     public String toString() {
         return "PhoneIpApiBean{" +
                 "reason='" + reason + '\'' +
                 ", error_code=" + error_code +
-                ", result=" + getData().toString() +
+                ", result=" + result +
                 '}';
     }
 
