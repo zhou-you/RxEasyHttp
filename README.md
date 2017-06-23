@@ -1148,6 +1148,7 @@ public class CustomApiResult<T> extends ApiResult<T> {
 }
 ```
 那么你的网络请求可以这样写
+##### 自定义回调方式（通过CallBackProxy代理）
 ```
 EasyHttp.get(url)
                 .readTimeOut(30 * 1000)//局部定义读超时
@@ -1189,6 +1190,30 @@ EasyHttp.get(url)
 ```
 
 通过以上改造，再次调用时直接使用CallBack，不用再关注CallBackProxy，是不是明显简单很多了，具体请看代码Demo!!!
+##### 自定义订阅方式（通过CallClazzProxy代理）
+```
+Observable<ResultBean> observable = EasyHttp.get("/mobile/get")
+                .readTimeOut(30 * 1000)//局部定义读超时
+                .writeTimeOut(30 * 1000)
+                .baseUrl("http://apis.juhe.cn")
+                .params("phone", "18688994275")
+                .params("dtype", "json")
+                .params("key", "5682c1f44a7f486e40f9720d6c97ffe4")
+                .execute(new CallClazzProxy<CustomApiResult<ResultBean>, ResultBean>(ResultBean.class) {
+                });
+        observable.subscribe(new ProgressSubscriber<ResultBean>(this, mProgressDialog) {
+            @Override
+            public void onError(ApiException e) {
+                super.onError(e);
+                showToast(e.getMessage());
+            }
+
+            @Override
+            public void onNext(ResultBean result) {
+                showToast(result.toString());
+            }
+        });
+```
 ## 调试模式
 一个好的库，一定有比较人性化的调试模式，为了方便开发者查看请求过程和请求日志，本库提供详细的日志打印，最好在开发阶段，请打开调试模式输出优雅的Log.
 调试模式的控制在初始化配置时就可以直接设置。
