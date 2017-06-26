@@ -17,6 +17,7 @@
 package com.zhouyou.http.interceptor;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -211,7 +212,7 @@ public class HttpLoggingInterceptor implements Interceptor {
             if (contentType != null) {
                 charset = contentType.charset(UTF8);
             }
-            log("\tbody:" + buffer.readString(charset));
+            log("\tbody:" + URLDecoder.decode(buffer.readString(charset),UTF8.name()));
         } catch (Exception e) {
             e.printStackTrace();
         }
