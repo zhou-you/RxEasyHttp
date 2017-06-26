@@ -38,6 +38,8 @@ import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.zhouyou.http.utils.HttpUtil.UTF8;
+
 /**
  * <p>描述：动态拦截器</p>
  * 主要功能是针对参数：<br>
@@ -122,7 +124,7 @@ public abstract class BaseDynamicInterceptor<R extends BaseDynamicInterceptor> i
         TreeMap<String, String> newParams = dynamic(oldparams);
         Utils.checkNotNull(newParams, "newParams==null");
         for (Map.Entry<String, String> entry : newParams.entrySet()) {
-            String urlValue = URLEncoder.encode(entry.getValue(), "UTF-8");
+            String urlValue = URLEncoder.encode(entry.getValue(), UTF8.name());
             //原来的URl: https://xxx.xxx.xxx/app/chairdressing/skinAnalyzePower/skinTestResult?appId=10101
             if (!nameKeys.contains(entry.getKey())) {//避免重复添加
                 newBuilder.addQueryParameter(entry.getKey(), urlValue);
@@ -151,7 +153,7 @@ public abstract class BaseDynamicInterceptor<R extends BaseDynamicInterceptor> i
             Utils.checkNotNull(newParams, "newParams==null");
             //Logc.i("======post请求参数===========");
             for (Map.Entry<String, String> entry : newParams.entrySet()) {
-                String value = URLDecoder.decode(entry.getValue(), "UTF-8");
+                String value = URLDecoder.decode(entry.getValue(), UTF8.name());
                 bodyBuilder.addEncoded(entry.getKey(), value);
                 //Logc.i(entry.getKey() + " -> " + value);
             }
