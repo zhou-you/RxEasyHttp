@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import rx.functions.Func1;
@@ -58,13 +59,14 @@ public class ApiResultFunc<T> implements Func1<ResponseBody, ApiResult<T>> {
         ApiResult<T> apiResult = new ApiResult<T>();
         apiResult.setCode(-1);
         if (type instanceof ParameterizedType) {//自定义ApiResult
-            Class<T> cls = (Class) ((ParameterizedType) type).getRawType();
+            final Class<T> cls = (Class) ((ParameterizedType) type).getRawType();
             if (ApiResult.class.isAssignableFrom(cls)) {
-                Type[] params = ((ParameterizedType) type).getActualTypeArguments();
-                Class clazz = Utils.getClass(params[0], 0);
+                final Type[] params = ((ParameterizedType) type).getActualTypeArguments();
+                final Class clazz = Utils.getClass(params[0], 0);
+                final Class rawType = Utils.getClass(type,0);
                 try {
                     String json = responseBody.string();
-                    if (clazz.equals(String.class)) {
+                    if (!List.class.isAssignableFrom(rawType)&&clazz.equals(String.class)) {
                         apiResult.setData((T) json);
                         apiResult.setCode(0);
                     } else {
@@ -86,13 +88,13 @@ public class ApiResultFunc<T> implements Func1<ResponseBody, ApiResult<T>> {
             }
         } else {//默认Apiresult
             try {
-                String json = responseBody.string();
-                Class<T> clazz = Utils.getClass(type, 0);
+                final String json = responseBody.string();
+                final Class<T> clazz = Utils.getClass(type, 0);
                 if (clazz.equals(String.class)) {
                     apiResult.setData((T) json);
                     apiResult.setCode(0);
                 } else {
-                    ApiResult result = parseApiResult(json, apiResult);
+                    final ApiResult result = parseApiResult(json, apiResult);
                     if (result != null) {
                         apiResult = result;
                         if (apiResult.getData() != null) {
