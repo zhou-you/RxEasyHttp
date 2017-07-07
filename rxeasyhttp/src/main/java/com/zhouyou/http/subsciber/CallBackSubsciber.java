@@ -30,7 +30,6 @@ import com.zhouyou.http.exception.ApiException;
  * 日期： 2016/12/28 17:10<br>
  * 版本： v2.0<br>
  */
-
 public class CallBackSubsciber<T> extends BaseSubscriber<T> {
     private CallBack<T> callBack;
 

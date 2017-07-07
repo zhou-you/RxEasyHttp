@@ -36,7 +36,7 @@ import okhttp3.internal.Util;
  * 版本： v2.0<br>
  *     
  * 修改者： zhouyou
- * 日期： 2016/01/06 10:35<br>
+ * 日期： 2017/01/06 10:35<br>
  * 1.这里笔者给读者留个提醒，ByteString其实已经很强大了，不需要我们自己再去处理加密了，只要善于发现br>
  * 2.这里为设么把MD5改成ByteString呢？其实改不改无所谓，只是想把ByteString这个好东西介绍给大家。(ok)br>
  * 3.在ByteString中有很多好用的方法包括MD5.sha1 base64  encodeUtf8 等等功能。br>

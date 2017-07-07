@@ -107,7 +107,7 @@ public final class RxCache {
      */
     public <T> Observable.Transformer<T, CacheResult<T>> transformer(CacheMode cacheMode, final Type type) {
         if (CacheMode.DEFAULT.getClassName().equals(cacheMode.getClassName()) || CacheMode.NO_CACHE.getClassName().equals(cacheMode.getClassName())) {
-            HttpLog.i("RxCache nonsupport DEFAULT and NO_CACHE strategy!!!");
+            //HttpLog.i("RxCache nonsupport DEFAULT and NO_CACHE strategy!!!");
             return new Observable.Transformer<T, CacheResult<T>>() {
                 @Override
                 public Observable<CacheResult<T>> call(Observable<T> tObservable) {

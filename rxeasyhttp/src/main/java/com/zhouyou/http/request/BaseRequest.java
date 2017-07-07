@@ -33,7 +33,7 @@ import com.zhouyou.http.interceptor.NoCacheInterceptor;
 import com.zhouyou.http.model.HttpHeaders;
 import com.zhouyou.http.model.HttpParams;
 import com.zhouyou.http.utils.HttpLog;
-import com.zhouyou.http.utils.RxSchedulers;
+import com.zhouyou.http.utils.RxUtil;
 import com.zhouyou.http.utils.Utils;
 
 import java.io.File;
@@ -354,7 +354,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
      * 移除缓存（key）
      */
     public void removeCache(String key) {
-        getRxCache().remove(key).compose(RxSchedulers.<Boolean>io_main())
+        getRxCache().remove(key).compose(RxUtil.<Boolean>io_main())
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {

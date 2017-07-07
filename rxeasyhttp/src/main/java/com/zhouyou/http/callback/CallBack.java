@@ -38,11 +38,11 @@ public abstract class CallBack<T> implements IType<T>{
     public abstract void onSuccess(T response);
 
     @Override
-    public Type getType() {
+    public Type getType() {//获取需要解析的泛型T类型
         return Utils.findNeedClass(getClass());
     }
 
-    public Type getRawType() {
+    public Type getRawType() {//获取需要解析的泛型T raw类型
         return Utils.findRawType(getClass());
     }
 }

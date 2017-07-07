@@ -45,9 +45,7 @@ import rx.Observable;
  * 1.加入基础API，减少Api冗余<br>
  * 2.支持多种方式访问网络（get,put,post,delete），包含了常用的情况<br>
  * 3.传统的Retrofit用法，服务器每增加一个接口，就要对应一个api，非常繁琐<br>
- * 4.最初是想采用<T> Observable<ApiResult<T>> executePost()这样的方式获取需要的对象，看似比较通用，无奈retrofit不支持二次泛型，真是哭晕啊！！
- * 只能返回比较顶级的ResponseBody。<br>
- * 5.如果返回ResponseBody在返回的结果中去获取T,又会报错，这是因为在运行过程中,通过泛型传入的类型T丢失了,所以无法转换,这叫做泛型擦除。
+ * 4.如果返回ResponseBody在返回的结果中去获取T,又会报错，这是因为在运行过程中,通过泛型传入的类型T丢失了,所以无法转换,这叫做泛型擦除。
  * 《泛型擦除》不知道的童鞋自己百度哦！！<br>
  * </p>
  * <p>
@@ -60,13 +58,6 @@ import rx.Observable;
  * 版本： v2.0<br>
  */
 public interface ApiService {
-
-    //最初我是想采用<T> Observable<ApiResult<T>> executePost()这样的方式获取需要的对象，看似比较通用，无奈retrofit不支持二次泛型.
-    //《无奈retrofit不支持二次泛型》
-   /* @POST()
-    @FormUrlEncoded
-    <T> Observable<ApiResult<T>> executePost(@Url() String url, @FieldMap Map<String, String> maps);
-    */
 
     @POST()
     @FormUrlEncoded

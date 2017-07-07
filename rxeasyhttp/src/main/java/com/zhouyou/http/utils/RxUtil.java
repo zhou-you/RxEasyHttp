@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
  * 日期： 2017/5/15 17:12 <br>
  * 版本： v1.0<br>
  */
-public class RxSchedulers {
+public class RxUtil {
 
     public static <T> Observable.Transformer<T, T> io_main() {
         return (Observable.Transformer) new Observable.Transformer() {

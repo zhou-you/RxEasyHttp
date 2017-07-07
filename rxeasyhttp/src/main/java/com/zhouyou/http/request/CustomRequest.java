@@ -28,7 +28,7 @@ import com.zhouyou.http.func.RetryExceptionFunc;
 import com.zhouyou.http.model.ApiResult;
 import com.zhouyou.http.subsciber.CallBackSubsciber;
 import com.zhouyou.http.transformer.HandleErrTransformer;
-import com.zhouyou.http.utils.RxSchedulers;
+import com.zhouyou.http.utils.RxUtil;
 import com.zhouyou.http.utils.Utils;
 
 import okhttp3.ResponseBody;
@@ -72,7 +72,7 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
      */
     public <T> Observable<T> call(Observable<T> observable) {
         checkvalidate();
-        return observable.compose(RxSchedulers.io_main())
+        return observable.compose(RxUtil.io_main())
                 .compose(new HandleErrTransformer())
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }
@@ -82,7 +82,7 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
     }
 
     public <R> Subscriber call(Observable observable, Subscriber<R> subscriber) {
-        observable.compose(RxSchedulers.io_main())
+        observable.compose(RxUtil.io_main())
                 .subscribe(subscriber);
         return subscriber;
     }
@@ -96,7 +96,7 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
         checkvalidate();
         return observable
                 .map(new HandleFuc<T>())
-                .compose(RxSchedulers.<T>io_main())
+                .compose(RxUtil.<T>io_main())
                 .compose(new HandleErrTransformer<T>())
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }
@@ -122,7 +122,7 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
     private <T> Observable<CacheResult<T>> toObservable(Observable observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {
         return observable.map(new ApiResultFunc(proxy != null ? proxy.getType() : new TypeToken<ResponseBody>() {
         }.getType()))
-                .compose(isSyncRequest ? RxSchedulers._main() : RxSchedulers._io_main())
+                .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallBack().getType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }

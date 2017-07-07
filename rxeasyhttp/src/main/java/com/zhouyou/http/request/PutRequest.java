@@ -26,7 +26,7 @@ import com.zhouyou.http.func.CacheResultFunc;
 import com.zhouyou.http.func.RetryExceptionFunc;
 import com.zhouyou.http.model.ApiResult;
 import com.zhouyou.http.subsciber.CallBackSubsciber;
-import com.zhouyou.http.utils.RxSchedulers;
+import com.zhouyou.http.utils.RxUtil;
 
 import java.lang.reflect.Type;
 
@@ -58,7 +58,7 @@ public class PutRequest extends BaseRequest<PutRequest> {
     public <T> Observable<T> execute(CallClazzProxy<? extends ApiResult<T>, T> proxy) {
         return build().apiManager.put(url, params.urlParamsMap)
                 .map(new ApiResultFunc(proxy.getType()))
-                .compose(isSyncRequest ? RxSchedulers._main() : RxSchedulers._io_main())
+                .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay))
                 .compose(new Observable.Transformer<CacheResult<T>, T>() {
@@ -90,7 +90,7 @@ public class PutRequest extends BaseRequest<PutRequest> {
     private <T> Observable<CacheResult<T>> toObservable(Observable observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {
         return observable.map(new ApiResultFunc(proxy != null ? proxy.getType() : new TypeToken<ResponseBody>() {
         }.getType()))
-                .compose(isSyncRequest ? RxSchedulers._main() : RxSchedulers._io_main())
+                .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallBack().getType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }

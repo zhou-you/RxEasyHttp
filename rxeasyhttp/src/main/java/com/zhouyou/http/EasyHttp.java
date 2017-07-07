@@ -36,7 +36,7 @@ import com.zhouyou.http.request.GetRequest;
 import com.zhouyou.http.request.PostRequest;
 import com.zhouyou.http.request.PutRequest;
 import com.zhouyou.http.utils.HttpLog;
-import com.zhouyou.http.utils.RxSchedulers;
+import com.zhouyou.http.utils.RxUtil;
 import com.zhouyou.http.utils.Utils;
 
 import java.io.File;
@@ -596,7 +596,7 @@ public final class EasyHttp {
      * 清空缓存
      */
     public static void clearCache() {
-        getRxCache().clear().compose(RxSchedulers.<Boolean>io_main())
+        getRxCache().clear().compose(RxUtil.<Boolean>io_main())
                 .subscribe(new Action1<Boolean>() {
                     @Override
                     public void call(Boolean aBoolean) {
@@ -614,7 +614,7 @@ public final class EasyHttp {
      * 移除缓存（key）
      */
     public static void removeCache(String key) {
-        getRxCache().remove(key).compose(RxSchedulers.<Boolean>io_main()).subscribe(new Action1<Boolean>() {
+        getRxCache().remove(key).compose(RxUtil.<Boolean>io_main()).subscribe(new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
                 HttpLog.i("removeCache success!!!");

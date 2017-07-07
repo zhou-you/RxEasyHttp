@@ -47,7 +47,7 @@ public abstract class CallBackProxy<T extends ApiResult<R>, R> implements IType<
     }
 
     @Override
-    public Type getType() {
+    public Type getType() {//CallBack代理方式，获取需要解析的Type
         Type typeArguments = null;
         if (mCallBack != null) {
             Type rawType = mCallBack.getRawType();//如果用户的信息是返回List需单独处理

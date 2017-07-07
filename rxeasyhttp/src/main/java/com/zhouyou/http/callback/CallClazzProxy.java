@@ -45,7 +45,7 @@ public abstract class CallClazzProxy<T extends ApiResult<R>, R> implements IType
     }
 
     @Override
-    public Type getType() {
+    public Type getType() {//CallClazz代理方式，获取需要解析的Type
         Type typeArguments = null;
         if (type != null) {
             typeArguments = type;
