@@ -38,6 +38,10 @@
             android:name=".CacheActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".CustomApiActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

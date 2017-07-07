@@ -52,7 +52,12 @@ import com.zhouyou.http.subsciber.IProgressDialog;
 
 import rx.functions.Action1;
 
-
+/**
+ * <p>描述：登录测试</p>
+ * 作者： zhouyou<br>
+ * 日期： 2017/7/6 16:26 <br>
+ * 版本： v1.0<br>
+ */
 public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -86,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mEmailView.setText("18688994275");
-        mPasswordView.setText("123456");
+        mPasswordView.setText("zy123456");
         rxPermissions = new RxPermissions(this);
         autoLogin();
     }
@@ -121,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            onLogin(email, password);
+            getPermissions(email, password);
         }
     }
 
@@ -137,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
      * 用登录举例
      */
     public void onLogin(final String name, final String pass) {
-        if (!isTest1()) return;
         IProgressDialog mProgressDialog = new IProgressDialog() {
             @Override
             public Dialog getDialog() {
@@ -188,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 showToast("自动登录中...");
-                                onLogin(user, pass);
+                                getPermissions(user, pass);
                                 dialog.dismiss();
                             }
                         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -201,21 +205,19 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public boolean isTest1() {
+    public void getPermissions(final String name, final String pass) {
        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
                .subscribe(new Action1<Boolean>() {
                    @Override
                    public void call(Boolean aBoolean) {
                        if(aBoolean){
-                           Toast.makeText(LoginActivity.this,
-                                   "权限获取成功",
-                                   Toast.LENGTH_SHORT).show();
+                           //Toast.makeText(LoginActivity.this, "权限获取成功", Toast.LENGTH_SHORT).show();
+                           onLogin(name, pass);
                        }else {
                            showMissingPermissionDialog();
                        }
                    }
                });
-        return true;
     }
 
     // 显示缺失权限提示

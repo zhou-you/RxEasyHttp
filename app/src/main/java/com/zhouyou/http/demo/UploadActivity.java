@@ -35,7 +35,12 @@ import com.zhouyou.http.utils.HttpLog;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
-
+/**
+ * <p>描述：文件上传</p>
+ * 作者： zhouyou<br>
+ * 日期： 2017/7/6 16:26 <br>
+ * 版本： v1.0<br>
+ */
 public class UploadActivity extends AppCompatActivity {
 
     @Override

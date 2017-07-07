@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.zhouyou.http.demo.customapi;
+package com.zhouyou.http.demo.customapi.test1;
 
 public class ResultBean {
     private String province;

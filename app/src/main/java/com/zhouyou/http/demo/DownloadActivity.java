@@ -27,7 +27,12 @@ import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.demo.utils.FileUtils;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.utils.HttpLog;
-
+/**
+ * <p>描述：文件下载</p>
+ * 作者： zhouyou<br>
+ * 日期： 2017/7/6 16:25 <br>
+ * 版本： v1.0<br>
+ */
 public class DownloadActivity extends AppCompatActivity {
     private ProgressDialog dialog;
 

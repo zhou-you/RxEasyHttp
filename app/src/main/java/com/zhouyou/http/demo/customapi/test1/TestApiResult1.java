@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.zhouyou.http.demo.customapi;
+package com.zhouyou.http.demo.customapi.test1;
 
 import com.zhouyou.http.model.ApiResult;
 
@@ -26,7 +26,7 @@ import com.zhouyou.http.model.ApiResult;
  * 日期： 2017/5/22 10:00 <br>
  * 版本： v1.0<br>
  */
-public class CustomApiResult<T> extends ApiResult<T> {
+public class TestApiResult1<T> extends ApiResult<T> {
     //{"resultcode":"200","reason":"Return Successd!","result":{"province":"广东","city":"深圳","areacode":"0755","zip":"18000","company":"联通","card":""},"error_code":0}
     String reason;
     int error_code;
@@ -38,29 +38,16 @@ public class CustomApiResult<T> extends ApiResult<T> {
         return error_code;
     }
 
-    @Override
-    public void setCode(int code) {
-        error_code = code;
-    }
 
     @Override
     public String getMsg() {
         return reason;
     }
 
-    @Override
-    public void setMsg(String msg) {
-        reason = msg;
-    }
 
     @Override
     public T getData() {
         return result;
-    }
-
-    @Override
-    public void setData(T data) {
-        result = data;
     }
 
     @Override

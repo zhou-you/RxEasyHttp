@@ -33,7 +33,12 @@ import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.utils.HttpLog;
 
 import rx.Subscriber;
-
+/**
+ * <p>描述：缓存使用介绍</p>
+ * 作者： zhouyou<br>
+ * 日期： 2017/7/6 16:25 <br>
+ * 版本： v1.0<br>
+ */
 public class CacheActivity extends AppCompatActivity implements View.OnClickListener {
     TextView cache_content_txt;
 
