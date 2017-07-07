@@ -39,6 +39,10 @@ public class CustomPostRequest extends PostRequest {
         super(url);
     }
 
+    /*public PostRequest upJson(Object objBean) {//若果你的是obj,你想很容易转json,可以自己新增一个方法obj转json的
+        return super.upJson(StringUtil.getJson(objBean));
+    }*/
+
     /**
      * 覆写execute方法指定，代理用TestApiResult2
      * @param type
