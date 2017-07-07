@@ -66,6 +66,7 @@ public class ApiResultFunc<T> implements Func1<ResponseBody, ApiResult<T>> {
                 final Class rawType = Utils.getClass(type,0);
                 try {
                     String json = responseBody.string();
+                    //增加是List<String>判断错误的问题
                     if (!List.class.isAssignableFrom(rawType)&&clazz.equals(String.class)) {
                         apiResult.setData((T) json);
                         apiResult.setCode(0);
