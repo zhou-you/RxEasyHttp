@@ -52,10 +52,10 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     public final void onError(java.lang.Throwable e) {
         HttpLog.e("-->http is err");
         if (e instanceof ApiException) {
-            HttpLog.e("--> e instanceof ApiException" + e.getMessage());
+            HttpLog.e("--> e instanceof ApiException err:" + e.getMessage());
             onError((ApiException) e);
         } else {
-            HttpLog.e("e !instanceof ApiException" + e.getMessage());
+            HttpLog.e("--> e !instanceof ApiException err:" + e.getMessage());
             onError(ApiException.handleException(e));
         }
     }
