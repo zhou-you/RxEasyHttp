@@ -64,14 +64,6 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/serverinfo"
-                android:text="当前环境：正式（）"
-                android:layout_width="match_parent"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:layout_height="wrap_content" />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

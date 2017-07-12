@@ -61,7 +61,6 @@ import rx.functions.Action1;
 public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
-    private TextView serverinfo;
     RxPermissions rxPermissions;
     
     @Override
@@ -69,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mEmailView = (EditText) findViewById(R.id.email);
-        serverinfo = (TextView) findViewById(R.id.serverinfo);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
