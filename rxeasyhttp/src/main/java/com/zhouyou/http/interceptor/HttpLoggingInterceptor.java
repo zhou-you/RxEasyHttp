@@ -119,7 +119,7 @@ public class HttpLoggingInterceptor implements Interceptor {
         Protocol protocol = connection != null ? connection.protocol() : Protocol.HTTP_1_1;
 
         try {
-            String requestStartMessage = "--> " + request.method() + ' ' + request.url() + ' ' + protocol;
+            String requestStartMessage = "--> " + request.method() + ' ' + URLDecoder.decode(request.url().url().toString(),UTF8.name()) + ' ' + protocol;
             log(requestStartMessage);
 
             if (logHeaders) {
