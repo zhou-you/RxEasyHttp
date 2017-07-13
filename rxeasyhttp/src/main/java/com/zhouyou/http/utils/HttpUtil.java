@@ -16,8 +16,6 @@
 
 package com.zhouyou.http.utils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Map;
 
@@ -38,12 +36,12 @@ public class HttpUtil {
             for (Map.Entry<String, String> urlParams : params.entrySet()) {
                 String urlValues = urlParams.getValue();
                 //对参数进行 utf-8 编码,防止头信息传中文
-                String urlValue = URLEncoder.encode(urlValues, UTF8.name());
-                sb.append(urlParams.getKey()).append("=").append(urlValue).append("&");
+                //String urlValue = URLEncoder.encode(urlValues, UTF8.name());
+                sb.append(urlParams.getKey()).append("=").append(urlValues).append("&");
             }
             sb.deleteCharAt(sb.length() - 1);
             return sb.toString();
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             HttpLog.e(e.getMessage());
         }
         return url;
