@@ -110,7 +110,6 @@ public class CustomApiActivity extends AppCompatActivity {
         //http://japi.juhe.cn/joke/content/list.from?key=f5236a9fb8fc75fac0a4d9b8c27a4e90&page=1&pagesize=10&sort=asc&time=1418745237
         EasyHttp.get("http://japi.juhe.cn/joke/content/list.from")
                 .params("key", "f5236a9fb8fc75fac0a4d9b8c27a4e90")
-                .params("key", "f5236a9fb8fc75fac0a4d9b8c27a4e90")
                 .params("page", "1")
                 .params("pagesize", "10")
                 .params("sort", "asc")
@@ -156,7 +155,6 @@ public class CustomApiActivity extends AppCompatActivity {
      */
     public void onTestN(View view){
         HttpManager.get("http://japi.juhe.cn/joke/content/list.from")
-                .params("key", "f5236a9fb8fc75fac0a4d9b8c27a4e90")
                 .params("key", "f5236a9fb8fc75fac0a4d9b8c27a4e90")
                 .params("page", "1")
                 .params("pagesize", "10")
