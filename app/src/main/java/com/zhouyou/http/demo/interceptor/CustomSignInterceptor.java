@@ -52,7 +52,7 @@ public class CustomSignInterceptor extends BaseDynamicInterceptor<CustomSignInte
         if (isSign()) {//是否签名,因为你的字段key可能不是sign，这种动态的自己处理
             dynamicMap.put(ComParamContact.Common.SIGN, sign(dynamicMap));
         }
-        //Logc.i("dynamicMap:" + dynamicMap.toString());
+        //HttpLog.i("dynamicMap:" + dynamicMap.toString());
         return dynamicMap;//dynamicMap:是原有的全局参数+局部参数+新增的动态参数
     }
 
