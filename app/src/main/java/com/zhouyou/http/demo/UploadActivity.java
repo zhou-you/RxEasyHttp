@@ -29,6 +29,7 @@ import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.body.UIProgressResponseCallBack;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.exception.ApiException;
+import com.zhouyou.http.request.BaseBodyRequest;
 import com.zhouyou.http.subsciber.IProgressDialog;
 import com.zhouyou.http.utils.HttpLog;
 
@@ -190,6 +191,44 @@ public class UploadActivity extends AppCompatActivity {
                 .params("uid", "4811420")
                 .params("auth_key", "21f8d9bcc50c6ac1ae1020ce12f5f5a7")
                 .params("avatar", file, file.getName(), mUIProgressResponseCallBack)
+                .execute(new ProgressDialogCallBack<String>(mProgressDialog, true, true) {
+            @Override
+            public void onSuccess(String response) {
+                showToast(response);
+            }
+
+            @Override
+            public void onError(ApiException e) {
+                super.onError(e);
+                showToast(e.getMessage());
+            }
+        });
+
+    }
+    
+    public void onUploadFileMaps2(View view) {
+        File file = new File("/sdcard/1.jpg");
+        UIProgressResponseCallBack mUIProgressResponseCallBack= new UIProgressResponseCallBack() {
+            @Override
+            public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
+                int progress = (int) (bytesRead * 100 / contentLength);
+                HttpLog.i("progress=" + progress);
+                ((ProgressDialog) mProgressDialog.getDialog()).setProgress(progress);
+                if (done) {//完成
+                    ((ProgressDialog) mProgressDialog.getDialog()).setMessage("上传完整");
+                }
+            }
+        };
+        EasyHttp.post("/index.php?s=/Home/user/dj_add_care")
+                .baseUrl("http://106.14.83.28:89")
+                .params("uid", "1")
+                .params("title", "冷小菜")
+                .params("content", "我发个哈哈哈哈哈哈哈哈")
+                .params("key", "dangjian")
+                .uploadType(BaseBodyRequest.UploadType.BODY)//body方式上传
+                .params("img1", file, file.getName(), mUIProgressResponseCallBack)
+                //.params("img2", file, file.getName(), mUIProgressResponseCallBack)
+                //.params("img3", file, file.getName(), mUIProgressResponseCallBack)
                 .execute(new ProgressDialogCallBack<String>(mProgressDialog, true, true) {
             @Override
             public void onSuccess(String response) {
