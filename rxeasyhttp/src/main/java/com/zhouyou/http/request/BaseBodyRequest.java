@@ -54,14 +54,14 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         /**
          * MultipartBody.Part方式上传
          */
-        PARTS,
+        PART,
         /**
          * Map RequestBody方式上传
          */
-        BODYS
+        BODY
     }
 
-    private UploadType currentUploadType = UploadType.PARTS;
+    private UploadType currentUploadType = UploadType.PART;
 
     public BaseBodyRequest(String url) {
         super(url);
@@ -170,7 +170,7 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         if (params.fileParamsMap.isEmpty()) {
             return apiManager.post(url, params.urlParamsMap);
         } else {
-            if (currentUploadType == UploadType.PARTS) {//part方式上传
+            if (currentUploadType == UploadType.PART) {//part方式上传
                 return uploadFilesWithParts();
             } else {//body方式上传
                 return uploadFilesWithBodys();

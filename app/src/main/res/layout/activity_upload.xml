@@ -38,4 +38,11 @@
         android:text="多文件上传（混合）"
         android:textAllCaps="false"
         />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onUploadFileMaps2"
+        android:text="多文件上传2（混合）"
+        android:textAllCaps="false"
+        />
 </LinearLayout>
