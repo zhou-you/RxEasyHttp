@@ -50,6 +50,19 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
     protected Object object;                                   //上传的对象
     protected RequestBody requestBody;                         //自定义的请求体
 
+    public enum UploadType {
+        /**
+         * MultipartBody.Part方式上传
+         */
+        PARTS,
+        /**
+         * Map RequestBody方式上传
+         */
+        BODYS
+    }
+
+    private UploadType currentUploadType = UploadType.PARTS;
+
     public BaseBodyRequest(String url) {
         super(url);
     }
@@ -131,6 +144,14 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         return (R) this;
     }
 
+    /**
+     * 上传文件的方式，默认part方式上传
+     */
+    public <T> R uploadType(UploadType uploadtype) {
+        currentUploadType = uploadtype;
+        return (R) this;
+    }
+
     protected Observable<ResponseBody> generateBody() {
         if (this.requestBody != null) { //自定义的请求体
             return apiManager.postBody(url, this.requestBody);
@@ -149,7 +170,11 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         if (params.fileParamsMap.isEmpty()) {
             return apiManager.post(url, params.urlParamsMap);
         } else {
-            return uploadFilesWithParts();
+            if (currentUploadType == UploadType.PARTS) {//part方式上传
+                return uploadFilesWithParts();
+            } else {//body方式上传
+                return uploadFilesWithBodys();
+            }
         }
     }
 
@@ -210,7 +235,8 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         if (fileWrapper.file instanceof File) {
             requestBody = RequestBody.create(fileWrapper.contentType, (File) fileWrapper.file);
         } else if (fileWrapper.file instanceof InputStream) {
-            requestBody = RequestBodyUtils.create(RequestBodyUtils.MEDIA_TYPE_MARKDOWN, (InputStream) fileWrapper.file);
+            //requestBody = RequestBodyUtils.create(RequestBodyUtils.MEDIA_TYPE_MARKDOWN, (InputStream) fileWrapper.file);
+            requestBody = RequestBodyUtils.create(fileWrapper.contentType, (InputStream) fileWrapper.file);
         } else if (fileWrapper.file instanceof byte[]) {
             requestBody = RequestBody.create(fileWrapper.contentType, (byte[]) fileWrapper.file);
         }
