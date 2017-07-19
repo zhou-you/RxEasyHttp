@@ -46,9 +46,9 @@ public abstract class ProgressDialogCallBack<T> extends CallBack<T> implements P
     /**
      * 自定义加载进度框,可以设置是否显示弹出框，是否可以取消
      *
-     * @param progressDialog
-     * @param isShowProgress
-     * @param isCancel
+     * @param progressDialog  dialog
+     * @param isShowProgress 是否显示进度
+     * @param isCancel 对话框是否可以取消
      */
     public ProgressDialogCallBack(IProgressDialog progressDialog, boolean isShowProgress, boolean isCancel) {
         this.progressDialog = progressDialog;
