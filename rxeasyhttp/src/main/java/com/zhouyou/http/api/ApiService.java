@@ -51,7 +51,7 @@ import rx.Observable;
  * <p>
  * 注意事项：<br>
  * 1.使用@url,而不是@Path注解,后者放到方法体上,会强制先urlencode,然后与baseurl拼接,请求无法成功<br>
- * 2..注意事项： map不能为null,否则该请求不会执行,但可以size为空.<br>
+ * 2.注意事项： map不能为null,否则该请求不会执行,但可以size为空.<br>
  * </p>
  * 作者： zhouyou<br>
  * 日期： 2016/12/19 16:35<br>
