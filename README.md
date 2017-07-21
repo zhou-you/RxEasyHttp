@@ -47,8 +47,8 @@ QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及
 ## 版本说明
 #### 当前版本
 
-V1.1.1
-- 修改了文件上传方式，增加设置uploadType
+V1.1.2
+- put请求增加body支持
 
 #### 更新日志
 [点击查看更新日志](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
@@ -59,7 +59,7 @@ V1.1.1
 #### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:1.1.1'
+ compile 'com.zhouyou:rxeasyhttp:1.1.2'
 }
 ```
 想查看所有版本，请点击下面地址。
