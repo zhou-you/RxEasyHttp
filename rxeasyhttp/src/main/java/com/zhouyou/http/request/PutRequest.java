@@ -40,7 +40,7 @@ import rx.Subscription;
  * 日期： 2017/5/22 16:30 <br>
  * 版本： v1.0<br>
  */
-public class PutRequest extends BaseRequest<PutRequest> {
+public class PutRequest extends BaseBodyRequest<PutRequest> {
     public PutRequest(String url) {
         super(url);
     }
@@ -56,7 +56,7 @@ public class PutRequest extends BaseRequest<PutRequest> {
     }
 
     public <T> Observable<T> execute(CallClazzProxy<? extends ApiResult<T>, T> proxy) {
-        return build().apiManager.put(url, params.urlParamsMap)
+        return build().generateRequest()
                 .map(new ApiResultFunc(proxy.getType()))
                 .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallType()))
@@ -93,5 +93,14 @@ public class PutRequest extends BaseRequest<PutRequest> {
                 .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallBack().getType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
+    }
+
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        if (this.object != null) {//自定义的请求object
+            return apiManager.putBody(url, object);
+        }else{
+            return apiManager.put(url, params.urlParamsMap);
+        }
     }
 }

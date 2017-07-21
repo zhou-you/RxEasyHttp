@@ -152,7 +152,8 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         return (R) this;
     }
 
-    protected Observable<ResponseBody> generateBody() {
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
         if (this.requestBody != null) { //自定义的请求体
             return apiManager.postBody(url, this.requestBody);
         } else if (this.json != null) {//上传的Json

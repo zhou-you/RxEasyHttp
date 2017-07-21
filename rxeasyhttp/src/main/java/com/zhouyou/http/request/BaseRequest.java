@@ -50,10 +50,12 @@ import okhttp3.Cookie;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observable;
 import rx.functions.Action1;
 
 import static com.zhouyou.http.EasyHttp.getRxCache;
@@ -98,7 +100,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
     protected List<Converter.Factory> converterFactories = new ArrayList<>();
     protected List<CallAdapter.Factory> adapterFactories = new ArrayList<>();
     protected final List<Interceptor> interceptors = new ArrayList<>();
-   
+
 
     public BaseRequest(String url) {
         this.url = url;
@@ -518,4 +520,6 @@ public abstract class BaseRequest<R extends BaseRequest> {
         apiManager = retrofit.create(ApiService.class);
         return (R) this;
     }
+
+    protected abstract Observable<ResponseBody> generateRequest();
 }

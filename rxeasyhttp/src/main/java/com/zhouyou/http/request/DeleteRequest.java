@@ -48,7 +48,7 @@ public class DeleteRequest extends BaseRequest<DeleteRequest> {
     }
 
     public <T> Subscription execute(CallBackProxy<? extends ApiResult<T>, T> proxy) {
-        Observable<CacheResult<T>> observable = build().toObservable(apiManager.delete(url, params.urlParamsMap), proxy);
+        Observable<CacheResult<T>> observable = build().toObservable(generateRequest(), proxy);
         if (CacheResult.class != proxy.getCallBack().getRawType()) {
             return observable.compose(new Observable.Transformer<CacheResult<T>, T>() {
                 @Override
@@ -66,5 +66,10 @@ public class DeleteRequest extends BaseRequest<DeleteRequest> {
                 .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallBack().getType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
+    }
+
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        return apiManager.delete(url, params.urlParamsMap);
     }
 }

@@ -127,4 +127,8 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }
 
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        return null;
+    }
 }

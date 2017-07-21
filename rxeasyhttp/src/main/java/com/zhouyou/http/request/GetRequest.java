@@ -45,19 +45,19 @@ public class GetRequest extends BaseRequest<GetRequest> {
     public GetRequest(String url) {
         super(url);
     }
-    
+
     public <T> Observable<T> execute(Class<T> clazz) {
         return execute(new CallClazzProxy<ApiResult<T>, T>(clazz) {
         });
     }
-    
+
     public <T> Observable<T> execute(Type type) {
         return execute(new CallClazzProxy<ApiResult<T>, T>(type) {
         });
     }
 
     public <T> Observable<T> execute(CallClazzProxy<? extends ApiResult<T>, T> proxy) {
-        return build().apiManager.get(url, params.urlParamsMap)
+        return build().generateRequest()
                 .map(new ApiResultFunc(proxy.getType()))
                 .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallType()))
@@ -94,5 +94,10 @@ public class GetRequest extends BaseRequest<GetRequest> {
                 .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallBack().getType()))
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
+    }
+
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        return apiManager.get(url, params.urlParamsMap);
     }
 }

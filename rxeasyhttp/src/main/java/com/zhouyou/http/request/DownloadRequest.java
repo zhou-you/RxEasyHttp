@@ -61,7 +61,7 @@ public class DownloadRequest extends BaseRequest<DownloadRequest> {
     }
 
     public <T> Subscription execute(CallBack<T> callBack) {
-        return build().apiManager.downloadFile(url).compose(new Observable.Transformer<ResponseBody, Object>() {
+        return build().generateRequest().compose(new Observable.Transformer<ResponseBody, Object>() {
             @Override
             public Observable<Object> call(Observable<ResponseBody> responseBodyObservable) {
                 if (isSyncRequest)
@@ -74,5 +74,10 @@ public class DownloadRequest extends BaseRequest<DownloadRequest> {
             }
         }).compose(new HandleErrTransformer()).retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay))
                 .subscribe(new DownloadSubscriber(savePath, saveName, callBack, context));
+    }
+
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        return apiManager.downloadFile(url);
     }
 }

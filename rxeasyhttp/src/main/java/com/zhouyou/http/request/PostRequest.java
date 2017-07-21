@@ -57,7 +57,7 @@ public class PostRequest extends BaseBodyRequest<PostRequest> {
     }
     
     public <T> Observable<T> execute(CallClazzProxy<? extends ApiResult<T>, T> proxy) {
-        return build().generateBody()
+        return build().generateRequest()
                 .map(new ApiResultFunc(proxy.getType()))
                 .compose(isSyncRequest ? RxUtil._main() : RxUtil._io_main())
                 .compose(rxCache.transformer(cacheMode, proxy.getCallType()))
@@ -76,7 +76,7 @@ public class PostRequest extends BaseBodyRequest<PostRequest> {
     }
 
     public <T> Subscription execute(CallBackProxy<? extends ApiResult<T>, T> proxy) {
-        Observable<CacheResult<T>> observable = build().toObservable(generateBody(), proxy);
+        Observable<CacheResult<T>> observable = build().toObservable(generateRequest(), proxy);
         if (CacheResult.class != proxy.getCallBack().getRawType()) {
             return observable.compose(new Observable.Transformer<CacheResult<T>, T>() {
                 @Override

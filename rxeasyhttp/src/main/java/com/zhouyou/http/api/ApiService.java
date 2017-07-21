@@ -75,6 +75,9 @@ public interface ApiService {
     @PUT("{url}")
     Observable<ResponseBody> put(@Path("url") String url, @QueryMap Map<String, String> maps);
 
+    @POST("{url}")
+    Observable<ResponseBody> putBody(@Path("url") String url, @Body Object object);
+
     @Multipart
     @POST()
     Observable<ResponseBody> uploadFlie(@Url String fileUrl, @Part("description") RequestBody description, @Part("files") MultipartBody.Part file);
