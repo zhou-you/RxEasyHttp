@@ -1,6 +1,6 @@
 ## RxEasyHttp
 
-本库是一款基于Retrofit2+RxJava实现简单易用的网络请求框架，结合android平台特性的网络封装库,采用api链式调用一点到底,集成cookie管理,多种缓存模式,极简https配置,上传下载进度显示,请求错误自动重试,请求携带token、时间戳、签名sign动态配置,自动登录成功后请求重发功能,3种层次的参数设置默认全局局部,默认标准ApiResult同时可以支持自定义的数据结构，已经能满足现在的大部分网络请求。
+本库是一款基于RxJava2+Retrofit2实现简单易用的网络请求框架，结合android平台特性的网络封装库,采用api链式调用一点到底,集成cookie管理,多种缓存模式,极简https配置,上传下载进度显示,请求错误自动重试,请求携带token、时间戳、签名sign动态配置,自动登录成功后请求重发功能,3种层次的参数设置默认全局局部,默认标准ApiResult同时可以支持自定义的数据结构，已经能满足现在的大部分网络请求。
 *注：Retrofit和Rxjava是当下非常火爆的开源框架，均来自神一般的Square公司。本库就不介绍Retrofit和Rxjava的用法。*
 
 ## 为什么会封装此库？
@@ -32,7 +32,7 @@
 - 支持请求数据结果采用回调和订阅两种方式
 - api设计上结合http协议和android平台特点来实现,loading对话框,实时进度条显示
 - 返回结果和异常统一处理
-- 结合RxJava，线程智能控制
+- 结合RxJava2，线程智能控制
 
 ## 联系方式
 邮箱地址： 478319399@qq.com
@@ -47,8 +47,17 @@ QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及
 ## 版本说明
 #### 当前版本
 
-V1.1.2
-- put请求增加body支持
+V2.0.0
+
+- 网络库从Rxjava升级到Rxjava2
+- 优化缓存策略实现
+- 修复同步请求回调问题
+- 修复put请求失败问题
+- 修改图片请求失败@url问题导致404错误
+- 修复多图片表单上传失败问题
+- Demo增加根据key获取缓存的演示
+- 修复post提交json到后台问题
+- 定位upObject失败原因，需要加转换器addConverterFactory(GsonConverterFactory.create())
 
 #### 更新日志
 [点击查看更新日志](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
@@ -59,7 +68,7 @@ V1.1.2
 #### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:1.1.2'
+ compile 'com.zhouyou:rxeasyhttp:2.0.0'
 }
 ```
 想查看所有版本，请点击下面地址。
@@ -362,10 +371,10 @@ EasyHttp.get(url)
                     }
                 });
 ```
-### 请求返回Subscription
-网络请求会返回Subscription对象，方便取消网络请求
+### 请求返回
+网络请求会返回Disposable对象，方便取消网络请求
 ```
-Subscription subscription = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
+Disposable disposable = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
                 .params("param1", "paramValue1")
                 .execute(new SimpleCallBack<SkinTestResult>() {
                     @Override
@@ -380,7 +389,7 @@ Subscription subscription = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower
                 });
 
         //在需要取消网络请求的地方调用,一般在onDestroy()中
-        //EasyHttp.cancelSubscription(subscription);
+        //EasyHttp.cancelSubscription(disposable);
 ```
 ### 带有进度框的请求
 带有进度框的请求，可以设置对话框消失是否自动取消网络和自定义对话框功能，具体参数作用请看请求回调讲解
@@ -614,10 +623,10 @@ final UIProgressResponseCallBack listener = new UIProgressResponseCallBack() {
                 });
 ```
 ### 取消请求
-#### 通过Subscription取消
-每个请求前都会返回一个Subscription，取消订阅就可以取消网络请求，如果是带有进度框的网络请求，则不需要手动取消网络请求，会自动取消。
+#### 通过Disposable取消
+每个请求前都会返回一个Disposable，取消订阅就可以取消网络请求，如果是带有进度框的网络请求，则不需要手动取消网络请求，会自动取消。
 ```
- Subscription mSubscription = EasyHttp.get(url).execute(callback);
+ Disposable mSubscription = EasyHttp.get(url).execute(callback);
   ...
   @Override
     protected void onDestroy() {
@@ -737,7 +746,7 @@ final CustomRequest request = EasyHttp.custom()
         LoginService mLoginService = request.create(LoginService.class);
         LoginService mLoginService = request.create(LoginService.class);
         Observable<ApiResult<AuthModel>> observable = request.call(mLoginService.login("v1/account/login", request.getParams().urlParamsMap));
-        Subscription subscription = observable.subscribe(new Action1<ApiResult<AuthModel>>() {
+        Disposable subscription = observable.subscribe(new Action1<ApiResult<AuthModel>>() {
             @Override
             public void call(ApiResult<AuthModel> result) {
                 //请求成功
@@ -1182,7 +1191,7 @@ EasyHttp.get(url)
 
 这种写法会觉得有点长，CallBackProxy的泛型参数每次都需要填写，其中CustomApiResult是继承ApiResult的，CustomApiResult相当于项目的basebean,对于一个实际项目来讲，basebean是固定的，所以我们可以继续封装这个方法，根据需要一般只需要封装get和post请求就可以了。
 ```
- public static <T> Subscription customExecute(CallBack<T> callBack) {
+ public static <T> Disposable customExecute(CallBack<T> callBack) {
         return execute(new CallBackProxy<CustomApiResult<T>, T>(callBack) {
         });
     }
