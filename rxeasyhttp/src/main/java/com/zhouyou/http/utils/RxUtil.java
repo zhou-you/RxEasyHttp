@@ -21,9 +21,16 @@ import com.zhouyou.http.func.HandleFuc;
 import com.zhouyou.http.func.HttpResponseFunc;
 import com.zhouyou.http.model.ApiResult;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * <p>描述：线程调度工具</p>
@@ -33,40 +40,76 @@ import rx.schedulers.Schedulers;
  */
 public class RxUtil {
 
-    public static <T> Observable.Transformer<T, T> io_main() {
-        return (Observable.Transformer) new Observable.Transformer() {
+    public static <T> ObservableTransformer<T, T> io_main() {
+        return new ObservableTransformer<T, T>() {
             @Override
-            public Object call(Object observable) {
-                return ((Observable) observable)
+            public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+                return upstream
                         .subscribeOn(Schedulers.io())
                         .unsubscribeOn(Schedulers.io())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(@NonNull Disposable disposable) throws Exception {
+                                HttpLog.i("+++doOnSubscribe+++" + disposable.isDisposed());
+                            }
+                        })
+                        .doFinally(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                HttpLog.i("+++doFinally+++");
+                            }
+                        })
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
 
-    public static <T> Observable.Transformer<ApiResult<T>, T> _io_main() {
-        return (Observable.Transformer) new Observable.Transformer() {
+    public static <T> ObservableTransformer<ApiResult<T>, T> _io_main() {
+        return new ObservableTransformer<ApiResult<T>, T>() {
             @Override
-            public Object call(Object observable) {
-                return ((Observable) observable)
+            public ObservableSource<T> apply(@NonNull Observable<ApiResult<T>> upstream) {
+                return upstream
                         .subscribeOn(Schedulers.io())
                         .unsubscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .map(new HandleFuc<T>())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(@NonNull Disposable disposable) throws Exception {
+                                HttpLog.i("+++doOnSubscribe+++" + disposable.isDisposed());
+                            }
+                        })
+                        .doFinally(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                HttpLog.i("+++doFinally+++");
+                            }
+                        })
                         .onErrorResumeNext(new HttpResponseFunc<T>());
             }
         };
     }
 
 
-    public static <T> Observable.Transformer<ApiResult<T>, T> _main() {
-        return (Observable.Transformer) new Observable.Transformer() {
+    public static <T> ObservableTransformer<ApiResult<T>, T> _main() {
+        return new ObservableTransformer<ApiResult<T>, T>() {
             @Override
-            public Object call(Object observable) {
-                return ((Observable) observable)
-                        .observeOn(AndroidSchedulers.mainThread())
+            public ObservableSource<T> apply(@NonNull Observable<ApiResult<T>> upstream) {
+                return upstream
+                        //.observeOn(AndroidSchedulers.mainThread())
                         .map(new HandleFuc<T>())
+                        .doOnSubscribe(new Consumer<Disposable>() {
+                            @Override
+                            public void accept(@NonNull Disposable disposable) throws Exception {
+                                HttpLog.i("+++doOnSubscribe+++" + disposable.isDisposed());
+                            }
+                        })
+                        .doFinally(new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                HttpLog.i("+++doFinally+++");
+                            }
+                        })
                         .onErrorResumeNext(new HttpResponseFunc<T>());
             }
         };

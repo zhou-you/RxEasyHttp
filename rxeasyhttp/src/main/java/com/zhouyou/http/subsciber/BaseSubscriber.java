@@ -23,7 +23,8 @@ import com.zhouyou.http.utils.HttpLog;
 
 import java.lang.ref.WeakReference;
 
-import rx.Subscriber;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableObserver;
 
 import static com.zhouyou.http.utils.Utils.isNetworkAvailable;
 
@@ -36,43 +37,48 @@ import static com.zhouyou.http.utils.Utils.isNetworkAvailable;
  * 日期： 2016/12/20 10:35<br>
  * 版本： v2.0<br>
  */
-public abstract class BaseSubscriber<T> extends Subscriber<T> {
+public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
     public WeakReference<Context> contextWeakReference;
-
+    
     public BaseSubscriber() {
     }
 
-    public BaseSubscriber(Context context) {
-        if (context != null)
-            contextWeakReference = new WeakReference<Context>(context);
+    @Override
+    protected void onStart() {
+        HttpLog.e("-->http is onStart");
+        if (contextWeakReference != null && contextWeakReference.get() != null && !isNetworkAvailable(contextWeakReference.get())) {
+            //Toast.makeText(context, "无网络，读取缓存数据", Toast.LENGTH_SHORT).show();
+            onComplete();
+        }
     }
 
 
+    public BaseSubscriber(Context context) {
+        if (context != null) {
+            contextWeakReference = new WeakReference<Context>(context);
+        }
+    }
+
+    @Override
+    public void onNext(@NonNull T t) {
+        HttpLog.e("-->http is onNext");
+    }
+
     @Override
     public final void onError(java.lang.Throwable e) {
-        HttpLog.e("-->http is err");
+        HttpLog.e("-->http is onError");
         if (e instanceof ApiException) {
-            HttpLog.e("--> e instanceof ApiException err:" + e.getMessage());
+            HttpLog.e("--> e instanceof ApiException err:" + e);
             onError((ApiException) e);
         } else {
-            HttpLog.e("--> e !instanceof ApiException err:" + e.getMessage());
+            HttpLog.e("--> e !instanceof ApiException err:" + e);
             onError(ApiException.handleException(e));
         }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        HttpLog.e("-->http is start");
-        if (contextWeakReference != null && !isNetworkAvailable(contextWeakReference.get())) {
-            //Toast.makeText(context, "无网络，读取缓存数据", Toast.LENGTH_SHORT).show();
-            onCompleted();
-        }
-    }
-
-    @Override
-    public void onCompleted() {
-        HttpLog.e("-->http is Complete");
+    public void onComplete() {
+        HttpLog.e("-->http is onComplete");
     }
 
 

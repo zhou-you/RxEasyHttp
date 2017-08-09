@@ -23,7 +23,7 @@ import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.subsciber.IProgressDialog;
 import com.zhouyou.http.subsciber.ProgressCancelListener;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * <p>描述：可以自定义带有加载进度框的回调</p>
@@ -46,9 +46,9 @@ public abstract class ProgressDialogCallBack<T> extends CallBack<T> implements P
     /**
      * 自定义加载进度框,可以设置是否显示弹出框，是否可以取消
      *
-     * @param progressDialog  dialog
+     * @param progressDialog dialog
      * @param isShowProgress 是否显示进度
-     * @param isCancel 对话框是否可以取消
+     * @param isCancel       对话框是否可以取消
      */
     public ProgressDialogCallBack(IProgressDialog progressDialog, boolean isShowProgress, boolean isCancel) {
         this.progressDialog = progressDialog;
@@ -121,14 +121,14 @@ public abstract class ProgressDialogCallBack<T> extends CallBack<T> implements P
 
     @Override
     public void onCancelProgress() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (disposed != null && !disposed.isDisposed()) {
+            disposed.dispose();
         }
     }
 
-    private Subscription subscription;
+    private Disposable disposed;
 
-    public void subscription(Subscription subscription) {
-        this.subscription = subscription;
+    public void subscription(Disposable disposed) {
+        this.disposed = disposed;
     }
 }

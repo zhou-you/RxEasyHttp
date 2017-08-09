@@ -31,9 +31,9 @@ import com.zhouyou.http.exception.ApiException;
  * <p>
  * 作者： zhouyou<br>
  * 日期： 2016/12/19 16:46<br>
- *     
- *修改者：zhouyou<br>
- *日期： 2017/04/19 15:56<br>
+ * <p>
+ * 修改者：zhouyou<br>
+ * 日期： 2017/04/19 15:56<br>
  * 修改内容：支持自定义对话框<br>
  * 版本： v2.0<br>
  */
@@ -46,7 +46,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     /**
      * 默认不显示弹出框，不可以取消
      *
-     * @param context
+     * @param context  上下文
      */
     public ProgressSubscriber(Context context) {
         super(context);
@@ -56,7 +56,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     /**
      * 自定义加载进度框
      *
-     * @param context
+     * @param context 上下文
      * @param progressDialog 自定义对话框
      */
     public ProgressSubscriber(Context context, IProgressDialog progressDialog) {
@@ -64,14 +64,14 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
         this.progressDialog = progressDialog;
         init(false);
     }
-    
+
     /**
      * 自定义加载进度框,可以设置是否显示弹出框，是否可以取消
      *
-     * @param context
-     * @param progressDialog
-     * @param isShowProgress
-     * @param isCancel
+     * @param context 上下文 
+     * @param progressDialog 对话框
+     * @param isShowProgress  是否显示对话框
+     * @param isCancel  对话框是否可以取消
      */
     public ProgressSubscriber(Context context, IProgressDialog progressDialog, boolean isShowProgress, boolean isCancel) {
         super(context);
@@ -83,7 +83,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     /**
      * 初始化
      *
-     * @param isCancel
+     * @param isCancel 对话框是否可以取消
      */
     private void init(boolean isCancel) {
         if (progressDialog == null) return;
@@ -134,7 +134,7 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
         dismissProgress();
     }
 
@@ -153,8 +153,8 @@ public abstract class ProgressSubscriber<T> extends BaseSubscriber<T> implements
 
     @Override
     public void onCancelProgress() {
-        if (!this.isUnsubscribed()) {
-            this.unsubscribe();
+        if (!isDisposed()) {
+            dispose();
         }
     }
 }

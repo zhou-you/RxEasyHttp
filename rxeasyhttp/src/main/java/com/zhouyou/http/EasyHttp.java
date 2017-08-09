@@ -48,6 +48,9 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
@@ -55,8 +58,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import rx.Subscription;
-import rx.functions.Action1;
 
 /**
  * <p>描述：网络请求入口类</p>
@@ -586,9 +587,9 @@ public final class EasyHttp {
     /**
      * 取消订阅
      */
-    public static void cancelSubscription(Subscription subscriber) {
-        if (subscriber != null && !subscriber.isUnsubscribed()) {
-            subscriber.unsubscribe();
+    public static void cancelSubscription(Disposable disposable) {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
         }
     }
 
@@ -597,14 +598,14 @@ public final class EasyHttp {
      */
     public static void clearCache() {
         getRxCache().clear().compose(RxUtil.<Boolean>io_main())
-                .subscribe(new Action1<Boolean>() {
+                .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void call(Boolean aBoolean) {
+                    public void accept(@NonNull Boolean aBoolean) throws Exception {
                         HttpLog.i("clearCache success!!!");
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(@NonNull Throwable throwable) throws Exception {
                         HttpLog.i("clearCache err!!!");
                     }
                 });
@@ -614,15 +615,15 @@ public final class EasyHttp {
      * 移除缓存（key）
      */
     public static void removeCache(String key) {
-        getRxCache().remove(key).compose(RxUtil.<Boolean>io_main()).subscribe(new Action1<Boolean>() {
+        getRxCache().remove(key).compose(RxUtil.<Boolean>io_main()).subscribe(new Consumer<Boolean>() {
             @Override
-            public void call(Boolean aBoolean) {
+            public void accept(@NonNull Boolean aBoolean) throws Exception {
                 HttpLog.i("removeCache success!!!");
             }
-        }, new Action1<Throwable>() {
+        }, new Consumer<Throwable>() {
             @Override
-            public void call(Throwable throwable) {
-                HttpLog.i("removeCache err!!!");
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                    HttpLog.i("removeCache err!!!");
             }
         });
     }

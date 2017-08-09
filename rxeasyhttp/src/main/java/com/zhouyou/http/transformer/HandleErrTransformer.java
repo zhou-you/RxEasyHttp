@@ -19,7 +19,10 @@ package com.zhouyou.http.transformer;
 
 import com.zhouyou.http.func.HttpResponseFunc;
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.annotations.NonNull;
 
 /**
  * <p>描述：错误转换Transformer</p>
@@ -27,10 +30,9 @@ import rx.Observable;
  * 日期： 2017/5/15 17:09 <br>
  * 版本： v1.0<br>
  */
-public class HandleErrTransformer<T> implements Observable.Transformer<T, T> {
+public class HandleErrTransformer<T> implements ObservableTransformer<T, T> {
     @Override
-    public Observable<T> call(Observable<T> tObservable) {
-        //return ((Observable) observable).map(new HandleFuc<T>()).onErrorResumeNext(new HttpResponseFunc<T>());
-        return ((Observable) tObservable).onErrorResumeNext(new HttpResponseFunc<T>());
+    public ObservableSource<T> apply(@NonNull Observable<T> upstream) {
+        return upstream.onErrorResumeNext(new HttpResponseFunc<T>());
     }
 }

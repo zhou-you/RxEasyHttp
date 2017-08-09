@@ -29,13 +29,15 @@ import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.body.UIProgressResponseCallBack;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.exception.ApiException;
-import com.zhouyou.http.request.BaseBodyRequest;
 import com.zhouyou.http.subsciber.IProgressDialog;
 import com.zhouyou.http.utils.HttpLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+
+import okhttp3.MediaType;
+
 /**
  * <p>描述：文件上传</p>
  * 作者： zhouyou<br>
@@ -175,7 +177,7 @@ public class UploadActivity extends AppCompatActivity {
 
     public void onUploadFileMaps(View view) {
         File file = new File("/sdcard/1.jpg");
-        UIProgressResponseCallBack mUIProgressResponseCallBack= new UIProgressResponseCallBack() {
+        UIProgressResponseCallBack mUIProgressResponseCallBack = new UIProgressResponseCallBack() {
             @Override
             public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
                 int progress = (int) (bytesRead * 100 / contentLength);
@@ -192,23 +194,23 @@ public class UploadActivity extends AppCompatActivity {
                 .params("auth_key", "21f8d9bcc50c6ac1ae1020ce12f5f5a7")
                 .params("avatar", file, file.getName(), mUIProgressResponseCallBack)
                 .execute(new ProgressDialogCallBack<String>(mProgressDialog, true, true) {
-            @Override
-            public void onSuccess(String response) {
-                showToast(response);
-            }
+                    @Override
+                    public void onSuccess(String response) {
+                        showToast(response);
+                    }
 
-            @Override
-            public void onError(ApiException e) {
-                super.onError(e);
-                showToast(e.getMessage());
-            }
-        });
+                    @Override
+                    public void onError(ApiException e) {
+                        super.onError(e);
+                        showToast(e.getMessage());
+                    }
+                });
 
     }
-    
+
     public void onUploadFileMaps2(View view) {
         File file = new File("/sdcard/1.jpg");
-        UIProgressResponseCallBack mUIProgressResponseCallBack= new UIProgressResponseCallBack() {
+        UIProgressResponseCallBack mUIProgressResponseCallBack = new UIProgressResponseCallBack() {
             @Override
             public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
                 int progress = (int) (bytesRead * 100 / contentLength);
@@ -219,29 +221,57 @@ public class UploadActivity extends AppCompatActivity {
                 }
             }
         };
-        EasyHttp.post("/index.php?s=/Home/user/dj_add_care")
-                .baseUrl("http://106.14.83.28:89")
+        EasyHttp.post("http://106.14.83.28:89/index.php?s=/Home/user/dj_add_care")
                 .params("uid", "1")
                 .params("title", "冷小菜")
                 .params("content", "我发个哈哈哈哈哈哈哈哈")
                 .params("key", "dangjian")
-                .uploadType(BaseBodyRequest.UploadType.BODY)//body方式上传
-                .params("img1", file, file.getName(), mUIProgressResponseCallBack)
-                //.params("img2", file, file.getName(), mUIProgressResponseCallBack)
-                //.params("img3", file, file.getName(), mUIProgressResponseCallBack)
+                .params("imgs[]", file, file.getName(), MediaType.parse("image/*"), mUIProgressResponseCallBack)
+                .params("imgs[]", file, file.getName(), MediaType.parse("image/*"), mUIProgressResponseCallBack)
+                .params("imgs[]", file, file.getName(), MediaType.parse("image/*"), mUIProgressResponseCallBack)
                 .execute(new ProgressDialogCallBack<String>(mProgressDialog, true, true) {
-            @Override
-            public void onSuccess(String response) {
-                showToast(response);
-            }
+                    @Override
+                    public void onSuccess(String response) {
+                        showToast(response);
+                    }
 
-            @Override
-            public void onError(ApiException e) {
-                super.onError(e);
-                showToast(e.getMessage());
-            }
-        });
+                    @Override
+                    public void onError(ApiException e) {
+                        super.onError(e);
+                        showToast(e.getMessage());
+                    }
+                });
 
+    }
+
+    public void onUploadOne(View view) {
+        File file = new File("/sdcard/1.jpg");
+        UIProgressResponseCallBack mUIProgressResponseCallBack = new UIProgressResponseCallBack() {
+            @Override
+            public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
+                int progress = (int) (bytesRead * 100 / contentLength);
+                HttpLog.i("progress=" + progress);
+                ((ProgressDialog) mProgressDialog.getDialog()).setProgress(progress);
+                if (done) {//完成
+                    ((ProgressDialog) mProgressDialog.getDialog()).setMessage("上传完整");
+                }
+            }
+        };
+        EasyHttp.post("index.php/Home/index/uploadImg")
+                .baseUrl("http://106.15.42.39")
+                .params("img", file, file.getName(), mUIProgressResponseCallBack)
+                .execute(new ProgressDialogCallBack<String>(mProgressDialog, true, true) {
+                    @Override
+                    public void onSuccess(String s) {
+                        showToast(s);
+                    }
+
+                    @Override
+                    public void onError(ApiException e) {
+                        super.onError(e);
+                        showToast(e.getMessage());
+                    }
+                });
     }
 
     private void showToast(String msg) {

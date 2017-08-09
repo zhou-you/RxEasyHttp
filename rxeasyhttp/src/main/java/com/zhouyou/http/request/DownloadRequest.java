@@ -22,11 +22,14 @@ import com.zhouyou.http.func.RetryExceptionFunc;
 import com.zhouyou.http.subsciber.DownloadSubscriber;
 import com.zhouyou.http.transformer.HandleErrTransformer;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * <p>描述：下载请求</p>
@@ -60,20 +63,20 @@ public class DownloadRequest extends BaseRequest<DownloadRequest> {
         return this;
     }
 
-    public <T> Subscription execute(CallBack<T> callBack) {
-        return build().generateRequest().compose(new Observable.Transformer<ResponseBody, Object>() {
+    public <T> Disposable execute(CallBack<T> callBack) {
+        return (Disposable) build().apiManager.downloadFile(url).compose(new ObservableTransformer<ResponseBody, ResponseBody>() {
             @Override
-            public Observable<Object> call(Observable<ResponseBody> responseBodyObservable) {
-                if (isSyncRequest)
-                    return ((Observable) responseBodyObservable)
-                            .observeOn(AndroidSchedulers.mainThread());
-                else
-                    return ((Observable) responseBodyObservable).subscribeOn(Schedulers.io())
+            public ObservableSource<ResponseBody> apply(@NonNull Observable<ResponseBody> upstream) {
+                if(isSyncRequest){
+                    return upstream.observeOn(AndroidSchedulers.mainThread());
+                }else {
+                    return upstream.subscribeOn(Schedulers.io())
                             .unsubscribeOn(Schedulers.io())
                             .observeOn(Schedulers.io());
+                }
             }
         }).compose(new HandleErrTransformer()).retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay))
-                .subscribe(new DownloadSubscriber(savePath, saveName, callBack, context));
+                .subscribeWith(new DownloadSubscriber(context,savePath, saveName, callBack));
     }
 
     @Override

@@ -20,6 +20,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.demo.Api.LoginService;
 import com.zhouyou.http.demo.constant.AppConstant;
 import com.zhouyou.http.demo.constant.ComParamContact;
+import com.zhouyou.http.demo.model.ApiInfo;
 import com.zhouyou.http.demo.model.AuthModel;
 import com.zhouyou.http.demo.model.SectionItem;
 import com.zhouyou.http.demo.model.SkinTestResult;
@@ -44,14 +46,19 @@ import com.zhouyou.http.request.CustomRequest;
 import com.zhouyou.http.subsciber.BaseSubscriber;
 import com.zhouyou.http.subsciber.IProgressDialog;
 import com.zhouyou.http.subsciber.ProgressSubscriber;
+import com.zhouyou.http.utils.HttpLog;
+import com.zhouyou.http.utils.RxUtil;
 
 import java.util.List;
 
-import retrofit2.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 /**
  * <p>描述：网络请求介绍</p>
  * 作者： zhouyou<br>
@@ -64,15 +71,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Observable.create(new Observable.OnSubscribe<String>() {
+        Observable.create(new ObservableOnSubscribe<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void subscribe(@NonNull ObservableEmitter<String> e) throws Exception {
                 FileUtils.getFileFromAsset(MainActivity.this, "1.jpg");
             }
-        }).subscribe(new Action1<String>() {
+        }).compose(RxUtil.<String>io_main()).subscribe(new Consumer<String>() {
             @Override
-            public void call(String s) {
+            public void accept(@NonNull String s) throws Exception {
 
             }
         });
@@ -136,11 +142,61 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * post提交Object
+     */
+    public void onPostObject(View view) {
+        ApiInfo apiInfo = new ApiInfo();
+        ApiInfo.ApiInfoBean apiInfoBean = apiInfo.new ApiInfoBean();
+        apiInfoBean.setApiKey("12345");
+        apiInfoBean.setApiName("zhou-you");
+        apiInfo.setApiInfo(apiInfoBean);
+        EasyHttp.post("client/shipper/getCarType")
+                .baseUrl("http://WuXiaolong.me/")
+                //如果是body的方式提交object，必须要加GsonConverterFactory.create()
+                //他的本质就是把object转成json给到服务器，所以必须要加Gson Converter
+                //切记！切记！切记！  本例可能地址不对只做演示用
+                .addConverterFactory(GsonConverterFactory.create())
+                .upObject(apiInfo)//这种方式会自己把对象转成json提交给服务器
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        showToast(response);
+                    }
+                });
+    }
+    
+    /**
+     * put请求
+     */
+    public void onPut(View view) {
+        //http://api.youdui.org/api/v1/cart/1500996?count=4
+        EasyHttp.put("http://api.youdui.org/api/v1/cart/1500996")
+                .removeParam("appId")
+                .params("count", "4")
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        showToast(response);
+                    }
+                });
+    }
+
+    /**
      * 基础回调
      */
     public void onCallBack(View view) {
         //支持CallBack<SkinTestResult>、CallBack<String>回调
-        EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
+        Disposable mDisposable = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
                 .timeStamp(true)
                 .execute(new CallBack<SkinTestResult>() {
                     @Override
@@ -221,9 +277,10 @@ public class MainActivity extends AppCompatActivity {
      * 在需要取消网络请求的地方调用,一般在onDestroy()中
      */
     public void onSubscription(View view) {
-        Subscription subscription = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
+        Disposable disposable = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
                 .timeStamp(true)
                 .execute(new SimpleCallBack<SkinTestResult>() {
+
                     @Override
                     public void onError(ApiException e) {
                         showToast(e.getMessage());
@@ -235,8 +292,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        //在需要取消网络请求的地方调用,一般在onDestroy()中
-        //EasyHttp.cancelSubscription(subscription);
+        //EasyHttp.cancelSubscription(disposable);
+
     }
 
     /**
@@ -300,6 +357,79 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * 同步请求
+     */
+    private Handler mHandler = new Handler();
+
+    public void onSync(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
+                        .readTimeOut(30 * 1000)//局部定义读超时
+                        .writeTimeOut(30 * 1000)
+                        .connectTimeout(30 * 1000)
+                        .timeStamp(true)
+                        .syncRequest(true)//设置同步请求
+                        .execute(new SimpleCallBack<SkinTestResult>() {
+                            @Override
+                            public void onError(final ApiException e) {
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showToast(e.getMessage());
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onSuccess(final SkinTestResult response) {
+                                mHandler.post(new Runnable() {//异步 Toast
+                                    @Override
+                                    public void run() {
+                                        if (response != null) showToast(response.toString());
+                                    }
+                                });
+                            }
+                        });
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                HttpLog.i("====同步请求==========");
+                EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
+                        .readTimeOut(30 * 1000)//局部定义读超时
+                        .writeTimeOut(30 * 1000)
+                        .connectTimeout(30 * 1000)
+                        .syncRequest(true)//设置同步请求
+                        .timeStamp(true)
+                        .execute(new SimpleCallBack<SkinTestResult>() {
+                            @Override
+                            public void onError(final ApiException e) {
+                                mHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showToast(e.getMessage());
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onSuccess(final SkinTestResult response) {
+                                mHandler.post(new Runnable() {//异步 Toast
+                                    @Override
+                                    public void run() {
+                                        if (response != null) showToast(response.toString());
+                                    }
+                                });
+                            }
+                        });
+            }
+        }).start();
+    }
+
+    /**
      * 网络缓存
      */
     public void onCache(View view) {
@@ -324,18 +454,18 @@ public class MainActivity extends AppCompatActivity {
 
         LoginService mLoginService = request.create(LoginService.class);
         Observable<ApiResult<AuthModel>> observable = request.call(mLoginService.login("v1/account/login", request.getParams().urlParamsMap));
-        Subscription subscription = observable.subscribe(new Action1<ApiResult<AuthModel>>() {
+        Disposable disposable = observable.subscribe(new Consumer<ApiResult<AuthModel>>() {
             @Override
-            public void call(ApiResult<AuthModel> result) {
+            public void accept(@NonNull ApiResult<AuthModel> result) throws Exception {
                 showToast(result.toString());
             }
-        }, new Action1<Throwable>() {
+        }, new Consumer<Throwable>() {
             @Override
-            public void call(Throwable throwable) {
+            public void accept(@NonNull Throwable throwable) throws Exception {
                 showToast(throwable.getMessage());
             }
         });
-        //EasyHttp.cancelSubscription(subscription);取消订阅
+        //EasyHttp.cancelSubscription(disposable);//取消订阅
     }
 
     public void onCustomApiCall(View view) {
@@ -351,18 +481,18 @@ public class MainActivity extends AppCompatActivity {
 
         LoginService mLoginService = request.create(LoginService.class);
         Observable<AuthModel> observable = request.apiCall(mLoginService.login("v1/account/login", request.getParams().urlParamsMap));
-        Subscription subscription = observable.subscribe(new Action1<AuthModel>() {
+        Disposable disposable = observable.subscribe(new Consumer<AuthModel>() {
             @Override
-            public void call(AuthModel result) {
-                showToast(result.toString());
+            public void accept(@NonNull AuthModel authModel) throws Exception {
+                showToast(authModel.toString());
             }
-        }, new Action1<Throwable>() {
+        }, new Consumer<Throwable>() {
             @Override
-            public void call(Throwable throwable) {
+            public void accept(@NonNull Throwable throwable) throws Exception {
                 showToast(throwable.getMessage());
             }
         });
-        //EasyHttp.cancelSubscription(subscription);取消订阅
+        //EasyHttp.cancelSubscription(disposable);//取消订阅
     }
 
     public void onCustomApiResult(View view) {
@@ -372,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onListResult(View view) {
         //方式一：
-        /*EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
+       /* EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
                 .execute(new SimpleCallBack<List<SectionItem>>() {
                     @Override
                     public void onError(ApiException e) {
@@ -388,14 +518,14 @@ public class MainActivity extends AppCompatActivity {
         /*Observable<List<SectionItem>> observable = EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
                 .execute(new TypeToken<List<SectionItem>>() {
                 }.getType());
-        observable.subscribe(new Action1<List<SectionItem>>() {
+        observable.subscribe(new Consumer<List<SectionItem>>() {
             @Override
-            public void call(List<SectionItem> sectionItems) {
+            public void accept(@NonNull List<SectionItem> sectionItems) throws Exception {
                 showToast(sectionItems.toString());
             }
-        }, new Action1<Throwable>() {
+        }, new Consumer<Throwable>() {
             @Override
-            public void call(Throwable throwable) {
+            public void accept(@NonNull Throwable throwable) throws Exception {
                 showToast(throwable.getMessage());
             }
         });*/

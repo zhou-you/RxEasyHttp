@@ -21,7 +21,7 @@ import com.zhouyou.http.utils.Utils;
 
 import java.lang.reflect.Type;
 
-import okhttp3.internal.Util;
+import okio.ByteString;
 
 /**
  * <p>描述：缓存核心管理类</p>
@@ -54,8 +54,7 @@ public class CacheCore {
      * 读取
      */
     public <T> T load(Type type, String key, long time) {
-        //String cacheKey= ByteString.of(key.getBytes()).sha1().hex();
-        String cacheKey= Util.md5Hex(key);
+        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("loadCache  key=" + cacheKey);
         if (disk != null) {
             T result = disk.load(type,cacheKey, time);
@@ -71,7 +70,7 @@ public class CacheCore {
      * 保存
      */
     public <T> boolean save(String key, T value) {
-        String cacheKey= Util.md5Hex(key);
+        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("saveCache  key=" + cacheKey);
         return disk.save(cacheKey, value);
     }
@@ -83,7 +82,7 @@ public class CacheCore {
      * @return
      */
     public boolean containsKey(String key) {
-        String cacheKey= Util.md5Hex(key);
+        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("containsCache  key=" + cacheKey);
         if (disk != null) {
             if (disk.containsKey(cacheKey)) {
@@ -99,7 +98,7 @@ public class CacheCore {
      * @param key
      */
     public boolean remove(String key) {
-        String cacheKey= Util.md5Hex(key);
+        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("removeCache  key=" + cacheKey);
         if (disk != null) {
             return disk.remove(cacheKey);

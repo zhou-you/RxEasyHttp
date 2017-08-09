@@ -22,6 +22,8 @@ import com.zhouyou.http.callback.CallBack;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.exception.ApiException;
 
+import io.reactivex.annotations.NonNull;
+
 
 /**
  * <p>描述：带有callBack的回调</p>
@@ -31,44 +33,48 @@ import com.zhouyou.http.exception.ApiException;
  * 版本： v2.0<br>
  */
 public class CallBackSubsciber<T> extends BaseSubscriber<T> {
-    private CallBack<T> callBack;
+    public CallBack<T> mCallBack;
+    
 
     public CallBackSubsciber(Context context, CallBack<T> callBack) {
         super(context);
-        this.callBack = callBack;
+        mCallBack = callBack;
         if (callBack instanceof ProgressDialogCallBack) {
             ((ProgressDialogCallBack) callBack).subscription(this);
         }
     }
 
+
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        if (callBack != null) {
-            callBack.onStart();
+        if (mCallBack != null) {
+            mCallBack.onStart();
         }
     }
-
+    
     @Override
     public void onError(ApiException e) {
-        if (callBack != null) {
-            callBack.onError(e);
+        if (mCallBack != null) {
+            mCallBack.onError(e);
         }
+        dispose();
     }
 
     @Override
-    public void onNext(T t) {
-        //Utils.checkNotNull(t, "CallBackSubsciber onNext t==null");
-        if (callBack != null) {
-            callBack.onSuccess(t);
+    public void onNext(@NonNull T t) {
+        super.onNext(t);
+        if (mCallBack != null) {
+            mCallBack.onSuccess(t);
         }
+        dispose();
     }
 
     @Override
-    public void onCompleted() {
-        super.onCompleted();
-        if (callBack != null) {
-            callBack.onCompleted();
+    public void onComplete() {
+        super.onComplete();
+        if (mCallBack != null) {
+            mCallBack.onCompleted();
         }
     }
 }

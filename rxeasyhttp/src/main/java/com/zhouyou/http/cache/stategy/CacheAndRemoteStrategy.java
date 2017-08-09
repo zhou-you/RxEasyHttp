@@ -22,8 +22,10 @@ import com.zhouyou.http.cache.model.CacheResult;
 
 import java.lang.reflect.Type;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Predicate;
+
 
 /**
  * <p>描述：先显示缓存，再请求网络</p>
@@ -32,18 +34,18 @@ import rx.functions.Func1;
  * 日期： 2016/12/24 10:35<br>
  * 版本： v2.0<br>
  */
-public final class CacheAndRemoteStrategy extends BaseStrategy{
+public final class CacheAndRemoteStrategy extends BaseStrategy {
     @Override
     public <T> Observable<CacheResult<T>> execute(RxCache rxCache, String key, long time, Observable<T> source, Type type) {
-        Observable<CacheResult<T>> cache = loadCache(rxCache,type,key,time);
-        Observable<CacheResult<T>> remote = loadRemote(rxCache,key, source);
+        Observable<CacheResult<T>> cache = loadCache(rxCache, type, key, time, true);
+        Observable<CacheResult<T>> remote = loadRemote(rxCache, key, source, true);
         return Observable.concat(cache, remote)
-                .filter(new Func1<CacheResult<T>, Boolean>() {
+                .filter(new Predicate<CacheResult<T>>() {
                     @Override
-                    public Boolean call(CacheResult<T> result) {
-                        return result.data != null;
+                    public boolean test(@NonNull CacheResult<T> tCacheResult) throws Exception {
+                        return tCacheResult != null && tCacheResult.data != null;
                     }
                 });
     }
-     
- }
+
+}

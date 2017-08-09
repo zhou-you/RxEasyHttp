@@ -19,8 +19,9 @@ package com.zhouyou.http.func;
 
 import com.zhouyou.http.exception.ApiException;
 
-import rx.Observable;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 /**
  * <p>描述：异常转换处理</p>
@@ -28,9 +29,9 @@ import rx.functions.Func1;
  * 日期： 2017/5/15 16:55 <br>
  * 版本： v1.0<br>
  */
-public class HttpResponseFunc<T> implements Func1<Throwable, Observable<T>> {
+public class HttpResponseFunc<T> implements Function<Throwable, Observable<T>> {
     @Override
-    public Observable<T> call(Throwable t) {
-        return Observable.error(ApiException.handleException(t));
+    public Observable<T> apply(@NonNull Throwable throwable) throws Exception {
+        return Observable.error(ApiException.handleException(throwable));
     }
 }

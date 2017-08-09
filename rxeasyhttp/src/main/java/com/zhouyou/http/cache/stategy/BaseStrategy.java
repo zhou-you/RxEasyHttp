@@ -22,10 +22,13 @@ import com.zhouyou.http.utils.HttpLog;
 
 import java.lang.reflect.Type;
 
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * <p>描述：实现缓存策略的基类</p>
@@ -34,32 +37,52 @@ import rx.schedulers.Schedulers;
  * 版本： v2.0<br>
  */
 public abstract class BaseStrategy implements IStrategy {
-    <T> Observable<CacheResult<T>> loadCache(final RxCache rxCache, Type type, final String key, final long time) {
+    <T> Observable<CacheResult<T>> loadCache(final RxCache rxCache, Type type, final String key, final long time,final boolean needEmpty) {
         return rxCache
                 .<T>load(type,key,time)
-                .map(new Func1<T, CacheResult<T>>() {
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends T>>() {
                     @Override
-                    public CacheResult<T> call(T o) {
-                        HttpLog.i("loadCache result=" + o);
-                        return new CacheResult<T>(true, (T) o);
+                    public ObservableSource<? extends T> apply(@NonNull Throwable throwable) throws Exception {
+                        if (needEmpty) {
+                            return Observable.empty();
+                        } else {
+                            return Observable.error(throwable);
+                        }
+                    }
+                })
+                .map(new Function<T, CacheResult<T>>() {
+                    @Override
+                    public CacheResult<T> apply(@NonNull T t) throws Exception {
+                        HttpLog.i("loadCache result=" + t);
+                        return new CacheResult<T>(true, t);
                     }
                 });
     }
 
-     <T> Observable<CacheResult<T>> loadRemote(final RxCache rxCache, final String key, Observable<T> source) {
+     <T> Observable<CacheResult<T>> loadRemote(final RxCache rxCache, final String key, Observable<T> source,final boolean needEmpty) {
         return source
-                .map(new Func1<T, CacheResult<T>>() {
+                .onErrorResumeNext(new Function<Throwable, ObservableSource<? extends T>>() {
                     @Override
-                    public CacheResult<T> call(T t) {
+                    public ObservableSource<? extends T> apply(@NonNull Throwable throwable) throws Exception {
+                        if (needEmpty) {
+                            return Observable.empty();
+                        } else {
+                            return Observable.error(throwable);
+                        }
+                    }
+                })
+                .map(new Function<T, CacheResult<T>>() {
+                    @Override
+                    public CacheResult<T> apply(@NonNull T t) throws Exception {
                         HttpLog.i("loadRemote result=" + t);
                         rxCache.save(key, t).subscribeOn(Schedulers.io())
-                                .subscribe(new Action1<Boolean>() {
+                                .subscribe(new Consumer<Boolean>() {
                                     @Override
-                                    public void call(Boolean status) {
+                                    public void accept(@NonNull Boolean status) throws Exception {
                                         HttpLog.i("save status => " + status);
                                     }
                                 });
-                        return new CacheResult<T>(false, (T) t);
+                        return new CacheResult<T>(false, t);
                     }
                 });
     }

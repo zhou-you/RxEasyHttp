@@ -34,10 +34,14 @@ import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.exceptions.Exceptions;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.exceptions.Exceptions;
+import io.reactivex.plugins.RxJavaPlugins;
 
 
 /**
@@ -103,27 +107,13 @@ public final class RxCache {
      * 缓存transformer
      *
      * @param cacheMode 缓存类型
-     * @param type     缓存clazz
+     * @param type      缓存clazz
      */
-    public <T> Observable.Transformer<T, CacheResult<T>> transformer(CacheMode cacheMode, final Type type) {
-        if (CacheMode.DEFAULT.getClassName().equals(cacheMode.getClassName()) || CacheMode.NO_CACHE.getClassName().equals(cacheMode.getClassName())) {
-            //HttpLog.i("RxCache nonsupport DEFAULT and NO_CACHE strategy!!!");
-            return new Observable.Transformer<T, CacheResult<T>>() {
-                @Override
-                public Observable<CacheResult<T>> call(Observable<T> tObservable) {
-                    return tObservable.map(new Func1<T, CacheResult<T>>() {
-                        @Override
-                        public CacheResult<T> call(T t) {
-                            return new CacheResult<T>(false, (T) t);
-                        }
-                    });
-                }
-            };
-        }
+    public <T> ObservableTransformer<T, CacheResult<T>> transformer(CacheMode cacheMode, final Type type) {
         final IStrategy strategy = loadStrategy(cacheMode);//获取缓存策略
-        return new Observable.Transformer<T, CacheResult<T>>() {
+        return new ObservableTransformer<T, CacheResult<T>>() {
             @Override
-            public Observable<CacheResult<T>> call(Observable<T> apiResultObservable) {
+            public ObservableSource<CacheResult<T>> apply(@NonNull Observable<T> upstream) {
                 HttpLog.i("cackeKey=" + RxCache.this.cacheKey);
                 Type tempType = type;
                 if (type instanceof ParameterizedType) {//自定义ApiResult
@@ -132,38 +122,40 @@ public final class RxCache {
                         tempType = Utils.getParameterizedType(type, 0);
                     }
                 }
-                return strategy.execute(RxCache.this, RxCache.this.cacheKey, RxCache.this.cacheTime, apiResultObservable, tempType);
+                return strategy.execute(RxCache.this, RxCache.this.cacheKey, RxCache.this.cacheTime, upstream, tempType);
             }
         };
     }
 
-    private static abstract class SimpleSubscribe<T> implements Observable.OnSubscribe<T> {
+    private static abstract class SimpleSubscribe<T> implements ObservableOnSubscribe<T> {
         @Override
-        public final void call(Subscriber<? super T> subscriber) {
+        public void subscribe(@NonNull ObservableEmitter<T> subscriber) throws Exception {
             try {
                 T data = execute();
-                if (!subscriber.isUnsubscribed()) {
+                if (!subscriber.isDisposed()) {
                     subscriber.onNext(data);
                 }
             } catch (Throwable e) {
                 HttpLog.e(e.getMessage());
-                Exceptions.throwIfFatal(e);
-                if (!subscriber.isUnsubscribed()) {
+                if (!subscriber.isDisposed()) {
                     subscriber.onError(e);
                 }
+                Exceptions.throwIfFatal(e);
+                RxJavaPlugins.onError(e);
                 return;
             }
 
-            if (!subscriber.isUnsubscribed()) {
-                subscriber.onCompleted();
+            if (!subscriber.isDisposed()) {
+                subscriber.onComplete();
             }
         }
 
         abstract T execute() throws Throwable;
     }
-    
+
     /**
      * 读取
+     *
      * @param type 保存的类型
      * @param key  缓存key
      * @param time 保存时间
@@ -179,7 +171,8 @@ public final class RxCache {
 
     /**
      * 保存
-     * @param key  缓存key
+     *
+     * @param key   缓存key
      * @param value 缓存Value
      */
     public <T> Observable<Boolean> save(final String key, final T value) {
@@ -230,7 +223,6 @@ public final class RxCache {
 
     /**
      * 利用反射，加载缓存策略模型
-     *
      */
     private IStrategy loadStrategy(CacheMode cacheMode) {
         try {
@@ -391,14 +383,17 @@ public final class RxCache {
          * @param uniqueName 缓存目录
          */
         public File getDiskCacheDir(Context context, String uniqueName) {
-            String cachePath;
+            File cacheDir;
             if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                     || !Environment.isExternalStorageRemovable()) {
-                cachePath = context.getExternalCacheDir().getPath();
+                cacheDir = context.getExternalCacheDir();
             } else {
-                cachePath = context.getCacheDir().getPath();
+                cacheDir = context.getCacheDir();
             }
-            return new File(cachePath + File.separator + uniqueName);
+            if (cacheDir == null) {// if cacheDir is null throws NullPointerException
+                cacheDir = context.getCacheDir();
+            }
+            return new File(cacheDir.getPath() + File.separator + uniqueName);
         }
 
     }

@@ -30,7 +30,7 @@ import java.io.NotSerializableException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
 
 
 /**
@@ -45,6 +45,7 @@ public class ApiException extends Exception {
     private static final int UNAUTHORIZED = 401;
     private static final int FORBIDDEN = 403;
     private static final int NOT_FOUND = 404;
+    private static final int METHOD_NOT_ALLOWED = 405;
     private static final int REQUEST_TIMEOUT = 408;
     private static final int INTERNAL_SERVER_ERROR = 500;
     private static final int BAD_GATEWAY = 502;
@@ -145,6 +146,10 @@ public class ApiException extends Exception {
             ex = new ApiException(e, ERROR.UNKNOWNHOST_ERROR);
             ex.message = "无法解析该域名";
             return ex;
+        } else if (e instanceof NullPointerException) {
+            ex = new ApiException(e, ERROR.NULLPOINTER_EXCEPTION);
+            ex.message = "NullPointerException";
+            return ex;
         } else {
             ex = new ApiException(e, ERROR.UNKNOWN);
             ex.message = "未知错误";
@@ -208,5 +213,10 @@ public class ApiException extends Exception {
          * 未知主机错误
          */
         public static final int UNKNOWNHOST_ERROR = REQUEST_CANCEL + 1;
+
+        /**
+         * 空指针错误
+         */
+        public static final int NULLPOINTER_EXCEPTION = UNKNOWNHOST_ERROR + 1;
     }
 }

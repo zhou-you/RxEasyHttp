@@ -34,7 +34,7 @@ import okio.Source;
  */
 public class RequestBodyUtils {
 
-    public final static MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
+    //public final static MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
 
     public static RequestBody create(final MediaType mediaType, final InputStream inputStream) {
         return new RequestBody() {

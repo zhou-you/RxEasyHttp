@@ -19,7 +19,8 @@ package com.zhouyou.http.func;
 
 import com.zhouyou.http.cache.model.CacheResult;
 
-import rx.functions.Func1;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 /**
  * <p>描述：缓存结果转换</p>
@@ -27,9 +28,9 @@ import rx.functions.Func1;
  * 日期： 2017/4/21 10:53 <br>
  * 版本： v1.0<br>
  */
-public class CacheResultFunc<T> implements Func1<CacheResult<T>, T> {
+public class CacheResultFunc<T> implements Function<CacheResult<T>, T> {
     @Override
-    public T call(CacheResult<T> tCacheResult) {
-        return (T) tCacheResult.data;
+    public T apply(@NonNull CacheResult<T> tCacheResult) throws Exception {
+        return tCacheResult.data;
     }
 }

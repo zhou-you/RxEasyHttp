@@ -26,11 +26,11 @@ public enum CacheMode {
     /**
      * 不使用缓存,该模式下,cacheKey,cacheMaxAge 参数均无效
      **/
-    NO_CACHE("NOCache"),
+    NO_CACHE("NoStrategy"),
     /**
      * 完全按照HTTP协议的默认缓存规则，走OKhttp的Cache缓存
      **/
-    DEFAULT("Default"),
+    DEFAULT("NoStrategy"),
     /**
      * 先请求网络，请求网络失败后再加载缓存
      */

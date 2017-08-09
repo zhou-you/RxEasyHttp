@@ -36,7 +36,7 @@ import okhttp3.ResponseBody;
  * 版本： v1.0<br>
  */
 public abstract class CallBackProxy<T extends ApiResult<R>, R> implements IType<T> {
-    private CallBack<R> mCallBack;
+    CallBack<R> mCallBack;
 
     public CallBackProxy(CallBack<R> callBack) {
         mCallBack = callBack;

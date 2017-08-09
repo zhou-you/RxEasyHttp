@@ -163,7 +163,7 @@ public abstract class BaseDynamicInterceptor<R extends BaseDynamicInterceptor> i
             request = request.newBuilder().post(formBody).build();
         } else if (request.body() instanceof MultipartBody) {
             MultipartBody multipartBody = (MultipartBody) request.body();
-            MultipartBody.Builder bodyBuilder = new MultipartBody.Builder();
+            MultipartBody.Builder bodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
             List<MultipartBody.Part> oldparts = multipartBody.parts();
 
             //拼装新的参数

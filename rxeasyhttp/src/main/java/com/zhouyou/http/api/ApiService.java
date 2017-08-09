@@ -19,6 +19,7 @@ package com.zhouyou.http.api;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -33,11 +34,9 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
-import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
-import rx.Observable;
 
 /**
  * <p>描述：通用的的api接口</p>
@@ -61,22 +60,22 @@ public interface ApiService {
 
     @POST()
     @FormUrlEncoded
-    Observable<ResponseBody> post(@Url() String url, @FieldMap Map<String, String> maps);
+    Observable<ResponseBody> post(@Url String url, @FieldMap Map<String, String> maps);
 
-    @POST("{url}")
-    Observable<ResponseBody> postBody(@Path("url") String url, @Body Object object);
+    @POST()
+    Observable<ResponseBody> postBody(@Url String url, @Body Object object);
 
     @GET()
     Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> maps);
 
-    @DELETE("{url}")
-    Observable<ResponseBody> delete(@Path("url") String url, @QueryMap Map<String, String> maps);
+    @DELETE()
+    Observable<ResponseBody> delete(@Url String url, @QueryMap Map<String, String> maps);
 
-    @PUT("{url}")
-    Observable<ResponseBody> put(@Path("url") String url, @QueryMap Map<String, String> maps);
+    @PUT()
+    Observable<ResponseBody> put(@Url String url, @QueryMap Map<String, String> maps);
 
-    @POST("{url}")
-    Observable<ResponseBody> putBody(@Path("url") String url, @Body Object object);
+    @POST()
+    Observable<ResponseBody> putBody(@Url String url, @Body Object object);
 
     @Multipart
     @POST()
@@ -84,11 +83,11 @@ public interface ApiService {
 
     @Multipart
     @POST()
-    Observable<ResponseBody> uploadFiles(@Url() String url, @PartMap() Map<String, RequestBody> maps);
+    Observable<ResponseBody> uploadFiles(@Url String url, @PartMap() Map<String, RequestBody> maps);
 
     @Multipart
-    @POST("{path}")
-    Observable<ResponseBody> uploadFiles(@Path("path") String path, @Part() List<MultipartBody.Part> parts);
+    @POST()
+    Observable<ResponseBody> uploadFiles(@Url String url, @Part() List<MultipartBody.Part> parts);
 
     @Streaming
     @GET
@@ -96,8 +95,8 @@ public interface ApiService {
 
     @POST()
     @Headers({"Content-Type: application/json", "Accept: application/json"})
-    Observable<ResponseBody> postJson(@Url() String url, @Body RequestBody jsonBody);
-    
+    Observable<ResponseBody> postJson(@Url String url, @Body RequestBody jsonBody);
+
     @POST()
-    Observable<ResponseBody> postBody(@Url() String url, @Body RequestBody body);
+    Observable<ResponseBody> postBody(@Url String url, @Body RequestBody body);
 }

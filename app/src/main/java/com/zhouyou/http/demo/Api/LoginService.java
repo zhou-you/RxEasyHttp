@@ -22,11 +22,11 @@ import com.zhouyou.http.model.ApiResult;
 
 import java.util.Map;
 
+import io.reactivex.Observable;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import rx.Observable;
 
 public interface LoginService {
     @POST("{path}")

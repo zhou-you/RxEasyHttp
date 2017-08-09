@@ -45,6 +45,9 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import okhttp3.Cache;
 import okhttp3.Cookie;
 import okhttp3.HttpUrl;
@@ -54,9 +57,7 @@ import okhttp3.ResponseBody;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import rx.Observable;
-import rx.functions.Action1;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import static com.zhouyou.http.EasyHttp.getRxCache;
 
@@ -357,15 +358,15 @@ public abstract class BaseRequest<R extends BaseRequest> {
      */
     public void removeCache(String key) {
         getRxCache().remove(key).compose(RxUtil.<Boolean>io_main())
-                .subscribe(new Action1<Boolean>() {
+                .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void call(Boolean aBoolean) {
+                    public void accept(@NonNull Boolean aBoolean) throws Exception {
                         HttpLog.i("removeCache success!!!");
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
-                        HttpLog.i("removeCache err!!!");
+                    public void accept(@NonNull Throwable throwable) throws Exception {
+                        HttpLog.i("removeCache err!!!"+throwable);  
                     }
                 });
     }
@@ -512,7 +513,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
             okHttpClientBuilder.cache(cache);
         }
         final Retrofit.Builder retrofitBuilder = generateRetrofit();
-        retrofitBuilder.addCallAdapterFactory(RxJavaCallAdapterFactory.create());//增加RxJavaCallAdapterFactory
+        retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());//增加RxJava2CallAdapterFactory
         okHttpClient = okHttpClientBuilder.build();
         retrofitBuilder.client(okHttpClient);
         retrofit = retrofitBuilder.build();

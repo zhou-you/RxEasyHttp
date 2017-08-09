@@ -22,7 +22,7 @@ import com.zhouyou.http.cache.model.CacheResult;
 
 import java.lang.reflect.Type;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * <p>描述：实现缓存策略的接口，可以自定义缓存实现方式，只要实现该接口就可以了</p>

@@ -17,9 +17,9 @@
 package com.zhouyou.http.cache.core;
 
 
+import com.jakewharton.disklrucache.DiskLruCache;
 import com.zhouyou.http.cache.converter.IDiskConverter;
 import com.zhouyou.http.utils.Utils;
-import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class LruDiskCache extends BaseCache {
             InputStream source = edit.newInputStream(0);
             T value;
             if (source != null) {
-                value = (T) mDiskConverter.load(source,type);
+                value = mDiskConverter.load(source,type);
                 Utils.close(source);
                 edit.commit();
                 return value;

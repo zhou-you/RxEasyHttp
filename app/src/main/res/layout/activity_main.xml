@@ -35,6 +35,22 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onPostObject"
+            android:text="post object"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onPut"
+            android:text="put请求"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="onCallBack"
             android:text="CallBack回调"
             android:textAllCaps="false"
@@ -60,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onSubscription"
-            android:text="返回Subscription"
+            android:text="返回Disposable"
             android:textAllCaps="false"
             />
 
@@ -99,6 +115,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onSync"
+            android:text="同步请求"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="onCustomCall"
             android:text="自定义请求call()"
             android:textAllCaps="false"
@@ -119,6 +143,7 @@
             android:text="网络缓存"
             android:textAllCaps="false"
             />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,6 +151,7 @@
             android:text="自定义ApiResult"
             android:textAllCaps="false"
             />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -24,8 +24,9 @@ import com.zhouyou.http.request.GetRequest;
 
 import java.lang.reflect.Type;
 
-import rx.Observable;
-import rx.Subscription;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * <p>描述：扩展GetResult请求，解决自定义ApiResult重复写代理的问题</p>
@@ -41,6 +42,7 @@ public class CustomGetRequest extends GetRequest {
 
     /**
      * 覆写execute方法指定，代理用TestApiResult2
+     *
      * @param type
      * @param <T>
      * @return
@@ -58,7 +60,7 @@ public class CustomGetRequest extends GetRequest {
     }
 
     @Override
-    public <T> Subscription execute(CallBack<T> callBack) {
+    public <T> Disposable execute(CallBack<T> callBack) {
         return super.execute(new CallBackProxy<TestApiResult2<T>, T>(callBack) {
         });
     }

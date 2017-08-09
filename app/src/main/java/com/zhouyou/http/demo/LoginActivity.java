@@ -36,7 +36,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.demo.constant.AppConstant;
@@ -50,7 +50,9 @@ import com.zhouyou.http.demo.utils.Validator;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.subsciber.IProgressDialog;
 
-import rx.functions.Action1;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+
 
 /**
  * <p>描述：登录测试</p>
@@ -153,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
                 .params(ComParamContact.Login.PASSWORD, MD5.encrypt4login(pass, AppConstant.APP_SECRET))
                 .sign(true)
                 .timeStamp(true)
-                .syncRequest(false)//表示异步
                 .execute(new ProgressDialogCallBack<AuthModel>(mProgressDialog, true, true) {
                     @Override
                     public void onError(ApiException e) {
@@ -205,9 +206,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void getPermissions(final String name, final String pass) {
        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-               .subscribe(new Action1<Boolean>() {
+               .subscribe(new Consumer<Boolean>() {
                    @Override
-                   public void call(Boolean aBoolean) {
+                   public void accept(@NonNull Boolean aBoolean) throws Exception {
                        if(aBoolean){
                            //Toast.makeText(LoginActivity.this, "权限获取成功", Toast.LENGTH_SHORT).show();
                            onLogin(name, pass);

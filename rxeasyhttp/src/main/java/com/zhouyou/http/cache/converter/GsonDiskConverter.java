@@ -20,6 +20,9 @@ package com.zhouyou.http.cache.converter;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.TypeAdapter;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import com.zhouyou.http.utils.HttpLog;
 import com.zhouyou.http.utils.Utils;
 
@@ -53,13 +56,14 @@ import java.lang.reflect.Type;
  * 版本： v2.0<br>
  */
 public class GsonDiskConverter implements IDiskConverter {
-    private Gson gson;
+    private Gson gson = new Gson();
 
     public GsonDiskConverter() {
         this.gson = new Gson();
     }
 
     public GsonDiskConverter(Gson gson) {
+        Utils.checkNotNull(gson, "gson ==null");
         this.gson = gson;
     }
 
@@ -67,11 +71,11 @@ public class GsonDiskConverter implements IDiskConverter {
     public <T> T load(InputStream source, Type type) {
         T value = null;
         try {
-            if (gson != null) gson = new Gson();
-            value = gson.fromJson(new InputStreamReader(source), type);
-        } catch (JsonIOException e) {
-            HttpLog.e(e.getMessage());
-        } catch (JsonSyntaxException e) {
+            TypeAdapter<?> adapter = gson.getAdapter(TypeToken.get(type));
+            JsonReader jsonReader = gson.newJsonReader(new InputStreamReader(source));
+            value = (T) adapter.read(jsonReader);
+            //value = gson.fromJson(new InputStreamReader(source), type);
+        } catch (JsonIOException | IOException | JsonSyntaxException e) {
             HttpLog.e(e.getMessage());
         } finally {
             Utils.close(source);
@@ -87,12 +91,10 @@ public class GsonDiskConverter implements IDiskConverter {
             sink.write(bytes, 0, bytes.length);
             sink.flush();
             return true;
-        } catch (JsonIOException e) {
+        } catch (JsonIOException | JsonSyntaxException | IOException e) {
             HttpLog.e(e.getMessage());
-        } catch (JsonSyntaxException e) {
-            HttpLog.e(e.getMessage());
-        } catch (IOException e) {
-            HttpLog.e(e.getMessage());
+        } finally {
+            Utils.close(sink);
         }
         return false;
     }

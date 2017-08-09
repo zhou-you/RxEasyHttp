@@ -40,15 +40,15 @@ import java.lang.reflect.Type;
 public class SerializableDiskConverter implements IDiskConverter {
 
     @Override
-    public <T> T  load(InputStream source, Type type) {
+    public <T> T load(InputStream source, Type type) {
         //序列化的缓存不需要用到clazz
         T value = null;
         ObjectInputStream oin = null;
         try {
             oin = new ObjectInputStream(source);
-            value = (T)oin.readObject();
+            value = (T) oin.readObject();
         } catch (IOException | ClassNotFoundException e) {
-           HttpLog.e(e);
+            HttpLog.e(e);
         } finally {
             Utils.close(oin);
         }
@@ -65,10 +65,10 @@ public class SerializableDiskConverter implements IDiskConverter {
             return true;
         } catch (IOException e) {
             HttpLog.e(e);
-            return false;
         } finally {
             Utils.close(oos);
         }
+        return false;
     }
 
 }

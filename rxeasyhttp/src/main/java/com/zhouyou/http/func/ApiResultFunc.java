@@ -32,8 +32,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import okhttp3.ResponseBody;
-import rx.functions.Func1;
 
 
 /**
@@ -42,7 +43,7 @@ import rx.functions.Func1;
  * 日期： 2017/3/15 16:52 <br>
  * 版本： v1.0<br>
  */
-public class ApiResultFunc<T> implements Func1<ResponseBody, ApiResult<T>> {
+public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
     protected Type type;
     protected Gson gson;
 
@@ -55,7 +56,7 @@ public class ApiResultFunc<T> implements Func1<ResponseBody, ApiResult<T>> {
     }
 
     @Override
-    public ApiResult<T> call(ResponseBody responseBody) {
+    public ApiResult<T> apply(@NonNull ResponseBody responseBody) throws Exception {
         ApiResult<T> apiResult = new ApiResult<T>();
         apiResult.setCode(-1);
         if (type instanceof ParameterizedType) {//自定义ApiResult

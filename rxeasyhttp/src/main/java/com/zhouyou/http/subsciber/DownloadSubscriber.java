@@ -30,9 +30,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 /**
  * <p>描述：定义一个下载的订阅者</p>
@@ -41,11 +42,10 @@ import rx.functions.Action1;
  * 版本： v2.0<br>
  */
 public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> extends BaseSubscriber<ResponseBody> {
-    private CallBack callBack;
     private Context context;
     private String path;
     private String name;
-
+    public CallBack mCallBack;
     private static String APK_CONTENTTYPE = "application/vnd.android.package-archive";
     private static String PNG_CONTENTTYPE = "image/png";
     private static String JPG_CONTENTTYPE = "image/jpg";
@@ -53,11 +53,11 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
     private static String fileSuffix = "";
     private long lastRefreshUiTime;
 
-    public DownloadSubscriber(String path, String name, CallBack callBack, Context context) {
+    public DownloadSubscriber(Context context,String path, String name, CallBack callBack) {
         super(context);
         this.path = path;
         this.name = name;
-        this.callBack = callBack;
+        this.mCallBack = callBack;
         this.context = context;
         this.lastRefreshUiTime = System.currentTimeMillis();
     }
@@ -65,22 +65,24 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
     @Override
     public void onStart() {
         super.onStart();
-        if (callBack != null) {
-            callBack.onStart();
+        if (mCallBack != null) {
+            mCallBack.onStart();
         }
     }
 
     @Override
-    public void onCompleted() {
-        /*if (callBack != null) {
-            callBack.onComplete();
-        }*/
+    public void onComplete() {
+        if (mCallBack != null) {
+            mCallBack.onCompleted();
+        }
     }
 
     @Override
     public void onError(final ApiException e) {
         HttpLog.d("DownSubscriber:>>>> onError:" + e.getMessage());
-        callBack.onError(e);
+        if (mCallBack != null) {
+            mCallBack.onError(e);
+        }
     }
 
     @Override
@@ -138,7 +140,7 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                 HttpLog.d("file length: " + fileSize);
                 inputStream = body.byteStream();
                 outputStream = new FileOutputStream(futureStudioIconFile);
-
+                final CallBack callBack = mCallBack;
                 while (true) {
                     int read = inputStream.read(fileReader);
 
@@ -157,14 +159,15 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                         if (callBack != null) {
                             if (callBack != null) {
                                 final long finalFileSizeDownloaded = fileSizeDownloaded;
-                                Observable.just(finalFileSizeDownloaded).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
-                                    @Override
-                                    public void call(Long aLong) {
-                                        if (callBack instanceof DownloadProgressCallBack) {
-                                            ((DownloadProgressCallBack) callBack).update(finalFileSizeDownloaded, fileSize, finalFileSizeDownloaded == fileSize);
-                                        }
-                                    }
-                                });
+                                Observable.just(finalFileSizeDownloaded).observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new Consumer<Long>() {
+                                            @Override
+                                            public void accept(@NonNull Long aLong) throws Exception {
+                                                if (callBack instanceof DownloadProgressCallBack) {
+                                                    ((DownloadProgressCallBack) callBack).update(finalFileSizeDownloaded, fileSize, finalFileSizeDownloaded == fileSize);
+                                                }
+                                            }
+                                        });
                             }
                         }
                         lastRefreshUiTime = System.currentTimeMillis();
@@ -177,9 +180,9 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                 if (callBack != null) {
                     //final String finalName = name;
                     final String finalPath = path;
-                    Observable.just(finalPath).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<String>() {
+                    Observable.just(finalPath).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<String>() {
                         @Override
-                        public void call(String aLong) {
+                        public void accept(@NonNull String s) throws Exception {
                             if (callBack instanceof DownloadProgressCallBack) {
                                 ((DownloadProgressCallBack) callBack).onComplete(finalPath);
                             }
@@ -210,14 +213,16 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
 
     private void finalonError(final Exception e) {
 
-        if (callBack == null) {
+        if (mCallBack == null) {
             return;
         }
         //if (Utils.checkMain()) {
-        Observable.just(new ApiException(e, 100)).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<ApiException>() {
+        Observable.just(new ApiException(e, 100)).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<ApiException>() {
             @Override
-            public void call(ApiException aLong) {
-                callBack.onError(aLong);
+            public void accept(@NonNull ApiException e) throws Exception {
+                if (mCallBack != null) {
+                    mCallBack.onError(e);
+                }
             }
         });
     }

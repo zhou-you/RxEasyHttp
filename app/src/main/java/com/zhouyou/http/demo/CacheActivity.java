@@ -32,7 +32,9 @@ import com.zhouyou.http.demo.model.SkinTestResult;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.utils.HttpLog;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 /**
  * <p>描述：缓存使用介绍</p>
  * 作者： zhouyou<br>
@@ -153,20 +155,25 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
                 .cacheDiskConverter(new SerializableDiskConverter())//默认使用的是 new SerializableDiskConverter();
                 .timeStamp(true)
                 .execute(SkinTestResult.class)
-                .subscribe(new Subscriber<SkinTestResult>() {
+                .subscribe(new Observer<SkinTestResult>() {
                     @Override
-                    public void onCompleted() {
-
+                    public void onSubscribe(@NonNull Disposable d) {
+                        
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onNext(@NonNull SkinTestResult skinTestResult) {
+                        showToast(skinTestResult.toString());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
                         showToast(e.getMessage());
                     }
 
                     @Override
-                    public void onNext(SkinTestResult skinTestResult) {
-                        showToast(skinTestResult.toString());
+                    public void onComplete() {
+
                     }
                 });
     }

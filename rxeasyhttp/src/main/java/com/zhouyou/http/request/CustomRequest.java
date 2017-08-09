@@ -31,10 +31,13 @@ import com.zhouyou.http.transformer.HandleErrTransformer;
 import com.zhouyou.http.utils.RxUtil;
 import com.zhouyou.http.utils.Utils;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
 
 /**
  * <p>描述：自定义请求，例如你有自己的ApiService</p>
@@ -77,14 +80,13 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }
 
-    public <T> Subscriber call(Observable<T> observable, CallBack<T> callBack) {
-        return call(observable, new CallBackSubsciber(context, callBack));
+    public <T> void call(Observable<T> observable, CallBack<T> callBack) {
+        call(observable, new CallBackSubsciber(context, callBack));
     }
 
-    public <R> Subscriber call(Observable observable, Subscriber<R> subscriber) {
+    public <R> void call(Observable observable, Observer<R> subscriber) {
         observable.compose(RxUtil.io_main())
                 .subscribe(subscriber);
-        return subscriber;
     }
 
 
@@ -101,22 +103,23 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
                 .retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay));
     }
 
-    public <T> Subscription apiCall(Observable<T> observable, CallBack<T> callBack) {
+    public <T> Disposable apiCall(Observable<T> observable, CallBack<T> callBack) {
         return call(observable, new CallBackProxy<ApiResult<T>, T>(callBack) {
         });
     }
 
-    public <T> Subscription call(Observable<T> observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {
+    public <T> Disposable call(Observable<T> observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {
         Observable<CacheResult<T>> cacheobservable = build().toObservable(observable, proxy);
         if (CacheResult.class != proxy.getCallBack().getRawType()) {
-            return cacheobservable.compose(new Observable.Transformer<CacheResult<T>, T>() {
+            return cacheobservable.compose(new ObservableTransformer<CacheResult<T>, T>() {
                 @Override
-                public Observable<T> call(Observable<CacheResult<T>> observable) {
-                    return observable.map(new CacheResultFunc<T>());
+                public ObservableSource<T> apply(@NonNull Observable<CacheResult<T>> upstream) {
+                    return upstream.map(new CacheResultFunc<T>());
                 }
-            }).subscribe(new CallBackSubsciber(context, proxy.getCallBack()));
+            }).subscribeWith(new CallBackSubsciber<T>(context, proxy.getCallBack()));
+        } else {
+            return cacheobservable.subscribeWith(new CallBackSubsciber<CacheResult<T>>(context, proxy.getCallBack()));
         }
-        return cacheobservable.subscribe(new CallBackSubsciber<CacheResult<T>>(context, proxy.getCallBack()));
     }
 
     private <T> Observable<CacheResult<T>> toObservable(Observable observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {

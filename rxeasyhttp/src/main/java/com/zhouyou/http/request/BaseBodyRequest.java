@@ -29,12 +29,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
-import rx.Observable;
 
 /**
  * <p>描述：body请求的基类</p>
@@ -183,7 +183,7 @@ public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseReq
         List<MultipartBody.Part> parts = new ArrayList<>();
         //拼接参数键值对
         for (Map.Entry<String, String> mapEntry : params.urlParamsMap.entrySet()) {
-            parts.add(MultipartBody.Part.createFormData(mapEntry.getKey(), mapEntry.getValue()));
+            parts.add(MultipartBody.Part.createFormData(mapEntry.getKey(),mapEntry.getValue()));
         }
         //拼接文件
         for (Map.Entry<String, List<HttpParams.FileWrapper>> entry : params.fileParamsMap.entrySet()) {
