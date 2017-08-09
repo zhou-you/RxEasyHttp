@@ -154,7 +154,16 @@ public final class RxCache {
     }
 
     /**
-     * 读取
+     * 获取缓存
+     * @param type 保存的类型
+     * @param key 缓存key
+     */
+    public <T> Observable<T> load(final Type type, final String key) {
+        return load(type, key, -1);
+    }
+
+    /**
+     * 根据时间读取缓存
      *
      * @param type 保存的类型
      * @param key  缓存key

@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.cache.converter.SerializableDiskConverter;
 import com.zhouyou.http.cache.model.CacheMode;
@@ -30,11 +31,14 @@ import com.zhouyou.http.cache.model.CacheResult;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.demo.model.SkinTestResult;
 import com.zhouyou.http.exception.ApiException;
+import com.zhouyou.http.subsciber.BaseSubscriber;
 import com.zhouyou.http.utils.HttpLog;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+
 /**
  * <p>描述：缓存使用介绍</p>
  * 作者： zhouyou<br>
@@ -120,7 +124,7 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onSuccess(CacheResult<SkinTestResult> cacheResult) {
                         HttpLog.i(cacheResult.toString());
-                        String from ;
+                        String from;
                         if (cacheResult.isFromCache) {
                             from = "我来自缓存";
                         } else {
@@ -158,7 +162,7 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
                 .subscribe(new Observer<SkinTestResult>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        
+
                     }
 
                     @Override
@@ -190,6 +194,31 @@ public class CacheActivity extends AppCompatActivity implements View.OnClickList
      */
     public void onClearCache(View view) {
         EasyHttp.clearCache();
+    }
+
+    /**
+     * 根据key获取缓存
+     */
+    public void onLoadCache(View view) {
+        Observable<SkinTestResult> observable = EasyHttp.getRxCacheBuilder()
+                //获取缓存需要指定下转换器，默认就是SerializableDiskConverter 这里可以不用写
+                //就是你网络请求用哪个转换器存储的缓存，那么读取时也要采用对应的转换器读取
+                .diskConverter(new SerializableDiskConverter()).build()
+                 //这个表示读取缓存根据时间,读取指定时间内的缓存，例如读取:5*60s之内的缓存
+                //.load(new TypeToken<SkinTestResult>() {}.getType(), this.getClass().getSimpleName(), 5 * 60)
+                 //这个表示读取缓存不根据时间只要有缓存就读取
+                .load(new TypeToken<SkinTestResult>() {}.getType(), this.getClass().getSimpleName());
+        observable.subscribe(new BaseSubscriber<SkinTestResult>() {
+            @Override
+            public void onError(ApiException e) {
+                showToast("获取缓存失败:" + e.getMessage());
+            }
+
+            @Override
+            public void onNext(SkinTestResult s) {
+                showToast("获取缓存成功:" + s.toString());
+            }
+        });
     }
 
     private void showToast(String msg) {

@@ -97,6 +97,13 @@
             android:text="清空缓存"
             android:textAllCaps="false"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onLoadCache"
+            android:text="根据key获取缓存"
+            android:textAllCaps="false"/>
+
         <TextView
             android:id="@+id/cache_content"
             android:layout_width="match_parent"
