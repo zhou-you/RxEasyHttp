@@ -58,7 +58,6 @@ public class CallBackSubsciber<T> extends BaseSubscriber<T> {
         if (mCallBack != null) {
             mCallBack.onError(e);
         }
-        dispose();
     }
 
     @Override
@@ -67,7 +66,6 @@ public class CallBackSubsciber<T> extends BaseSubscriber<T> {
         if (mCallBack != null) {
             mCallBack.onSuccess(t);
         }
-        dispose();
     }
 
     @Override
