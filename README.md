@@ -371,7 +371,7 @@ EasyHttp.get(url)
                     }
                 });
 ```
-### 请求返回
+### 请求返回Disposable
 网络请求会返回Disposable对象，方便取消网络请求
 ```
 Disposable disposable = EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
