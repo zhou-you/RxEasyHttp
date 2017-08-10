@@ -169,6 +169,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    /**
+     * post提交json
+     */
+    public void onPostJson(View view) {
+        EasyHttp.post("api/xzbg/gwcl/getGwlist")
+                .baseUrl("http://218.25.174.167:7009/dlydbg/")
+                .upJson("{\"imei\":\"862155035349405\",\"imsi\":\"123456789\",\"phone\":\"18688994275\",\"swjg_dm\":\"\",\"swry_dm\":\"127053096\",\"version\":\"1.0.0\"}")
+                //这里不想解析，简单只是为了做演示 直接返回String
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        showToast(s);
+                    }
+                });
+    }
     
     /**
      * put请求

@@ -24,13 +24,17 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.cache.model.CacheMode;
+import com.zhouyou.http.cache.model.CacheResult;
 import com.zhouyou.http.callback.CallBackProxy;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
+import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.demo.customapi.test1.ResultBean;
 import com.zhouyou.http.demo.customapi.test1.TestApiResult1;
 import com.zhouyou.http.demo.customapi.test2.Result;
 import com.zhouyou.http.demo.customapi.test2.TestApiResult2;
 import com.zhouyou.http.demo.customapi.test3.TestApiResult3;
+import com.zhouyou.http.demo.customapi.test4.GwclBean;
 import com.zhouyou.http.demo.customapi.testN.HttpManager;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.subsciber.IProgressDialog;
@@ -148,6 +152,50 @@ public class CustomApiActivity extends AppCompatActivity {
                 }) {
                 });
     }
+    
+    public void onTestFour(View view){
+        EasyHttp.post("api/xzbg/gwcl/getGwlist")
+                .baseUrl("http://218.25.174.167:7009/dlydbg/")
+                .upJson("{\"imei\":\"862155035349405\",\"imsi\":\"123456789\",\"phone\":\"18688994275\",\"swjg_dm\":\"\",\"swry_dm\":\"127053096\",\"version\":\"1.0.0\"}")
+                .cacheMode(CacheMode.CACHEANDREMOTE)
+                .cacheKey(this.getClass().getSimpleName()+"test")
+                 //方式一
+                .execute(new CallBackProxy<TestApiResult3<CacheResult<List<GwclBean>>>, CacheResult<List<GwclBean>>>(new SimpleCallBack<CacheResult<List<GwclBean>>>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(CacheResult<List<GwclBean>> cacheResult) {
+                        String from;
+                        if (cacheResult.isFromCache) {
+                            from = "我来自缓存:";
+                        } else {
+                            from = "我来自远程网络:";
+                        }
+
+                        showToast(from+cacheResult.data.toString());
+                    }
+                }) {
+                });
+                //方式二
+                //如果你想获取当前的返回是否来自缓存需要在解析的数据外面包裹CacheResult<>  cacheResult.isFromCache可以获取是来自缓存还是网络
+                //如果你不想关注是否来自缓存，可以不加CacheResult<>，就是上层没有isFromCache这个标记了
+               /* .execute(new CallBackProxy<TestApiResult3<List<GwclBean>>, List<GwclBean>>(new SimpleCallBack<CacheResult<List<GwclBean>>>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(CacheResult<List<GwclBean>> result) {
+                        HttpLog.i(">>>>>>>>>>>>>"+result.toString());
+                        if (result != null) showToast(result.toString());
+                    }
+                }) {
+                });*/
+    }
 
     /**
      * 主要解决重复写代理的问题,用法不变，只是将EasyHttp换成你自己定义的HttpManager去访问。HttpManager只是个类名可以使用其他名称。
@@ -173,7 +221,6 @@ public class CustomApiActivity extends AppCompatActivity {
                     }
                 });
     }
-    
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
