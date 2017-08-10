@@ -155,7 +155,7 @@ public class CustomApiActivity extends AppCompatActivity {
     
     public void onTestFour(View view){
         EasyHttp.post("api/xzbg/gwcl/getGwlist")
-                .baseUrl("http://218.25.174.167:7009/dlydbg/")
+                .baseUrl("http://xxx.xxx.xx:7009/dlydbg/")
                 .upJson("{\"imei\":\"862155035349405\",\"imsi\":\"123456789\",\"phone\":\"18688994275\",\"swjg_dm\":\"\",\"swry_dm\":\"127053096\",\"version\":\"1.0.0\"}")
                 .cacheMode(CacheMode.CACHEANDREMOTE)
                 .cacheKey(this.getClass().getSimpleName()+"test")

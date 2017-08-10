@@ -43,6 +43,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onPostJson"
+            android:text="post Json"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="onPut"
             android:text="put请求"
             android:textAllCaps="false"
