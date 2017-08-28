@@ -64,13 +64,21 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
             if (ApiResult.class.isAssignableFrom(cls)) {
                 final Type[] params = ((ParameterizedType) type).getActualTypeArguments();
                 final Class clazz = Utils.getClass(params[0], 0);
-                final Class rawType = Utils.getClass(type,0);
+                final Class rawType = Utils.getClass(type, 0);
                 try {
                     String json = responseBody.string();
                     //增加是List<String>判断错误的问题
-                    if (!List.class.isAssignableFrom(rawType)&&clazz.equals(String.class)) {
-                        apiResult.setData((T) json);
-                        apiResult.setCode(0);
+                    if (!List.class.isAssignableFrom(rawType) && clazz.equals(String.class)) {
+                        //apiResult.setData((T) json);
+                        //apiResult.setCode(0);
+                        final Type type = Utils.getType(cls, 0);
+                        ApiResult result = gson.fromJson(json, type);
+                        if (result != null) {
+                            apiResult = result;
+                            apiResult.setData((T) json);
+                        } else {
+                            apiResult.setMsg("json is null");
+                        }
                     } else {
                         ApiResult result = gson.fromJson(json, type);
                         if (result != null) {
@@ -93,8 +101,15 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
                 final String json = responseBody.string();
                 final Class<T> clazz = Utils.getClass(type, 0);
                 if (clazz.equals(String.class)) {
-                    apiResult.setData((T) json);
-                    apiResult.setCode(0);
+                    //apiResult.setData((T) json);
+                    //apiResult.setCode(0);
+                    final ApiResult result = parseApiResult(json, apiResult);
+                    if (result != null) {
+                        apiResult = result;
+                        apiResult.setData((T) json);
+                    } else {
+                        apiResult.setMsg("json is null");
+                    }
                 } else {
                     final ApiResult result = parseApiResult(json, apiResult);
                     if (result != null) {
