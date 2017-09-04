@@ -64,8 +64,9 @@ V2.0.0
 ## 用法介绍
 目前只支持主流开发工具AndtoidStudio的使用，没有提供Eclipse使用方式.
 本项目Demo的网络请求的服务器地址为了安全，把url去掉了，但是Demo程序中的示例都是ok的
-#### 点击下载Demo体验  [RxEasyHttp-Demo](https://github.com/zhou-you/RxEasyHttp/blob/master/RxEasyHttp-Demo.apk?raw=true)
-#### build.gradle设置
+### Demo下载
+[点击下载](https://github.com/zhou-you/RxEasyHttp/blob/master/RxEasyHttp-Demo.apk?raw=true)
+### build.gradle设置
 ```
 dependencies {
  compile 'com.zhouyou:rxeasyhttp:2.0.0'
@@ -902,7 +903,7 @@ new ProgressSubscriber<T>(this, mProgressDialog) {
 - ONLYREMOTE：仅加载网络，但数据依然会被缓存
 - ONLYCACHE：只读取缓存，缓存没有会返回null
 - CACHEANDREMOTE:先使用缓存，不管是否存在，仍然请求网络，CallBack会回调两次.
-- CACHEANDREMOTEDISTINCT:先使用缓存，不管是否存在，仍然请求网络，CallBack回调不一定是两次，如果发现请求的网络数据和缓存数据是一样的，就不会再返回网络的回调,既回调一次。否则不相同仍然会回调两次。（目的是为了防止数据没有发生变化，也需要回调两次导致界面无用的重复刷新）
+- CACHEANDREMOTEDISTINCT:先使用缓存，不管是否存在，仍然请求网络，CallBack回调不一定是两次，如果发现请求的网络数据和缓存数据是一样的，就不会再返回网络的回调,既回调一次。否则不相同仍然会回调两次。（目的是为了防止数据没有发生变化，也需要回调两次导致界面无用的重复刷新）,**此种模式缓存的对象bean一定要重写tostring()方法**
 
 *注：无论对于哪种缓存模式，都可以指定一个cacheKey，建议针对不同需要缓存的页面设置不同的cacheKey，如果相同，会导致数据覆盖。*
 
