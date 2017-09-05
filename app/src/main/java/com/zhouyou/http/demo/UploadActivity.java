@@ -56,12 +56,14 @@ public class UploadActivity extends AppCompatActivity {
     private IProgressDialog mProgressDialog = new IProgressDialog() {
         @Override
         public Dialog getDialog() {
-            dialog = new ProgressDialog(UploadActivity.this);
-            dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置进度条的形式为圆形转动的进度条
-            dialog.setMessage("正在上传...");
-            // 设置提示的title的图标，默认是没有的，如果没有设置title的话只设置Icon是不会显示图标的
-            dialog.setTitle("文件上传");
-            dialog.setMax(100);
+            if(dialog==null) {
+                dialog = new ProgressDialog(UploadActivity.this);
+                dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);// 设置进度条的形式为圆形转动的进度条
+                dialog.setMessage("正在上传...");
+                // 设置提示的title的图标，默认是没有的，如果没有设置title的话只设置Icon是不会显示图标的
+                dialog.setTitle("文件上传");
+                dialog.setMax(100);
+            }
             return dialog;
         }
     };
