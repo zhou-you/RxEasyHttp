@@ -1257,12 +1257,9 @@ public class MyApplication extends Application {
 7.save status => true保存缓存的状态
 ## 混淆
 ```
--dontwarn okio.**
--dontwarn javax.annotation.Nullable
--dontwarn javax.annotation.ParametersAreNonnullByDefault
--dontwarn javax.annotation.**
--keep com.zhouyou.http.model
--keep com.zhouyou.http.cache.model
+-keep class com.zhouyou.http.model.** {*;}
+-keep class com.zhouyou.http.cache.model.** {*;}
+-keep class com.zhouyou.http.cache.stategy.**
 ```
 ## 支持开源
 乐于赞赏，感谢朋友们的支持和鼓励，让我们一起努力做一些好东西! 
