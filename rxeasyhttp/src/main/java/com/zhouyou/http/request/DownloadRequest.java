@@ -25,7 +25,6 @@ import com.zhouyou.http.transformer.HandleErrTransformer;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -68,7 +67,7 @@ public class DownloadRequest extends BaseRequest<DownloadRequest> {
             @Override
             public ObservableSource<ResponseBody> apply(@NonNull Observable<ResponseBody> upstream) {
                 if(isSyncRequest){
-                    return upstream.observeOn(AndroidSchedulers.mainThread());
+                    return upstream;//.observeOn(AndroidSchedulers.mainThread());
                 }else {
                     return upstream.subscribeOn(Schedulers.io())
                             .unsubscribeOn(Schedulers.io())
