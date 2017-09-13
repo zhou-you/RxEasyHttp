@@ -61,6 +61,7 @@ dependencies {
 }
 ```
 想查看所有版本，请点击下面地址。
+
 [![jcenter](https://img.shields.io/badge/Jcenter-Latest%20Release-orange.svg)](https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/)
 ## 权限说明
 如果使用本库实现文件下载到SD卡、或者配置了缓存数据到SD卡，你必须要考虑到Android6.0及以上系统的运行时权限，给大家推荐两个权限库：
