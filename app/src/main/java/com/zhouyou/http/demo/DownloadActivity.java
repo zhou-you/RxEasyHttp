@@ -18,6 +18,7 @@ package com.zhouyou.http.demo;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -48,9 +49,9 @@ public class DownloadActivity extends AppCompatActivity {
         dialog.setMax(100);
     }
 
-    public void onDownloadFile1(View view) {
+    public void onDownloadFile1(View view) {//下载回调是在异步里处理的
         EasyHttp.downLoad("http://apk.hiapk.com/web/api.do?qt=8051&id=723")
-                .savePath("/sdcard/test/")//默认在：/storage/emulated/0/Android/data/包名/files/1494647767055
+                .savePath(Environment.getExternalStorageDirectory().getPath()+"/test/")//默认在：/storage/emulated/0/Android/data/包名/files/1494647767055
                 .saveName("custom_name")//默认名字是时间戳生成的
                 .execute(new DownloadProgressCallBack<String>() {
                     @Override
@@ -65,6 +66,7 @@ public class DownloadActivity extends AppCompatActivity {
 
                     @Override
                     public void onStart() {
+                        HttpLog.i("======"+Thread.currentThread().getName());
                         dialog.show();
                     }
 
@@ -75,7 +77,8 @@ public class DownloadActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(ApiException e) {
+                    public void onError(final ApiException e) {
+                        HttpLog.i("======"+Thread.currentThread().getName());
                         showToast(e.getMessage());
                         dialog.dismiss();
                     }
@@ -85,7 +88,7 @@ public class DownloadActivity extends AppCompatActivity {
     public void onDownloadFile2(View view) {
         String url = "http://61.144.207.146:8081/b8154d3d-4166-4561-ad8d-7188a96eb195/2005/07/6c/076ce42f-3a78-4b5b-9aae-3c2959b7b1ba/kfid/2475751/qqlite_3.5.0.660_android_r108360_GuanWang_537047121_release_10000484.apk";
         EasyHttp.downLoad(url)
-                .savePath("/sdcard/test/QQ")
+                .savePath(Environment.getExternalStorageDirectory().getPath()+"/test/QQ")
                 .saveName(FileUtils.getFileName(url))
                 .execute(new DownloadProgressCallBack<String>() {
                     @Override

@@ -183,7 +183,8 @@ public class AppTools {
      */
     public static String getLocalIpAddress(Activity activity) {
         try {
-            WifiManager wifi = (WifiManager) activity.getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifi;
+            wifi = (WifiManager) activity.getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = wifi.getConnectionInfo();
             int ipAddress = info.getIpAddress();
             String Ipv4Address = InetAddress
@@ -191,8 +192,7 @@ public class AppTools {
                             String.format("%d.%d.%d.%d", (ipAddress & 0xff),
                                     (ipAddress >> 8 & 0xff),
                                     (ipAddress >> 16 & 0xff),
-                                    (ipAddress >> 24 & 0xff))).getHostAddress()
-                    .toString();
+                                    (ipAddress >> 24 & 0xff))).getHostAddress();
             return Ipv4Address;
         } catch (Exception e) {
             e.printStackTrace();
@@ -213,8 +213,7 @@ public class AppTools {
         List<RunningTaskInfo> runningTaskInfos = manager.getRunningTasks(1);
 
         if (runningTaskInfos != null)
-            return (runningTaskInfos.get(0).topActivity.getClassName())
-                    .toString();
+            return (runningTaskInfos.get(0).topActivity.getClassName());
         else
             return "";
     }

@@ -362,7 +362,7 @@ public class DateTimeUtils {
             String[] loginInfo = message.split("#");
             if (loginInfo != null && loginInfo.length >= 3) {
                 try {
-                    String utcTime = loginInfo[1].toString();
+                    String utcTime = loginInfo[1];
                     beiJingTime = DateTimeUtils.getUserZoneString(utcTime, "HH:mm", null);
                     String repaceTimeStr = "#"+utcTime+"#";
                     beiJingTime = message.replace(repaceTimeStr,beiJingTime);

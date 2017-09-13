@@ -43,7 +43,7 @@ public class ACache {
     public static final int TIME_DAY = TIME_HOUR * 24;
     private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 MB
     private static final int MAX_COUNT = Integer.MAX_VALUE;
-    private static Map<String, ACache> mInstanceMap = new HashMap<String, ACache>();
+    private static Map<String, ACache> mInstanceMap = new HashMap<>();
     private ACacheManager mCache;
 
     private ACache(File cacheDir, long max_size, int max_count) {
@@ -268,6 +268,7 @@ public class ACache {
             try {
                 oos.close();
             } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

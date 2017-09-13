@@ -49,7 +49,7 @@ public class MD5 {
      * @param res 源字符串
      * @return md5值
      */
-    public final static String encode(String res) {
+    public static String encode(String res) {
 
         try {
             byte[] strTemp = res.getBytes();
@@ -86,7 +86,7 @@ public class MD5 {
         for (int i = 0; i < charArray.length; i++)
             byteArray[i] = (byte) charArray[i];
         byte[] md5Bytes = sDigest.digest(byteArray);
-        StringBuffer hexValue = new StringBuffer();
+        StringBuilder hexValue = new StringBuilder();
         for (byte md5Byte : md5Bytes) {
             int val = ((int) md5Byte) & 0xff;
             if (val < 16)

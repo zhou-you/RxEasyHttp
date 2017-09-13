@@ -34,34 +34,33 @@ public final class SystemInfoUtils {
      * @return 系统相关的信息
      */
     public static String getUserAgent(Context context, String appId) {
-        StringBuffer userAgent = new StringBuffer();
+        String userAgent = appId +// 应用名称
+                CommonConsts.SEMICOLON +
+                AppTools.getVersionName(context) + // App版本
+                CommonConsts.SEMICOLON +
+                CommonConsts.SourceType +// 平台
+                CommonConsts.SEMICOLON +
+                SystemInfoUtils.getOSVersionName() + // OS版本
+                CommonConsts.SEMICOLON +
+                SystemInfoUtils.getOSVersionDisplayName() + // OS显示版本
+                CommonConsts.SEMICOLON +
+                SystemInfoUtils.getBrandName() + // 品牌厂商
+                CommonConsts.SEMICOLON +
+                SystemInfoUtils.getModelName() + // 设备
+                CommonConsts.SEMICOLON +
+                DensityUtils.getPhoneSize(context) + // 分辨率
+                CommonConsts.SEMICOLON +
+                SystemInfoUtils.getAppSource(context, CommonConsts.APP_SOURCE) + // 分发渠道
+                CommonConsts.SEMICOLON +
+                SystemInfoUtils.getNetType(context) + // 网络类型
+                CommonConsts.SEMICOLON;
         // ==============================================================
 //		User-Agent
 //		格式：
 //		应用名称;应用版本;平台;OS版本;OS版本名称;厂商;机型;分辨率(宽*高);安装渠道;网络;
 //		示例：
 //		HET;2.2.0;Android;4.2.2;N7100XXUEMI6BYTuifei;samsung;GT-I9300;480*800;360;WIFI;
-        userAgent.append(appId);// 应用名称
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(AppTools.getVersionName(context)); // App版本
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(CommonConsts.SourceType);// 平台
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(SystemInfoUtils.getOSVersionName()); // OS版本
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(SystemInfoUtils.getOSVersionDisplayName()); // OS显示版本
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(SystemInfoUtils.getBrandName()); // 品牌厂商
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(SystemInfoUtils.getModelName()); // 设备
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(DensityUtils.getPhoneSize(context)); // 分辨率
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(SystemInfoUtils.getAppSource(context, CommonConsts.APP_SOURCE)); // 分发渠道
-        userAgent.append(CommonConsts.SEMICOLON);
-        userAgent.append(SystemInfoUtils.getNetType(context)); // 网络类型
-        userAgent.append(CommonConsts.SEMICOLON);
-        return userAgent.toString();
+        return userAgent;
     }
 
     /**
@@ -131,6 +130,7 @@ public final class SystemInfoUtils {
                     0);
             iAppVersionCode = info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
         return iAppVersionCode;
     }
@@ -149,6 +149,7 @@ public final class SystemInfoUtils {
                     0);
             strAppVersionName = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
         return strAppVersionName;
     }

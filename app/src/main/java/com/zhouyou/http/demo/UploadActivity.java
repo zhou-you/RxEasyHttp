@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
@@ -81,7 +82,7 @@ public class UploadActivity extends AppCompatActivity {
                 }
             }
         };
-        File file = new File("/sdcard/1.jpg");
+        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/1.jpg");
         EasyHttp.post("/v1/user/uploadAvatar")
                 //如果有文件名字可以不用再传Type,会自动解析到是image/*
                 .params("avatar", file, file.getName(), listener)
@@ -178,7 +179,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void onUploadFileMaps(View view) {
-        File file = new File("/sdcard/1.jpg");
+        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/1.jpg");
         UIProgressResponseCallBack mUIProgressResponseCallBack = new UIProgressResponseCallBack() {
             @Override
             public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
@@ -211,7 +212,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void onUploadFileMaps2(View view) {
-        File file = new File("/sdcard/1.jpg");
+        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/1.jpg");
         UIProgressResponseCallBack mUIProgressResponseCallBack = new UIProgressResponseCallBack() {
             @Override
             public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {
@@ -247,7 +248,7 @@ public class UploadActivity extends AppCompatActivity {
     }
 
     public void onUploadOne(View view) {
-        File file = new File("/sdcard/1.jpg");
+        File file = new File(Environment.getExternalStorageDirectory().getPath()+"/1.jpg");
         UIProgressResponseCallBack mUIProgressResponseCallBack = new UIProgressResponseCallBack() {
             @Override
             public void onUIResponseProgress(long bytesRead, long contentLength, boolean done) {

@@ -327,7 +327,7 @@ public class StringUtils {
      */
     public static boolean isNullString(String str) {
         return (null == str || isBlank(str.trim()) || "null".equals(str.trim()
-                .toLowerCase())) ? true : false;
+                .toLowerCase()));
     }
 
     public static boolean isEmpty(CharSequence cs) {
