@@ -34,47 +34,34 @@
 - 返回结果和异常统一处理
 - 结合RxJava2，线程智能控制
 
+## 关于我
+[![github](https://img.shields.io/badge/GitHub-zhou--you-green.svg)](https://github.com/zhou-you)   [![csdn](https://img.shields.io/badge/CSDN-zhouy478319399-green.svg)](http://blog.csdn.net/zhouy478319399)
 ## 联系方式
-邮箱地址： 478319399@qq.com
-QQ群： 581235049（建议使用QQ群，邮箱使用较少，可能看的不及时）
-本群旨在为使用我的[github](https://github.com/zhou-you)项目的人提供方便，如果遇到问题欢迎在群里提问。一个人的能力也有限，希望一起学习一起进步。
-关注我的[github](https://github.com/zhou-you)，了解我的最新项目。关注我的[博客](http://blog.csdn.net/zhouy478319399)，阅读我的最新文章。
-##### 欢迎加入QQ交流群
+本群旨在为使用我github项目的人提供方便，如果遇到问题欢迎在群里提问。
+#### 欢迎加入QQ交流群:581235049
 ![](http://img.blog.csdn.net/20170601165330238)
 ## 演示（请star支持）
 ![](http://img.blog.csdn.net/20170608210826622)![](http://img.blog.csdn.net/20170609092207665) 
 ![](http://img.blog.csdn.net/20170609093543947)![](http://img.blog.csdn.net/20170609092405916)
 ## 版本说明
+
 #### 当前版本
+[![release](https://img.shields.io/badge/release-V2.0.1-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 
-V2.0.0
-
-- 网络库从Rxjava升级到Rxjava2
-- 优化缓存策略实现
-- 修复同步请求回调问题
-- 修复put请求失败问题
-- 修改图片请求失败@url问题导致404错误
-- 修复多图片表单上传失败问题
-- Demo增加根据key获取缓存的演示
-- 修复post提交json到后台问题
-- 定位upObject失败原因，需要加转换器addConverterFactory(GsonConverterFactory.create())
-
-#### 更新日志
-[点击查看更新日志](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 ## 用法介绍
 目前只支持主流开发工具AndtoidStudio的使用，没有提供Eclipse使用方式.
 本项目Demo的网络请求的服务器地址为了安全，把url去掉了，但是Demo程序中的示例都是ok的
 ### Demo下载
-[点击下载](https://github.com/zhou-you/RxEasyHttp/blob/master/RxEasyHttp-Demo.apk?raw=true)
+[![downloads](https://img.shields.io/badge/downloads-430k-blue.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/RxEasyHttp-Demo.apk?raw=true)
+
 ### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:2.0.0'
+ compile 'com.zhouyou:rxeasyhttp:2.0.1'
 }
 ```
 想查看所有版本，请点击下面地址。
-
-Latest release: [https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/](https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/)
+[![jcenter](https://img.shields.io/badge/Jcenter-Latest%20Release-orange.svg)](https://jcenter.bintray.com/com/zhouyou/rxeasyhttp/)
 ## 权限说明
 如果使用本库实现文件下载到SD卡、或者配置了缓存数据到SD卡，你必须要考虑到Android6.0及以上系统的运行时权限，给大家推荐两个权限库：
 
