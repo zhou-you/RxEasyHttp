@@ -91,7 +91,7 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
 
 
     /**
-     * 调用call返回一个Observable,针对het的业务<T>
+     * 调用call返回一个Observable,针对ApiResult的业务<T>
      * 举例：如果你给的是一个Observable<ApiResult<AuthModel>> 那么返回的<T>是AuthModel
      */
     public <T> Observable<T> apiCall(Observable<ApiResult<T>> observable) {

@@ -25,7 +25,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -119,7 +119,7 @@ public abstract class BaseDynamicInterceptor<R extends BaseDynamicInterceptor> i
             String value = httpUrl.queryParameterValues(nameList.get(i)) != null && httpUrl.queryParameterValues(nameList.get(i)).size() > 0 ? httpUrl.queryParameterValues(nameList.get(i)).get(0) : "";
             oldparams.put(nameList.get(i), value);
         }
-        String nameKeys = Arrays.asList(nameList).toString();
+        String nameKeys = Collections.singletonList(nameList).toString();
         //拼装新的参数
         TreeMap<String, String> newParams = dynamic(oldparams);
         Utils.checkNotNull(newParams, "newParams==null");

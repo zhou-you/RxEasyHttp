@@ -57,7 +57,7 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
 
     @Override
     public ApiResult<T> apply(@NonNull ResponseBody responseBody) throws Exception {
-        ApiResult<T> apiResult = new ApiResult<T>();
+        ApiResult<T> apiResult = new ApiResult<>();
         apiResult.setCode(-1);
         if (type instanceof ParameterizedType) {//自定义ApiResult
             final Class<T> cls = (Class) ((ParameterizedType) type).getRawType();

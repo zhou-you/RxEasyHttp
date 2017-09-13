@@ -91,10 +91,10 @@ public class LruDiskCache extends BaseCache {
             }
             OutputStream sink = edit.newOutputStream(0);
             if (sink != null) {
-                mDiskConverter.writer(sink, value);
+                boolean result = mDiskConverter.writer(sink, value);
                 Utils.close(sink);
                 edit.commit();
-                return true;
+                return result;
             }
             edit.abort();
         } catch (IOException e) {

@@ -34,7 +34,7 @@ import okio.ByteString;
  * 作者： zhouyou<br>
  * 日期： 2016/12/24 10:35<br>
  * 版本： v2.0<br>
- *     
+ * <p>
  * 修改者： zhouyou
  * 日期： 2017/01/06 10:35<br>
  * 1.这里笔者给读者留个提醒，ByteString其实已经很强大了，不需要我们自己再去处理加密了，只要善于发现br>
@@ -46,18 +46,18 @@ public class CacheCore {
     private LruDiskCache disk;
 
     public CacheCore(LruDiskCache disk) {
-        this.disk = Utils.checkNotNull(disk,"disk==null");
+        this.disk = Utils.checkNotNull(disk, "disk==null");
     }
 
 
     /**
      * 读取
      */
-    public <T> T load(Type type, String key, long time) {
-        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
+    public synchronized <T> T load(Type type, String key, long time) {
+        String cacheKey = ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("loadCache  key=" + cacheKey);
         if (disk != null) {
-            T result = disk.load(type,cacheKey, time);
+            T result = disk.load(type, cacheKey, time);
             if (result != null) {
                 return result;
             }
@@ -69,8 +69,8 @@ public class CacheCore {
     /**
      * 保存
      */
-    public <T> boolean save(String key, T value) {
-        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
+    public synchronized <T> boolean save(String key, T value) {
+        String cacheKey = ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("saveCache  key=" + cacheKey);
         return disk.save(cacheKey, value);
     }
@@ -81,8 +81,8 @@ public class CacheCore {
      * @param key
      * @return
      */
-    public boolean containsKey(String key) {
-        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
+    public synchronized boolean containsKey(String key) {
+        String cacheKey = ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("containsCache  key=" + cacheKey);
         if (disk != null) {
             if (disk.containsKey(cacheKey)) {
@@ -97,8 +97,8 @@ public class CacheCore {
      *
      * @param key
      */
-    public boolean remove(String key) {
-        String cacheKey= ByteString.of(key.getBytes()).md5().hex();
+    public synchronized boolean remove(String key) {
+        String cacheKey = ByteString.of(key.getBytes()).md5().hex();
         HttpLog.d("removeCache  key=" + cacheKey);
         if (disk != null) {
             return disk.remove(cacheKey);
@@ -109,7 +109,7 @@ public class CacheCore {
     /**
      * 清空缓存
      */
-    public boolean clear() {
+    public synchronized boolean clear() {
         if (disk != null) {
             return disk.clear();
         }

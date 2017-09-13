@@ -72,7 +72,8 @@ public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
             onError((ApiException) e);
         } else {
             HttpLog.e("--> e !instanceof ApiException err:" + e);
-            onError(ApiException.handleException(e));
+            //onError(ApiException.handleException(e));
+            onError(e);
         }
     }
 

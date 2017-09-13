@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
+import java.util.ConcurrentModificationException;
 
 /**
  * <p>描述：GSON-数据转换器</p>
@@ -75,9 +76,11 @@ public class GsonDiskConverter implements IDiskConverter {
             JsonReader jsonReader = gson.newJsonReader(new InputStreamReader(source));
             value = (T) adapter.read(jsonReader);
             //value = gson.fromJson(new InputStreamReader(source), type);
-        } catch (JsonIOException | IOException | JsonSyntaxException e) {
+        } catch (JsonIOException | IOException| ConcurrentModificationException | JsonSyntaxException e) {
             HttpLog.e(e.getMessage());
-        } finally {
+        } catch (Exception e){
+            HttpLog.e(e.getMessage());
+        }finally {
             Utils.close(source);
         }
         return value;
@@ -91,7 +94,9 @@ public class GsonDiskConverter implements IDiskConverter {
             sink.write(bytes, 0, bytes.length);
             sink.flush();
             return true;
-        } catch (JsonIOException | JsonSyntaxException | IOException e) {
+        } catch (JsonIOException | JsonSyntaxException | ConcurrentModificationException| IOException e) {
+            HttpLog.e(e.getMessage());
+        }catch (Exception e){
             HttpLog.e(e.getMessage());
         } finally {
             Utils.close(sink);

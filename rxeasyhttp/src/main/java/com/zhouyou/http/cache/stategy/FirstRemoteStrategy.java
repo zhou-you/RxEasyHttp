@@ -21,6 +21,7 @@ import com.zhouyou.http.cache.RxCache;
 import com.zhouyou.http.cache.model.CacheResult;
 
 import java.lang.reflect.Type;
+import java.util.Arrays;
 
 import io.reactivex.Observable;
 
@@ -35,9 +36,11 @@ import io.reactivex.Observable;
 public final class FirstRemoteStrategy extends BaseStrategy {
     @Override
     public <T> Observable<CacheResult<T>> execute(RxCache rxCache, String key, long time, Observable<T> source, Type type) {
-        Observable<CacheResult<T>> cache = loadCache(rxCache, type, key, time,false);
-        Observable<CacheResult<T>> remote = loadRemote(rxCache, key, source,true);
-        return remote.switchIfEmpty(cache);
-
+        Observable<CacheResult<T>> cache = loadCache(rxCache, type, key, time, true);
+        Observable<CacheResult<T>> remote = loadRemote(rxCache, key, source, false);
+        //return remote.switchIfEmpty(cache);
+        return Observable
+                .concatDelayError(Arrays.asList(cache, remote))
+                .take(1);
     }
 }

@@ -167,6 +167,11 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                                                     ((DownloadProgressCallBack) callBack).update(finalFileSizeDownloaded, fileSize, finalFileSizeDownloaded == fileSize);
                                                 }
                                             }
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(@NonNull Throwable throwable) throws Exception {
+                                                
+                                            }
                                         });
                             }
                         }
@@ -186,6 +191,11 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                             if (callBack instanceof DownloadProgressCallBack) {
                                 ((DownloadProgressCallBack) callBack).onComplete(finalPath);
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(@NonNull Throwable throwable) throws Exception {
+                            
                         }
                     });
                     HttpLog.i("file downloaded: " + fileSizeDownloaded + " of " + fileSize);
@@ -223,6 +233,11 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                 if (mCallBack != null) {
                     mCallBack.onError(e);
                 }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                
             }
         });
     }

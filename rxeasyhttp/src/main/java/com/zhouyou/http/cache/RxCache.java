@@ -40,8 +40,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.exceptions.Exceptions;
-import io.reactivex.plugins.RxJavaPlugins;
 
 
 /**
@@ -132,22 +130,14 @@ public final class RxCache {
         public void subscribe(@NonNull ObservableEmitter<T> subscriber) throws Exception {
             try {
                 T data = execute();
-                if (!subscriber.isDisposed()) {
-                    subscriber.onNext(data);
-                }
+                boolean isDisposed = subscriber.isDisposed();
+                HttpLog.i("isDisposed:"+isDisposed);
+                subscriber.onNext(data);
             } catch (Throwable e) {
-                HttpLog.e(e.getMessage());
-                if (!subscriber.isDisposed()) {
-                    subscriber.onError(e);
-                }
-                Exceptions.throwIfFatal(e);
-                RxJavaPlugins.onError(e);
-                return;
+                HttpLog.i("subscriber onError:" + e.getMessage());
+                subscriber.onError(new Throwable("err!!!!!!!!!!!!"));
             }
-
-            if (!subscriber.isDisposed()) {
-                subscriber.onComplete();
-            }
+            subscriber.onComplete();
         }
 
         abstract T execute() throws Throwable;
