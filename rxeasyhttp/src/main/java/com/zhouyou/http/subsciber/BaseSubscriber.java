@@ -55,7 +55,7 @@ public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
 
     public BaseSubscriber(Context context) {
         if (context != null) {
-            contextWeakReference = new WeakReference<Context>(context);
+            contextWeakReference = new WeakReference<>(context);
         }
     }
 
@@ -72,8 +72,7 @@ public abstract class BaseSubscriber<T> extends DisposableObserver<T> {
             onError((ApiException) e);
         } else {
             HttpLog.e("--> e !instanceof ApiException err:" + e);
-            //onError(ApiException.handleException(e));
-            onError(e);
+            onError(ApiException.handleException(e));
         }
     }
 
