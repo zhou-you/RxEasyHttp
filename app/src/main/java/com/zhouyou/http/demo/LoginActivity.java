@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mEmailView.setText("18688994275");
-        mPasswordView.setText("zy123456");
+        mPasswordView.setText("123456");
         rxPermissions = new RxPermissions(this);
         autoLogin();
     }
