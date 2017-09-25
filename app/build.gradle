@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '26'
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.zhouyou.http.demo"
         minSdkVersion 15
@@ -22,6 +22,11 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+    dexOptions {
+        jumboMode = true
+        incremental true
+        javaMaxHeapSize "2g"
     }
     /* compileOptions {
          targetCompatibility 1.8

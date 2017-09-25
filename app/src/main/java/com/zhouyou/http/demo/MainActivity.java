@@ -491,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCustomApiCall(View view) {
         final String name = "18688994275";
-        final String pass = "zy123456";
+        final String pass = "123456";
         final CustomRequest request = EasyHttp.custom()
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .sign(true)
