@@ -57,7 +57,7 @@
 ### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:2.0.1'
+ compile 'com.zhouyou:rxeasyhttp:2.0.2'
 }
 ```
 想查看所有版本，请点击下面地址。
