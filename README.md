@@ -45,8 +45,8 @@
 ![](http://img.blog.csdn.net/20170609093543947)![](http://img.blog.csdn.net/20170609092405916)
 ## 版本说明
 
-#### 当前版本
-[![release](https://img.shields.io/badge/release-V2.0.1-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
+### 当前版本
+[![release](https://img.shields.io/badge/release-V2.0.2-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 
 ## 用法介绍
 目前只支持主流开发工具AndtoidStudio的使用，没有提供Eclipse使用方式.
