@@ -29,11 +29,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.CallBack;
+import com.zhouyou.http.callback.CallClazzProxy;
 import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.demo.Api.LoginService;
 import com.zhouyou.http.demo.constant.AppConstant;
 import com.zhouyou.http.demo.constant.ComParamContact;
+import com.zhouyou.http.demo.customapi.test5.TestApiResult5;
 import com.zhouyou.http.demo.model.ApiInfo;
 import com.zhouyou.http.demo.model.AuthModel;
 import com.zhouyou.http.demo.model.SectionItem;
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-    
+
     /**
      * put请求
      */
@@ -523,22 +525,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void onListResult(View view) {
         //方式一：
-       /* EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
-                .execute(new SimpleCallBack<List<SectionItem>>() {
+        /*EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
+                .execute(new CallBackProxy<TestApiResult5<List<SectionItem>>, List<SectionItem>>(new SimpleCallBack<List<SectionItem>>() {
                     @Override
                     public void onError(ApiException e) {
                         showToast(e.getMessage());
                     }
 
                     @Override
-                    public void onSuccess(List<SectionItem> response) {
-                        if (response != null) showToast(response.toString());
+                    public void onSuccess(List<SectionItem> sectionItems) {
+                        showToast(sectionItems.toString());
                     }
+                }) {
                 });*/
         //方式二：
         /*Observable<List<SectionItem>> observable = EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
-                .execute(new TypeToken<List<SectionItem>>() {
-                }.getType());
+                .execute(new CallClazzProxy<TestApiResult5<List<SectionItem>>, List<SectionItem>>(new TypeToken<List<SectionItem>>() {
+                }.getType()) {
+                });
         observable.subscribe(new Consumer<List<SectionItem>>() {
             @Override
             public void accept(@NonNull List<SectionItem> sectionItems) throws Exception {
@@ -552,8 +556,9 @@ public class MainActivity extends AppCompatActivity {
         });*/
         //方式三：
         Observable<List<SectionItem>> observable = EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
-                .execute(new TypeToken<List<SectionItem>>() {
-                }.getType());
+                .execute(new CallClazzProxy<TestApiResult5<List<SectionItem>>, List<SectionItem>>(new TypeToken<List<SectionItem>>() {
+                }.getType()) {
+                });
         observable.subscribe(new ProgressSubscriber<List<SectionItem>>(MainActivity.this, mProgressDialog) {
             @Override
             public void onError(ApiException e) {
