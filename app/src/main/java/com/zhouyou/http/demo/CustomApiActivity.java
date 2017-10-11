@@ -156,7 +156,7 @@ public class CustomApiActivity extends AppCompatActivity {
     public void onTestFour(View view){
         EasyHttp.post("api/")
                 .baseUrl("http://xxx.xx.xx/dlydbg/")
-                .upJson("{\"imei\":\"\",\"imsi\":\"123456789\",\"phone\":\"\",\"swjg_dm\":\"\",\"swry_dm\":\"127053096\",\"version\":\"1.0.0\"}")
+                .upJson("{\"\":\"\",\"\":\"\",\"\":\"\",\"\":\"\",\"\":\"\",\"version\":\"1.0.0\"}")
                 .cacheMode(CacheMode.CACHEANDREMOTE)
                 .cacheKey(this.getClass().getSimpleName()+"test")
                  //方式一
