@@ -135,9 +135,9 @@ public class CustomApiActivity extends AppCompatActivity {
     }
     
     public void onTestThree(View view){
-        EasyHttp.post("http://218.25.174.167:7009/dlydbg/api/user/login")
+        EasyHttp.post("http://xxx.xx.xx/dlydbg/api/user/login")
                 //{"version":"2.5.0","phone":"13012463189","imei":"6789098763343","imsi":"6675343576887","gwkl":"dl_sj1192"}
-                .upJson("{\"version\":\"2.5.0\",\"phone\":\"18688994275\",\"imei\":\"6789098763343\",\"imsi\":\"6675343576887\",\"gwkl\":\"dl_sj1192\"}")
+                .upJson("{\"\":\"2.5.0\",\"\":\"\",\"\":\"\",\"\":\"\",\"gwkl\":\"\"}")
                 .execute(new CallBackProxy<TestApiResult3<List<String>>, List<String>>(new ProgressDialogCallBack<List<String>>(mProgressDialog) {
                     @Override
                     public void onError(ApiException e) {
