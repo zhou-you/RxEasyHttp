@@ -32,6 +32,15 @@ android {
          targetCompatibility 1.8
          sourceCompatibility 1.8
      }*/
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+                def name = "${rootDir}/apk/rxeasyhttp-demo.apk"
+                output.outputFile = file(name)
+            }
+        }
+    }
 }
 
 /*repositories {
