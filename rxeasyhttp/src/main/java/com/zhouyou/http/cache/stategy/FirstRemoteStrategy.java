@@ -40,7 +40,7 @@ public final class FirstRemoteStrategy extends BaseStrategy {
         Observable<CacheResult<T>> remote = loadRemote(rxCache, key, source, false);
         //return remote.switchIfEmpty(cache);
         return Observable
-                .concatDelayError(Arrays.asList(cache, remote))
+                .concatDelayError(Arrays.asList(remote, cache))
                 .take(1);
     }
 }
