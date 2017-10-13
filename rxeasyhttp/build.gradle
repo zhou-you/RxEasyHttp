@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 4
-        versionName "2.0.2"
+        versionName "2.0.4"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -25,6 +25,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }*/
     lintOptions {
+        checkReleaseBuilds false
         abortOnError false
     }
 }
