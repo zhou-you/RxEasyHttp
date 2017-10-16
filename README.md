@@ -136,7 +136,7 @@ public class MyApplication extends Application {
                 .setBaseUrl(Url)//设置全局URL
 
                 // 打开该调试开关并设置TAG,不需要就不要加入该行
-                // 最后的true表示是否打印okgo的内部异常，一般打开方便调试错误
+                // 最后的true表示是否打印内部异常，一般打开方便调试错误
                 .debug("EasyHttp", true)
                 
                 //如果使用默认的60秒,以下三行也不需要设置
@@ -1223,7 +1223,7 @@ public class MyApplication extends Application {
             EasyHttp.getInstance()
             		...
                     // 打开该调试开关并设置TAG,不需要就不要加入该行
-                    // 最后的true表示是否打印okgo的内部异常，一般打开方便调试错误
+                    // 最后的true表示是否打印内部异常，一般打开方便调试错误
                     .debug("EasyHttp", true);
         }
     }
