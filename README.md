@@ -283,6 +283,7 @@ Url可以通过初始化配置的时候传入`EasyHttp.getInstance().setBaseUrl(
 入口方法传入： `EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult").baseUrl("http://www.xxxx.com")`
 如果入口方法中传入的url含有http或者https,则不会拼接初始化设置的baseUrl.
 例如：`EasyHttp.get("http://www.xxx.com/v1/app/chairdressing/skinAnalyzePower/skinTestResult")`则setBaseUrl()和baseUrl()传入的baseurl都不会被拼接。
+*注:EasyHttp.get/post/put/等采用拼接的用法时请注意，url要用/斜杠开头，例如：`EasyHttp.get("/v1/login")` 正确  ` EasyHttp.get("v1/login")` 错误*
 #### http请求参数
 两种设置方式
 .params(HttpParams params)
