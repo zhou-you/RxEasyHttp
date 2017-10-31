@@ -19,6 +19,14 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onLogin"
+            android:text="登陆测试"
+            android:textAllCaps="false"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:onClick="onGet"
             android:text="get请求"
             android:textAllCaps="false"

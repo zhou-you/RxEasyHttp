@@ -85,6 +85,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    
+    public void onLogin(View view){
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 
 
     public void onGet(View view) {
