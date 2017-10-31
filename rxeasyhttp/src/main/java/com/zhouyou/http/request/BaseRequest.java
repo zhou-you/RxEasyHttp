@@ -397,6 +397,10 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 newClientBuilder.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
             if (proxy != null) newClientBuilder.proxy(proxy);
             if (cookies.size() > 0) EasyHttp.getCookieJar().addCookies(cookies);
+
+            //添加头  头添加放在最前面方便其他拦截器可能会用到
+            newClientBuilder.addInterceptor(new HeadersInterceptor(headers));
+            
             for (Interceptor interceptor : interceptors) {
                 if (interceptor instanceof BaseDynamicInterceptor) {
                     ((BaseDynamicInterceptor) interceptor).sign(sign).timeStamp(timeStamp).accessToken(accessToken);
@@ -413,8 +417,6 @@ public abstract class BaseRequest<R extends BaseRequest> {
                     newClientBuilder.addNetworkInterceptor(interceptor);
                 }
             }
-            //添加头
-            newClientBuilder.addInterceptor(new HeadersInterceptor(headers));
             return newClientBuilder;
         }
     }
