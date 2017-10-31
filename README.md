@@ -1247,10 +1247,51 @@ public class MyApplication extends Application {
 7.save status => true保存缓存的状态
 ## 混淆
 ```
+#okhttp
+-dontwarn com.squareup.okhttp3.**
+-keep class com.squareup.okhttp3.** { *;}
+-dontwarn okio.**
+
+# Retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Exceptions
+
+# Retrolambda
+-dontwarn java.lang.invoke.*
+
+# RxJava RxAndroid
+-dontwarn sun.misc.**
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+    long producerIndex;
+    long consumerIndex;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+###rxandroid-1.2.1
+-keepclassmembers class rx.android.**{*;}
+
+# Gson
+-keep class com.google.gson.stream.** { *; }
+-keepattributes EnclosingMethod
+-keep class org.xz_sale.entity.**{*;}
+-keep class com.google.gson.** {*;}
+-keep class com.google.**{*;}
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.examples.android.model.** { *; }
+
+#RxEasyHttp
 -keep class com.zhouyou.http.model.** {*;}
 -keep class com.zhouyou.http.cache.model.** {*;}
--keep class com.zhouyou.http.cache.stategy.**
+-keep class com.zhouyou.http.cache.stategy.**{*;}
 ```
+[请查看Demo中完整的混淆文件](https://github.com/zhou-you/RxEasyHttp/blob/master/app/proguard-rules.pro)
+
 ## 支持开源
 乐于赞赏，感谢朋友们的支持和鼓励，让我们一起努力做一些好东西! 
 可以使用「微信」「支付宝」客户端赞赏：
