@@ -14,10 +14,30 @@ android {
             enabled true
         }*/
     }
+    signingConfigs {
+        debug {
+
+        }
+        release {
+            keyAlias 'zy' //修改成自己的签名
+            keyPassword 'xxxx'//修改成自己的签名
+            storeFile file('D:/zhouyou.jks')//修改成自己的签名
+            storePassword 'xxxxxx'//修改成自己的签名
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true//是否混淆（注：如果混淆文件未配置使用false）
+            zipAlignEnabled true //是否支持Zip Align
+            shrinkResources true //是否清理无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
         }
     }
     lintOptions {
@@ -28,11 +48,11 @@ android {
         incremental true
         javaMaxHeapSize "2g"
     }
+
     /* compileOptions {
          targetCompatibility 1.8
          sourceCompatibility 1.8
      }*/
-
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
@@ -50,7 +70,7 @@ android {
 }*/
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
