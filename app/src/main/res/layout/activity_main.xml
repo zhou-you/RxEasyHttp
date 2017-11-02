@@ -175,6 +175,13 @@
             android:text="测试返回list集合"
             android:textAllCaps="false"
             />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onScene"
+            android:text="与Rxjava结合使用场景举列"
+            android:textAllCaps="false"
+            />
 
     </LinearLayout>
 </ScrollView>

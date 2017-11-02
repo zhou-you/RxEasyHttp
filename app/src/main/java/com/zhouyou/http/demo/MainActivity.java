@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onGet(View view) {
         EasyHttp.get("/v1/app/chairdressing/skinAnalyzePower/skinTestResult")
-                .readTimeOut(30 * 1000)//局部定义读超时
+                .readTimeOut(30 * 1000)//局部定义读超时 ,可以不用定义
                 .writeTimeOut(30 * 1000)
                 .connectTimeout(30 * 1000)
                 //.headers("","")//设置头参数
@@ -577,6 +577,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onScene(View view){
+        Intent intent = new Intent(MainActivity.this, SceneActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onDestroy() {

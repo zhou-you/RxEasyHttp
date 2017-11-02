@@ -94,7 +94,7 @@ public class CustomApiActivity extends AppCompatActivity {
                 .params("phone", "18688994275")
                 .params("dtype", "json")
                 .params("key", "5682c1f44a7f486e40f9720d6c97ffe4")
-                .execute(new CallClazzProxy<CustomApiResult<ResultBean>, ResultBean>(ResultBean.class) {
+                .execute(new CallClazzProxy<TestApiResult1<ResultBean>, ResultBean>(ResultBean.class) {
                 });
         observable.subscribe(new ProgressSubscriber<ResultBean>(this, mProgressDialog) {
             @Override
