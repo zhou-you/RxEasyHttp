@@ -43,7 +43,11 @@
 ![](http://img.blog.csdn.net/20170601165330238)
 ## 演示（请star支持）
 ![](http://img.blog.csdn.net/20170608210826622) ![](http://img.blog.csdn.net/20170609092207665)
-![](http://img.blog.csdn.net/20170609093543947) ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/20170609092405916.gif)
+![](http://img.blog.csdn.net/20170609093543947) ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/4.gif)
+
+### RxEasyHttp与Rxjava结合使用场景演示
+![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/5.gif)
+
 ## 版本说明
 
 ### 当前版本
