@@ -42,8 +42,8 @@
 #### 欢迎加入QQ交流群 [![](https://img.shields.io/badge/%E7%82%B9%E6%88%91%E4%B8%80%E9%94%AE%E5%8A%A0%E5%85%A5QQ%E7%BE%A4-581235049-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=1e1f4bcfd8775a55e6cf6411f6ff0e7058ff469ef87c4d1e67890c27f0c5a390)
 ![](http://img.blog.csdn.net/20170601165330238)
 ## 演示（请star支持）
-![](http://img.blog.csdn.net/20170608210826622) ![](http://img.blog.csdn.net/20170609092207665)
-![](http://img.blog.csdn.net/20170609093543947) ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/4.gif)
+![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/1.gif) ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/2.gif)
+![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/3.gif) ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/4.gif)
 
 ### RxEasyHttp与Rxjava结合使用场景演示
 ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/5.gif)
