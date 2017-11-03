@@ -179,7 +179,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onScene"
-            android:text="与Rxjava结合使用场景举列"
+            android:text="场景举列"
             android:textAllCaps="false"
             />
 

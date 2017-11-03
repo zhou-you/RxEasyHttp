@@ -187,11 +187,11 @@ public class PollActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         EasyHttp.cancelSubscription(polldisposable);
         EasyHttp.cancelSubscription(countdisposable);
         EasyHttp.cancelSubscription(ifdisposable);
         EasyHttp.cancelSubscription(filterdisposable);
+        super.onDestroy();
     }
 
     private void showToast(String msg) {
