@@ -519,10 +519,10 @@ Observable<SkinTestResult> observable = EasyHttp.get(url)
 - `.requestBody(body)//上传自定义RequestBody`
 - `.upObject(object)//上传对象object`   必须要增加`.addConverterFactory(GsonConverterFactory.create())`设置
 
-*注：
-1.upString、upJson、requestBody、upBytes、upObject五个方法不能同时使用，当前只能选用一个
-2.使用upJson、upObject时候params、sign(true/false)、accessToken（true/false）、拦截器都不会起作用
-*
+
+> 1.upString、upJson、requestBody、upBytes、upObject五个方法不能同时使用，当前只能选用一个
+> 2.使用upJson、upObject时候params、sign(true/false)、accessToken（true/false）、拦截器都不会起作用
+
 
 示例：
 ``` 
