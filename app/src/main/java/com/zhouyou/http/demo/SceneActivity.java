@@ -235,7 +235,6 @@ public class SceneActivity extends AppCompatActivity {
     //与view结合防止按钮重复点击-点击防抖
     public void onRepeatRquest(View view) {
         //与rxbinding库结合-从而避免重复请求，1s中内不再重复请求
-        //debounce和throttleFirst都可以
         //RxView.clicks(view).debounce(1,TimeUnit.SECONDS)
         RxView.clicks(view).throttleFirst(1, TimeUnit.SECONDS).flatMap(new Function<Object, ObservableSource<ResultBean>>() {
             @Override

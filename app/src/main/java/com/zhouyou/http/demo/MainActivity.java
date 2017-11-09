@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        showToast(e.getMessage());
+                        showToast(e.getMessage()+"  "+e.getCode());
                     }
 
                     @Override

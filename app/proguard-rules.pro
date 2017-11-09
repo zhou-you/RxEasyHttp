@@ -17,7 +17,7 @@
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*       # 混淆时所采用的算法
 -verbose #混淆时是否记录日志
 -repackageclasses #com.het.cbeauty 增加反编译难度把混淆的很多个文件全部放在同一个目录下
-#-obfuscationdictionary {filename}    使用给定文件中的关键字作为要混淆方法的名称   不一定适用abcd...
+#-obfuscationdictionary {filename}    使用给定文件中的关键字作为要混淆方法的名称   不一定是用abcd...
 
 #####################记录生成的日志数据,gradle build时在本项目根目录输出################
 
