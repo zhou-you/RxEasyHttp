@@ -138,7 +138,7 @@ public class MyApplication extends Application {
         EasyHttp.getInstance()
         
                 //可以全局统一设置全局URL
-                .setBaseUrl(Url)//设置全局URL
+                .setBaseUrl(Url)//设置全局URL  url只能是域名 或者域名+端口号 
 
                 // 打开该调试开关并设置TAG,不需要就不要加入该行
                 // 最后的true表示是否打印内部异常，一般打开方便调试错误
