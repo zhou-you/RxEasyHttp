@@ -47,9 +47,9 @@
 
 ### RxEasyHttp与Rxjava结合使用场景演示
 ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/5.gif)
-[RxEasyHttp网络库与Rxjava2结合常见使用场景介绍](http://blog.csdn.net/zhouy478319399/article/details/78550248)
 
-[[![](https://badge.juejin.im/entry/5a0d4d0d6fb9a045080934f1/likes.svg?style=plastic)](https://juejin.im/post/5a0d4cd851882531ba108090)](https://juejin.im/post/5a0d4cd851882531ba108090)
+[RxEasyHttp网络库与Rxjava2结合常见使用场景介绍](http://blog.csdn.net/zhouy478319399/article/details/78550248)
+[![](https://badge.juejin.im/entry/5a0d4d0d6fb9a045080934f1/likes.svg?style=plastic)](https://juejin.im/post/5a0d4cd851882531ba108090)
 
 ## 版本说明
 
