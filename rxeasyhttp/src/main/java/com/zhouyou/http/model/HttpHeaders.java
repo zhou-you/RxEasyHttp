@@ -94,14 +94,21 @@ public class HttpHeaders implements Serializable {
 
     public void put(String key, String value) {
         if (key != null && value != null) {
+            headersMap.remove(key);
             headersMap.put(key, value);
         }
     }
 
     public void put(HttpHeaders headers) {
         if (headers != null) {
-            if (headers.headersMap != null && !headers.headersMap.isEmpty())
-                headersMap.putAll(headers.headersMap);
+            if (headers.headersMap != null && !headers.headersMap.isEmpty()){
+               Set<Map.Entry<String, String>> set = headers.headersMap.entrySet();
+                for (Map.Entry<String, String> map : set) {
+                    headersMap.remove(map.getKey());
+                    headersMap.put(map.getKey(),map.getValue());
+                }
+            }
+                
         }
     }
 

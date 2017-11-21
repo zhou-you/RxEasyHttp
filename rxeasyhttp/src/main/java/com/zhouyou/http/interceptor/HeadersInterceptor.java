@@ -48,7 +48,10 @@ public class HeadersInterceptor implements Interceptor {
         if (headers.headersMap.isEmpty()) return chain.proceed(builder.build());
         try {
             for (Map.Entry<String, String> entry : headers.headersMap.entrySet()) {
-                builder.addHeader(entry.getKey(), entry.getValue()).build();
+                //去除重复的header
+                //builder.removeHeader(entry.getKey());
+                //builder.addHeader(entry.getKey(), entry.getValue()).build();
+                builder.header(entry.getKey(), entry.getValue()).build();
             }
         } catch (Exception e) {
             HttpLog.e(e);
