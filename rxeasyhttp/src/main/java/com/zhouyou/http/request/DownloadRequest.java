@@ -63,7 +63,7 @@ public class DownloadRequest extends BaseRequest<DownloadRequest> {
     }
 
     public <T> Disposable execute(CallBack<T> callBack) {
-        return (Disposable) build().apiManager.downloadFile(url).compose(new ObservableTransformer<ResponseBody, ResponseBody>() {
+        return (Disposable) build().generateRequest().compose(new ObservableTransformer<ResponseBody, ResponseBody>() {
             @Override
             public ObservableSource<ResponseBody> apply(@NonNull Observable<ResponseBody> upstream) {
                 if(isSyncRequest){
