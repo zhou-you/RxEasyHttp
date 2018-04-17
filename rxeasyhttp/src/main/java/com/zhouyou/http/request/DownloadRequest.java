@@ -66,16 +66,16 @@ public class DownloadRequest extends BaseRequest<DownloadRequest> {
         return (Disposable) build().generateRequest().compose(new ObservableTransformer<ResponseBody, ResponseBody>() {
             @Override
             public ObservableSource<ResponseBody> apply(@NonNull Observable<ResponseBody> upstream) {
-                if(isSyncRequest){
+                if (isSyncRequest) {
                     return upstream;//.observeOn(AndroidSchedulers.mainThread());
-                }else {
+                } else {
                     return upstream.subscribeOn(Schedulers.io())
                             .unsubscribeOn(Schedulers.io())
-                            .observeOn(Schedulers.io());
+                            .observeOn(Schedulers.computation());
                 }
             }
         }).compose(new HandleErrTransformer()).retryWhen(new RetryExceptionFunc(retryCount, retryDelay, retryIncreaseDelay))
-                .subscribeWith(new DownloadSubscriber(context,savePath, saveName, callBack));
+                .subscribeWith(new DownloadSubscriber(context, savePath, saveName, callBack));
     }
 
     @Override

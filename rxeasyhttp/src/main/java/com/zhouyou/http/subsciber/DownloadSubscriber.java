@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -49,7 +48,7 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
     private static String APK_CONTENTTYPE = "application/vnd.android.package-archive";
     private static String PNG_CONTENTTYPE = "image/png";
     private static String JPG_CONTENTTYPE = "image/jpg";
-    private static String TEXT_CONTENTTYPE = "text/html; charset=utf-8";
+    //private static String TEXT_CONTENTTYPE = "text/html; charset=utf-8";
     private static String fileSuffix = "";
     private long lastRefreshUiTime;
 
@@ -129,9 +128,10 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                 futureStudioIconFile.createNewFile();
             }*/
             InputStream inputStream = null;
-            OutputStream outputStream = null;
+            FileOutputStream outputStream = null;
             try {
-                byte[] fileReader = new byte[4096];
+                //byte[] fileReader = new byte[2048];
+                byte[] fileReader = new byte[1024 * 128];
 
                 final long fileSize = body.contentLength();
                 long fileSizeDownloaded = 0;
@@ -205,12 +205,12 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
                 finalonError(e);
                 return false;
             } finally {
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-
                 if (outputStream != null) {
                     outputStream.close();
+                }
+
+                if (inputStream != null) {
+                    inputStream.close();
                 }
             }
         } catch (IOException e) {

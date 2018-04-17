@@ -28,6 +28,7 @@ import com.zhouyou.http.callback.DownloadProgressCallBack;
 import com.zhouyou.http.demo.utils.FileUtils;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.utils.HttpLog;
+
 /**
  * <p>描述：文件下载</p>
  * 作者： zhouyou<br>
@@ -51,6 +52,7 @@ public class DownloadActivity extends AppCompatActivity {
 
     public void onDownloadFile1(View view) {//下载回调是在异步里处理的
         EasyHttp.downLoad("http://apk.hiapk.com/web/api.do?qt=8051&id=723")
+        //EasyHttp.downLoad("http://crfiles2.he1ju.com/0/925096f8-f720-4aa5-86ae-ef30548d2fdc.txt")
                 .savePath(Environment.getExternalStorageDirectory().getPath()+"/test/")//默认在：/storage/emulated/0/Android/data/包名/files/1494647767055
                 .saveName("custom_name")//默认名字是时间戳生成的
                 .execute(new DownloadProgressCallBack<String>() {
@@ -86,7 +88,9 @@ public class DownloadActivity extends AppCompatActivity {
     }
 
     public void onDownloadFile2(View view) {
-        String url = "http://61.144.207.146:8081/b8154d3d-4166-4561-ad8d-7188a96eb195/2005/07/6c/076ce42f-3a78-4b5b-9aae-3c2959b7b1ba/kfid/2475751/qqlite_3.5.0.660_android_r108360_GuanWang_537047121_release_10000484.apk";
+        //String url = "http://61.144.207.146:8081/b8154d3d-4166-4561-ad8d-7188a96eb195/2005/07/6c/076ce42f-3a78-4b5b-9aae-3c2959b7b1ba/kfid/2475751/qqlite_3.5.0.660_android_r108360_GuanWang_537047121_release_10000484.apk";
+        //String url = "http://crfiles2.he1ju.com/0/925096f8-f720-4aa5-86ae-ef30548d2fdc.txt";
+        String url = "http://txt.99dushuzu.com/download-txt/3/21068.txt";
         EasyHttp.downLoad(url)
                 .savePath(Environment.getExternalStorageDirectory().getPath()+"/test/QQ")
                 .saveName(FileUtils.getFileName(url))
