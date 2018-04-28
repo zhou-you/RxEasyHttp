@@ -43,6 +43,7 @@ import okhttp3.ResponseBody;
  * 日期： 2017/3/15 16:52 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings("unchecked")
 public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
     protected Type type;
     protected Gson gson;

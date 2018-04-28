@@ -58,6 +58,7 @@ public class PutRequest extends BaseBodyRequest<PutRequest> {
         });
     }
 
+    @SuppressWarnings(value={"unchecked", "deprecation"})
     public <T> Observable<T> execute(CallClazzProxy<? extends ApiResult<T>, T> proxy) {
         return build().generateRequest()
                 .map(new ApiResultFunc(proxy.getType()))
@@ -77,6 +78,7 @@ public class PutRequest extends BaseBodyRequest<PutRequest> {
         });
     }
 
+    @SuppressWarnings("unchecked")
     public <T> Disposable execute(CallBackProxy<? extends ApiResult<T>, T> proxy) {
         Observable<CacheResult<T>> observable = build().toObservable(apiManager.put(url, params.urlParamsMap), proxy);
         if (CacheResult.class != proxy.getCallBack().getRawType()) {
@@ -91,6 +93,7 @@ public class PutRequest extends BaseBodyRequest<PutRequest> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <T> Observable<CacheResult<T>> toObservable(Observable observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {
         return observable.map(new ApiResultFunc(proxy != null ? proxy.getType() : new TypeToken<ResponseBody>() {
         }.getType()))

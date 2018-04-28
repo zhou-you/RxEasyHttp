@@ -103,6 +103,7 @@ public class HttpParams implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> void put(String key, T countent, String fileName, MediaType contentType, ProgressResponseCallBack responseCallBack) {
         if (key != null) {
             List<FileWrapper> fileWrappers = fileParamsMap.get(key);

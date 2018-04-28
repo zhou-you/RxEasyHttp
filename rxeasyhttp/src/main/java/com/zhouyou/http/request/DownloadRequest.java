@@ -36,6 +36,7 @@ import okhttp3.ResponseBody;
  * 日期： 2017/4/28 17:20 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class DownloadRequest extends BaseRequest<DownloadRequest> {
     public DownloadRequest(String url) {
         super(url);

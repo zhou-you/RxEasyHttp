@@ -45,6 +45,7 @@ import okhttp3.ResponseBody;
  * 日期： 2017/5/15 17:04 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class CustomRequest extends BaseRequest<CustomRequest> {
     public CustomRequest() {
         super("");
@@ -122,6 +123,7 @@ public class CustomRequest extends BaseRequest<CustomRequest> {
         }
     }
 
+    @SuppressWarnings(value={"unchecked", "deprecation"})
     private <T> Observable<CacheResult<T>> toObservable(Observable observable, CallBackProxy<? extends ApiResult<T>, T> proxy) {
         return observable.map(new ApiResultFunc(proxy != null ? proxy.getType() : new TypeToken<ResponseBody>() {
         }.getType()))

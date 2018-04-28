@@ -45,6 +45,7 @@ import io.reactivex.functions.Function3;
  * 日期： 2017/10/31 17:45 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class SceneActivity extends AppCompatActivity {
 
     @Override

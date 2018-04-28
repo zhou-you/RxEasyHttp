@@ -44,6 +44,7 @@ import okhttp3.ResponseBody;
  * 日期： 2017/4/28 14:29 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class PostRequest extends BaseBodyRequest<PostRequest> {
     public PostRequest(String url) {
         super(url);

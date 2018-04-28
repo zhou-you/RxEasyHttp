@@ -207,6 +207,7 @@ public class AppTools {
      * @Title: getTopActivity
      * @Description: 获取栈顶activity
      */
+    @SuppressWarnings("deprecation")
     public static String getTopActivity(Context context) {
         ActivityManager manager = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);

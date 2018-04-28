@@ -39,6 +39,7 @@ import retrofit2.HttpException;
  * 日期： 2016/12/15 16:50 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings("deprecation")
 public class ApiException extends Exception {
     //对应HTTP的状态码
     private static final int BADREQUEST = 400;
