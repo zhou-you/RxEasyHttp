@@ -45,6 +45,7 @@ public class SearchActivity extends AppCompatActivity {
         search();
     }
 
+    @SuppressWarnings("unchecked")
     protected <T extends View> T findView(@IdRes int id) {
         return (T) findViewById(id);
     }

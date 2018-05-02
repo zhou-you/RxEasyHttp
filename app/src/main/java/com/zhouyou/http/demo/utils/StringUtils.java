@@ -551,6 +551,7 @@ public class StringUtils {
      * @param date
      * @return String
      */
+    @SuppressWarnings("deprecation")
     public static String formatJsonDateTime(JSONObject date) {
         Date result = null;
         try {

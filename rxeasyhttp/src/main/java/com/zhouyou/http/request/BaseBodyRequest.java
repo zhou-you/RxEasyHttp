@@ -42,6 +42,7 @@ import retrofit2.http.Body;
  * 日期： 2017/5/22 17:13 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public abstract class BaseBodyRequest<R extends BaseBodyRequest> extends BaseRequest<R> {
     protected String string;                                   //上传的文本内容
     protected MediaType mediaType;                                   //上传的文本内容

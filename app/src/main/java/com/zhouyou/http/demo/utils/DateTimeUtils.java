@@ -320,6 +320,7 @@ public class DateTimeUtils {
      * @return 用户时区时间距离1970-01-01的毫秒数.
      * @throws ParseException 时间转换异常
      */
+    @SuppressWarnings("deprecation")
     public static long getUserZoneMillis(final String strUtcTime,
                                          final String strInFmt) throws ParseException {
         if (StringUtils.isNull(strUtcTime)) {

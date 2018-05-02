@@ -67,6 +67,7 @@ import static com.zhouyou.http.EasyHttp.getRxCache;
  * 日期： 2017/4/28 17:19 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public abstract class BaseRequest<R extends BaseRequest> {
     protected Cache cache = null;
     protected CacheMode cacheMode = CacheMode.NO_CACHE;                    //默认无缓存

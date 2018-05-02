@@ -40,6 +40,7 @@ import okhttp3.ResponseBody;
  * 日期： 2017/4/28 15:02 <br>
  * 版本： v1.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class DeleteRequest extends BaseRequest<DeleteRequest> {
     public DeleteRequest(String url) {
         super(url);

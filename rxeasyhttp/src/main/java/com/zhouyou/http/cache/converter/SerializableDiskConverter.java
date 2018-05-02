@@ -37,6 +37,7 @@ import java.lang.reflect.Type;
  * 日期： 2016/12/24 17:35<br>
  * 版本： v2.0<br>
  */
+@SuppressWarnings(value={"unchecked", "deprecation"})
 public class SerializableDiskConverter implements IDiskConverter {
 
     @Override

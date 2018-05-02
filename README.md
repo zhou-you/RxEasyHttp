@@ -411,12 +411,12 @@ ProgressDialogCallBack带有进度框的请求，可以设置对话框消失是�
                     @Override
                     public void onError(ApiException e) {
                         super.onError(e);//super.onError(e)必须写不能删掉或者忘记了
-                        //请求成功
+                        //请求失败
                     }
 
                     @Override
                     public void onSuccess(SkinTestResult response) {
-                       //请求失败
+                       //请求成功
                     }
                 });
 ```
