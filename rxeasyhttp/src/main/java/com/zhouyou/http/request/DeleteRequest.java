@@ -32,6 +32,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -40,8 +41,8 @@ import okhttp3.ResponseBody;
  * 日期： 2017/4/28 15:02 <br>
  * 版本： v1.0<br>
  */
-@SuppressWarnings(value={"unchecked", "deprecation"})
-public class DeleteRequest extends BaseRequest<DeleteRequest> {
+@SuppressWarnings(value = {"unchecked", "deprecation"})
+public class DeleteRequest extends BaseBodyRequest<DeleteRequest> {
     public DeleteRequest(String url) {
         super(url);
     }
@@ -75,6 +76,18 @@ public class DeleteRequest extends BaseRequest<DeleteRequest> {
 
     @Override
     protected Observable<ResponseBody> generateRequest() {
-        return apiManager.delete(url, params.urlParamsMap);
+        if (this.requestBody != null) { //自定义的请求体
+            return apiManager.deleteBody(url, this.requestBody);
+        } else if (this.json != null) {//Json
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), this.json);
+            return apiManager.deleteJson(url, body);
+        }  else if (this.object != null) {//自定义的请求object
+            return apiManager.deleteBody(url, object);
+        } else if (this.string != null) {//文本内容
+            RequestBody body = RequestBody.create(mediaType, this.string);
+            return apiManager.deleteBody(url, body);
+        } else {
+            return apiManager.delete(url, params.urlParamsMap);
+        }
     }
 }

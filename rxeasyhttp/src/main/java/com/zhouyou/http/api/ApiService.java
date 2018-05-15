@@ -65,11 +65,28 @@ public interface ApiService {
     @POST()
     Observable<ResponseBody> postBody(@Url String url, @Body Object object);
 
+    @POST()
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ResponseBody> postJson(@Url String url, @Body RequestBody jsonBody);
+
+    @POST()
+    Observable<ResponseBody> postBody(@Url String url, @Body RequestBody body);
+
     @GET()
     Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> maps);
 
     @DELETE()
     Observable<ResponseBody> delete(@Url String url, @QueryMap Map<String, String> maps);
+    
+    @DELETE()
+    Observable<ResponseBody> deleteBody(@Url String url, @Body Object object);
+    
+    @DELETE()
+    Observable<ResponseBody> deleteBody(@Url String url, @Body RequestBody body);
+    
+    @DELETE()
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ResponseBody> deleteJson(@Url String url, @Body RequestBody jsonBody);
 
     @PUT()
     Observable<ResponseBody> put(@Url String url, @QueryMap Map<String, String> maps);
@@ -92,11 +109,4 @@ public interface ApiService {
     @Streaming
     @GET
     Observable<ResponseBody> downloadFile(@Url String fileUrl);
-
-    @POST()
-    @Headers({"Content-Type: application/json", "Accept: application/json"})
-    Observable<ResponseBody> postJson(@Url String url, @Body RequestBody jsonBody);
-
-    @POST()
-    Observable<ResponseBody> postBody(@Url String url, @Body RequestBody body);
 }

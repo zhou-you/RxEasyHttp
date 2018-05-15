@@ -80,7 +80,7 @@ public class PutRequest extends BaseBodyRequest<PutRequest> {
 
     @SuppressWarnings("unchecked")
     public <T> Disposable execute(CallBackProxy<? extends ApiResult<T>, T> proxy) {
-        Observable<CacheResult<T>> observable = build().toObservable(apiManager.put(url, params.urlParamsMap), proxy);
+        Observable<CacheResult<T>> observable = build().toObservable(generateRequest(), proxy);
         if (CacheResult.class != proxy.getCallBack().getRawType()) {
             return observable.compose(new ObservableTransformer<CacheResult<T>, T>() {
                 @Override
