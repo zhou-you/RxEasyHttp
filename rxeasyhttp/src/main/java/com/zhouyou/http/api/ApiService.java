@@ -91,7 +91,7 @@ public interface ApiService {
     @PUT()
     Observable<ResponseBody> put(@Url String url, @QueryMap Map<String, String> maps);
 
-    @POST()
+    @PUT()
     Observable<ResponseBody> putBody(@Url String url, @Body Object object);
 
     @Multipart
