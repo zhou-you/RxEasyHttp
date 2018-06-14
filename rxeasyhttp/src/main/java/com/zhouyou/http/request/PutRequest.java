@@ -35,6 +35,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -104,8 +105,16 @@ public class PutRequest extends BaseBodyRequest<PutRequest> {
 
     @Override
     protected Observable<ResponseBody> generateRequest() {
-        if (this.object != null) {//自定义的请求object
+        if (this.requestBody != null) { //自定义的请求体
+            return apiManager.putBody(url, this.requestBody);
+        } else if (this.json != null) {//Json
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), this.json);
+            return apiManager.putJson(url, body);
+        }  else if (this.object != null) {//自定义的请求object
             return apiManager.putBody(url, object);
+        } else if (this.string != null) {//文本内容
+            RequestBody body = RequestBody.create(mediaType, this.string);
+            return apiManager.putBody(url, body);
         } else {
             return apiManager.put(url, params.urlParamsMap);
         }

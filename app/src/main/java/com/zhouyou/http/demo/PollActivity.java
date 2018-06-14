@@ -44,18 +44,28 @@ public class PollActivity extends AppCompatActivity {
         //interval(0,5, TimeUnit.SECONDS)
         //interval(5, TimeUnit.SECONDS)两个参数的这个5就表示，初始延时5秒开始执行请求，轮询也是5s
         //自己根据需要选择合适的interval方法
-        polldisposable = Observable.interval(0, 5, TimeUnit.SECONDS).flatMap(new Function<Long, ObservableSource<Content>>() {
+        polldisposable = Observable.interval(0, 1, TimeUnit.SECONDS).flatMap(new Function<Long, ObservableSource<Content>>() {
             @Override
             public ObservableSource<Content> apply(@NonNull Long aLong) throws Exception {
-                return EasyHttp.get("/ajax.php")
-                        .baseUrl("http://fy.iciba.com")
-                        .params("a", "fy")
-                        .params("f", "auto")
-                        .params("t", "auto")
-                        .params("w", "hello world")
-                        //采用代理
-                        .execute(new CallClazzProxy<TestApiResult6<Content>, Content>(Content.class) {
-                        });
+                return Observable.timer(5, TimeUnit.SECONDS).flatMap(new Function<Long, ObservableSource<Content>>() {
+                    @Override
+                    public ObservableSource<Content> apply(@NonNull Long aLong) throws Exception {
+                        return EasyHttp.get("/ajax.php")
+                                .baseUrl("http://fy.iciba.com")
+                                .params("a", "fy")
+                                .params("f", "auto")
+                                .params("t", "auto")
+                                .params("w", "hello world")
+                                //采用代理
+                                .execute(new CallClazzProxy<TestApiResult6<Content>, Content>(Content.class) {
+                                }).onErrorResumeNext(new Function<Throwable, ObservableSource<? extends Content>>() {
+                                    @Override
+                                    public ObservableSource<? extends Content> apply(@NonNull Throwable throwable) throws Exception {
+                                        return Observable.empty();
+                                    }
+                                });
+                    }
+                });
             }
         }).subscribeWith(new BaseSubscriber<Content>() {
             @Override

@@ -94,6 +94,13 @@ public interface ApiService {
     @PUT()
     Observable<ResponseBody> putBody(@Url String url, @Body Object object);
 
+    @PUT()
+    Observable<ResponseBody> putBody(@Url String url, @Body RequestBody body);
+
+    @PUT()
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    Observable<ResponseBody> putJson(@Url String url, @Body RequestBody jsonBody);
+
     @Multipart
     @POST()
     Observable<ResponseBody> uploadFlie(@Url String fileUrl, @Part("description") RequestBody description, @Part("files") MultipartBody.Part file);
