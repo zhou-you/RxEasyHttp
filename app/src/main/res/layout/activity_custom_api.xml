@@ -38,6 +38,13 @@
         android:text="场景4"
         android:textAllCaps="false"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onTestFive"
+        android:text="场景5 自定义请求返回集合"
+        android:textAllCaps="false"
+        />
 
     <Button
         android:layout_width="match_parent"

@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
-    public void onLogin(View view){
+
+    public void onLogin(View view) {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
-                        showToast(e.getMessage()+"  "+e.getCode());
+                        showToast(e.getMessage() + "  " + e.getCode());
                     }
 
                     @Override
@@ -206,6 +206,27 @@ public class MainActivity extends AppCompatActivity {
         EasyHttp.put("http://api.youdui.org/api/v1/cart/1500996")
                 .removeParam("appId")
                 .params("count", "4")
+                .execute(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        showToast(response);
+                    }
+                });
+    }
+
+    /**
+     * delete请求
+     */
+    public void onDelete(View view) {
+        //测试请用自己的URL，这里为了安全去掉了地址
+        //这里采用的是delete请求提交json的方式，可以选择其他需要的方式
+        EasyHttp.delete("https://www.xxx.com/v1/user/Frined")
+                .upJson("{\"uid\":\"10008\",\"token\":\"5b305fbeaa331\"}\n")
                 .execute(new SimpleCallBack<String>() {
                     @Override
                     public void onError(ApiException e) {
@@ -530,7 +551,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onListResult(View view) {
         //方式一：
-        /*EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
+       /* EasyHttp.get("http://news-at.zhihu.com/api/3/sections")
                 .execute(new CallBackProxy<TestApiResult5<List<SectionItem>>, List<SectionItem>>(new SimpleCallBack<List<SectionItem>>() {
                     @Override
                     public void onError(ApiException e) {
@@ -578,7 +599,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void onScene(View view){
+    public void onScene(View view) {
         Intent intent = new Intent(MainActivity.this, SceneActivity.class);
         startActivity(intent);
     }

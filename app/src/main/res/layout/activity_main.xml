@@ -63,6 +63,13 @@
             android:text="put请求"
             android:textAllCaps="false"
             />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onDelete"
+            android:text="delete请求"
+            android:textAllCaps="false"
+            />
 
         <Button
             android:layout_width="match_parent"

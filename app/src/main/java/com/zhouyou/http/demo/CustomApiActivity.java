@@ -35,6 +35,8 @@ import com.zhouyou.http.demo.customapi.test2.Result;
 import com.zhouyou.http.demo.customapi.test2.TestApiResult2;
 import com.zhouyou.http.demo.customapi.test3.TestApiResult3;
 import com.zhouyou.http.demo.customapi.test4.GwclBean;
+import com.zhouyou.http.demo.customapi.test9.FriendsListBean;
+import com.zhouyou.http.demo.customapi.test9.MyResult;
 import com.zhouyou.http.demo.customapi.testN.HttpManager;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.subsciber.IProgressDialog;
@@ -195,6 +197,27 @@ public class CustomApiActivity extends AppCompatActivity {
                     }
                 }) {
                 });*/
+    }
+
+    /**
+     * 自定义请求返回集合
+     */
+    public void onTestFive(View view){
+        EasyHttp.get("https://api.91kaiteng.com/v1/user/Frineds")
+                .params("token", "5b305fbeaa331")
+                .params("keyword", "")
+                .execute(new CallBackProxy<MyResult<List<FriendsListBean>>, List<FriendsListBean>>(new SimpleCallBack<List<FriendsListBean>>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(List<FriendsListBean> result) {
+                        if (result != null) showToast(result.toString());
+                    }
+                }) {
+                });
     }
 
     /**

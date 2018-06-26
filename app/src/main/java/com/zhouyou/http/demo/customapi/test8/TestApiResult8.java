@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.zhouyou.http.demo.customapi.Test8;
+package com.zhouyou.http.demo.customapi.test8;
 
 import android.text.TextUtils;
 
