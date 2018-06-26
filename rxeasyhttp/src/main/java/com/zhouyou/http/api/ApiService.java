@@ -28,6 +28,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -77,15 +78,18 @@ public interface ApiService {
 
     @DELETE()
     Observable<ResponseBody> delete(@Url String url, @QueryMap Map<String, String> maps);
-    
-    @DELETE()
+
+    //@DELETE()//delete body请求比较特殊 需要自定义
+    @HTTP(method = "DELETE",/*path = "",*/hasBody = true)
     Observable<ResponseBody> deleteBody(@Url String url, @Body Object object);
-    
-    @DELETE()
+
+    //@DELETE()//delete body请求比较特殊 需要自定义
+    @HTTP(method = "DELETE",/*path = "",*/hasBody = true)
     Observable<ResponseBody> deleteBody(@Url String url, @Body RequestBody body);
-    
-    @DELETE()
+
+    //@DELETE()//delete body请求比较特殊 需要自定义
     @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @HTTP(method = "DELETE",/*path = "",*/hasBody = true)
     Observable<ResponseBody> deleteJson(@Url String url, @Body RequestBody jsonBody);
 
     @PUT()
