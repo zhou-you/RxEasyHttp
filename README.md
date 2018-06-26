@@ -55,7 +55,7 @@
 ## 版本说明
 
 ### 当前版本
-[![release](https://img.shields.io/badge/release-V2.0.8-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
+[![release](https://img.shields.io/badge/release-V2.0.9-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 
 ## 用法介绍
 目前只支持主流开发工具AndtoidStudio的使用，没有提供Eclipse使用方式.
@@ -68,7 +68,7 @@
 ### build.gradle设置
 ```
 dependencies {
- compile 'com.zhouyou:rxeasyhttp:2.0.8'
+ compile 'com.zhouyou:rxeasyhttp:2.0.9'
 }
 ```
 想查看所有版本，请点击下面地址。
