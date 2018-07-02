@@ -48,7 +48,7 @@
 ### RxEasyHttp与Rxjava结合使用场景演示
 ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/5.gif)
 
-[RxEasyHttp网络库与Rxjava2结合常见使用场景介绍](http://blog.csdn.net/zhouy478319399/article/details/78550248)
+**[RxEasyHttp网络库与Rxjava2结合常见使用场景介绍    点我！！！>>](http://blog.csdn.net/zhouy478319399/article/details/78550248)**
 
 [![](https://badge.juejin.im/entry/5a0d4d0d6fb9a045080934f1/likes.svg?style=plastic)](https://juejin.im/post/5a0d4cd851882531ba108090)
 
@@ -62,8 +62,8 @@
 ## 用法介绍
 目前只支持主流开发工具AndtoidStudio的使用，没有提供Eclipse使用方式.
 本项目Demo的网络请求的服务器地址为了安全，把url去掉了，但是Demo程序中的示例都是ok的
-### Demo下载
-[![downloads](https://img.shields.io/badge/downloads-2.2M-blue.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/apk/rxeasyhttp-demo.apk?raw=true)
+### 点击按钮下载Demo
+[![downloads](https://img.shields.io/badge/downloads-2.2M-blue.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/apk/rxeasyhttp-demo.apk?raw=true) 
 #### 扫码下载Demo
 ![](https://github.com/zhou-you/RxEasyHttp/blob/master/screenshot/down.png?raw=true)
 
