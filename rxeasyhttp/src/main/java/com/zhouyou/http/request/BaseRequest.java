@@ -59,6 +59,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import static com.zhouyou.http.EasyHttp.getRetrofitBuilder;
 import static com.zhouyou.http.EasyHttp.getRxCache;
 
 /**
@@ -427,16 +428,17 @@ public abstract class BaseRequest<R extends BaseRequest> {
      */
     private Retrofit.Builder generateRetrofit() {
         if (converterFactories.isEmpty() && adapterFactories.isEmpty()) {
-            return EasyHttp.getRetrofitBuilder().baseUrl(baseUrl);
+            return getRetrofitBuilder().baseUrl(baseUrl);
         } else {
-            final Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
+            final Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(baseUrl);
             if (!converterFactories.isEmpty()) {
                 for (Converter.Factory converterFactory : converterFactories) {
                     retrofitBuilder.addConverterFactory(converterFactory);
                 }
             } else {
                 //获取全局的对象重新设置
-                List<Converter.Factory> listConverterFactory = EasyHttp.getRetrofit().converterFactories();
+                Retrofit.Builder newBuilder = EasyHttp.getRetrofitBuilder();
+                List<Converter.Factory> listConverterFactory = newBuilder.baseUrl(baseUrl).build().converterFactories();
                 for (Converter.Factory factory : listConverterFactory) {
                     retrofitBuilder.addConverterFactory(factory);
                 }
@@ -447,12 +449,13 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 }
             } else {
                 //获取全局的对象重新设置
-                List<CallAdapter.Factory> listAdapterFactory = EasyHttp.getRetrofit().callAdapterFactories();
+                Retrofit.Builder newBuilder = EasyHttp.getRetrofitBuilder();
+                List<CallAdapter.Factory> listAdapterFactory = newBuilder.baseUrl(baseUrl).build().callAdapterFactories();
                 for (CallAdapter.Factory factory : listAdapterFactory) {
                     retrofitBuilder.addCallAdapterFactory(factory);
                 }
             }
-            return retrofitBuilder.baseUrl(baseUrl);
+            return retrofitBuilder;
         }
     }
 
