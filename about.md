@@ -1,0 +1,29 @@
+## 关于我
+专注Android领域的知识研究和分享，也是开源爱好者，Github地址 https://github.com/zhou-you ，会持续把工作中积累的知识和经验分享出去。
+
+## 技术交流
+### 一、QQ交流群
+[![](https://img.shields.io/badge/%E7%82%B9%E6%88%91%E4%B8%80%E9%94%AE%E5%8A%A0%E5%85%A5QQ%E7%BE%A4-581235049-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=1e1f4bcfd8775a55e6cf6411f6ff0e7058ff469ef87c4d1e67890c27f0c5a390)
+![](http://img.blog.csdn.net/20170601165330238)
+
+### 二、知识星球
+#### 我在知识星球平台上创建了一个星球「Android技术交流圈」
+
+![](https://github.com/zhou-you/RxEasyHttp/blob/master/screenshot/1_1.jpg)
+
+#### 有QQ群为什么还要创建星球呢？
+1. 它是更干净纯粹的朋友圈，没有广告，没有微商，也没有QQ群随便进去都是99+的消息，有用的信息都被冲掉
+1. 这里有QQ群没有的一些东西，QQ群旨在帮助使用我的库的同学解决问题和日常一些交流，而此星球是真正花费时间经营一起成长的技术交流圈子，其它关于知识星球更多优势可以自己去了解。
+
+#### 我的知识星球有什么？
+1. 专注分享与交流Android技术相关的常用知识、教程、经验、技术干货、技术前沿等 
+1. 推荐流行的框架及讲解，你关心的Kotlin、Rxjava、Retrofit、OkHttp、蓝牙、蓝牙Mesh等都会涉及 
+1. 向我提出问题的权力，一对一的提问解答
+1. 分享我的知识结构，成长过程中的迷茫，职业发展的经验和教训
+1. 圈友们可以在星球内自由发言、分享文章和资料，提出观点和问题，对于分享高质量的内容和帮助其他圈友解决问题的，我会定期送出红包予以鼓励
+1. ....
+![](https://github.com/zhou-you/RxEasyHttp/blob/master/screenshot/1.gif)
+**更多内容可以扫码看星球介绍！！！**
+
+
+
