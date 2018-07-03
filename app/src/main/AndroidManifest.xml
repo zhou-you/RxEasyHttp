@@ -59,9 +59,23 @@
             android:exported="false"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".PollActivity">
+        <activity
+            android:name=".PollActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".SearchActivity">
+        <activity
+            android:name=".SearchActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:exported="false"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
