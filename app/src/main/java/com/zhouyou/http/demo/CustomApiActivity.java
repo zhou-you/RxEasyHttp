@@ -31,6 +31,8 @@ import com.zhouyou.http.callback.ProgressDialogCallBack;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.demo.customapi.test1.ResultBean;
 import com.zhouyou.http.demo.customapi.test1.TestApiResult1;
+import com.zhouyou.http.demo.customapi.test10.ArticleBean;
+import com.zhouyou.http.demo.customapi.test10.TestResultApi10;
 import com.zhouyou.http.demo.customapi.test2.Result;
 import com.zhouyou.http.demo.customapi.test2.TestApiResult2;
 import com.zhouyou.http.demo.customapi.test3.TestApiResult3;
@@ -214,6 +216,22 @@ public class CustomApiActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(List<FriendsListBean> result) {
+                        if (result != null) showToast(result.toString());
+                    }
+                }) {
+                });
+    }
+    
+    public void onTestSix(View view){
+        EasyHttp.get("http://www.wanandroid.com/article/list/0/json")
+                .execute(new CallBackProxy<TestResultApi10<ArticleBean>, ArticleBean>(new SimpleCallBack<ArticleBean>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(ArticleBean result) {
                         if (result != null) showToast(result.toString());
                     }
                 }) {
