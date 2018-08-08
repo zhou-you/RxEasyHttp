@@ -127,7 +127,6 @@ public class PersistentCookieStore {
                 domainCookies = new ConcurrentHashMap<>();
                 this.cookies.put(domain, domainCookies);
             }
-            cookies.add(cookie);
         }
     }
 
