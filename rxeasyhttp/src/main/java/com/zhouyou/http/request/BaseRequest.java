@@ -57,7 +57,6 @@ import okhttp3.ResponseBody;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import static com.zhouyou.http.EasyHttp.getRetrofitBuilder;
 import static com.zhouyou.http.EasyHttp.getRxCache;
@@ -68,7 +67,7 @@ import static com.zhouyou.http.EasyHttp.getRxCache;
  * 日期： 2017/4/28 17:19 <br>
  * 版本： v1.0<br>
  */
-@SuppressWarnings(value={"unchecked", "deprecation"})
+@SuppressWarnings(value = {"unchecked", "deprecation"})
 public abstract class BaseRequest<R extends BaseRequest> {
     protected Cache cache = null;
     protected CacheMode cacheMode = CacheMode.NO_CACHE;                    //默认无缓存
@@ -110,8 +109,13 @@ public abstract class BaseRequest<R extends BaseRequest> {
         context = EasyHttp.getContext();
         EasyHttp config = EasyHttp.getInstance();
         this.baseUrl = config.getBaseUrl();
-        if (!TextUtils.isEmpty(this.baseUrl))
+        if (!TextUtils.isEmpty(this.baseUrl)){
             httpUrl = HttpUrl.parse(baseUrl);
+        }
+        if (baseUrl == null && url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+            httpUrl = HttpUrl.parse(url);
+            baseUrl =httpUrl.url().getProtocol()+"://" +httpUrl.url().getHost()+"/";
+        }
         cacheMode = config.getCacheMode();                                //添加缓存模式
         cacheTime = config.getCacheTime();                                //缓存时间
         retryCount = config.getRetryCount();                              //超时重试次数
@@ -368,7 +372,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        HttpLog.i("removeCache err!!!"+throwable);  
+                        HttpLog.i("removeCache err!!!" + throwable);
                     }
                 });
     }
@@ -402,7 +406,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
 
             //添加头  头添加放在最前面方便其他拦截器可能会用到
             newClientBuilder.addInterceptor(new HeadersInterceptor(headers));
-            
+
             for (Interceptor interceptor : interceptors) {
                 if (interceptor instanceof BaseDynamicInterceptor) {
                     ((BaseDynamicInterceptor) interceptor).sign(sign).timeStamp(timeStamp).accessToken(accessToken);
@@ -428,9 +432,14 @@ public abstract class BaseRequest<R extends BaseRequest> {
      */
     private Retrofit.Builder generateRetrofit() {
         if (converterFactories.isEmpty() && adapterFactories.isEmpty()) {
-            return getRetrofitBuilder().baseUrl(baseUrl);
+            Retrofit.Builder builder = getRetrofitBuilder();
+            if (!TextUtils.isEmpty(baseUrl)) {
+                builder.baseUrl(baseUrl);
+            }
+            return builder;
         } else {
-            final Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(baseUrl);
+            final Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
+            if (!TextUtils.isEmpty(baseUrl)) retrofitBuilder.baseUrl(baseUrl);
             if (!converterFactories.isEmpty()) {
                 for (Converter.Factory converterFactory : converterFactories) {
                     retrofitBuilder.addConverterFactory(converterFactory);
@@ -438,7 +447,10 @@ public abstract class BaseRequest<R extends BaseRequest> {
             } else {
                 //获取全局的对象重新设置
                 Retrofit.Builder newBuilder = EasyHttp.getRetrofitBuilder();
-                List<Converter.Factory> listConverterFactory = newBuilder.baseUrl(baseUrl).build().converterFactories();
+                if (!TextUtils.isEmpty(baseUrl)) {
+                    newBuilder.baseUrl(baseUrl);
+                }
+                List<Converter.Factory> listConverterFactory = newBuilder.build().converterFactories();
                 for (Converter.Factory factory : listConverterFactory) {
                     retrofitBuilder.addConverterFactory(factory);
                 }
@@ -519,7 +531,6 @@ public abstract class BaseRequest<R extends BaseRequest> {
             okHttpClientBuilder.cache(cache);
         }
         final Retrofit.Builder retrofitBuilder = generateRetrofit();
-        retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());//增加RxJava2CallAdapterFactory
         okHttpClient = okHttpClientBuilder.build();
         retrofitBuilder.client(okHttpClient);
         retrofit = retrofitBuilder.build();
