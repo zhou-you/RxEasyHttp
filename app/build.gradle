@@ -43,11 +43,11 @@ android {
     lintOptions {
         abortOnError false
     }
-    dexOptions {
+    /*dexOptions {
         jumboMode = true
         incremental true
         javaMaxHeapSize "2g"
-    }
+    }*/
 
     /* compileOptions {
          targetCompatibility 1.8
