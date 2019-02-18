@@ -90,7 +90,7 @@ public class DownloadSubscriber<ResponseBody extends okhttp3.ResponseBody> exten
     }
 
     private boolean writeResponseBodyToDisk(String path, String name, Context context, okhttp3.ResponseBody body) {
-        HttpLog.d("contentType:>>>>" + body.contentType().toString());
+        //HttpLog.d("contentType:>>>>" + body.contentType().toString());
         if (!TextUtils.isEmpty(name)) {//text/html; charset=utf-8
             String type;
             if (!name.contains(".")) {
