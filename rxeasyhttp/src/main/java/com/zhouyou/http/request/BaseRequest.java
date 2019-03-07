@@ -41,6 +41,7 @@ import java.io.InputStream;
 import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -109,12 +110,12 @@ public abstract class BaseRequest<R extends BaseRequest> {
         context = EasyHttp.getContext();
         EasyHttp config = EasyHttp.getInstance();
         this.baseUrl = config.getBaseUrl();
-        if (!TextUtils.isEmpty(this.baseUrl)){
+        if (!TextUtils.isEmpty(this.baseUrl)) {
             httpUrl = HttpUrl.parse(baseUrl);
         }
         if (baseUrl == null && url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
             httpUrl = HttpUrl.parse(url);
-            baseUrl =httpUrl.url().getProtocol()+"://" +httpUrl.url().getHost()+"/";
+            baseUrl = httpUrl.url().getProtocol() + "://" + httpUrl.url().getHost() + "/";
         }
         cacheMode = config.getCacheMode();                                //添加缓存模式
         cacheTime = config.getCacheTime();                                //缓存时间
@@ -326,6 +327,11 @@ public abstract class BaseRequest<R extends BaseRequest> {
 
     public R params(String key, String value) {
         params.put(key, value);
+        return (R) this;
+    }
+
+    public R params(Map<String, String> keyValues) {
+        params.put(keyValues);
         return (R) this;
     }
 
