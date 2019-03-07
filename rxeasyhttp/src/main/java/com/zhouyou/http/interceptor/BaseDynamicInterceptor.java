@@ -22,6 +22,7 @@ import com.zhouyou.http.utils.Utils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -153,7 +154,7 @@ public abstract class BaseDynamicInterceptor<R extends BaseDynamicInterceptor> i
             Utils.checkNotNull(newParams, "newParams==null");
             //Logc.i("======post请求参数===========");
             for (Map.Entry<String, String> entry : newParams.entrySet()) {
-                String value = URLEncoder.encode(entry.getValue(), UTF8.name());
+                String value = URLDecoder.decode(entry.getValue(), UTF8.name());
                 bodyBuilder.addEncoded(entry.getKey(), value);
                 //Logc.i(entry.getKey() + " -> " + value);
             }
