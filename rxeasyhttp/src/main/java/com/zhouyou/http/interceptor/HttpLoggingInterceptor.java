@@ -212,10 +212,23 @@ public class HttpLoggingInterceptor implements Interceptor {
             if (contentType != null) {
                 charset = contentType.charset(UTF8);
             }
-            log("\tbody:" + URLDecoder.decode(buffer.readString(charset),UTF8.name()));
+            String result = buffer.readString(charset);
+            log("\tbody:" + URLDecoder.decode(replacer(result),UTF8.name()));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String replacer(String content) {
+        String data = content;
+        try {
+            data = data.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+            data = data.replaceAll("\\+", "%2B");
+            data = URLDecoder.decode(data, "utf-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 
     public void e(java.lang.Throwable t) {
