@@ -1,7 +1,3 @@
-<<<<<<< 524f1f69a20469b6c59732b225eaf0b8fcbcade3
-=======
-<<<<<<< 524f1f69a20469b6c59732b225eaf0b8fcbcade3
->>>>>>> first commit
 # Built application files
 *.apk
 *.ap_
@@ -53,21 +49,11 @@ captures/
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 
-# Freeline
+# Freeline - An alternative to Instant Run
 freeline.py
 freeline/
 freeline_project_description.json
-<<<<<<< 524f1f69a20469b6c59732b225eaf0b8fcbcade3
-=======
-=======
+
 *.iml
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
-/build
-/captures
-.externalNativeBuild
->>>>>>> first commit
->>>>>>> first commit
