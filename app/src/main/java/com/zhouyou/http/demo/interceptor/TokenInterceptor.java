@@ -76,10 +76,6 @@ public class TokenInterceptor extends BaseExpiredInterceptor {
                     }
                     break;
                 case ComParamContact.Code.OTHER_PHONE_LOGINED://帐号在其它手机已登录
-                        /*authModel = reLogin();
-                        if (authModel != null) {
-                            return processAccessTokenError(chain, request);
-                        }*/
                     notifyLoginExit(apiResult.getMsg());
                     break;
                 case ComParamContact.Code.ERROR_SIGN://签名错误
@@ -274,17 +270,10 @@ public class TokenInterceptor extends BaseExpiredInterceptor {
         return processError(chain, request, ComParamContact.Common.REFRESH_TOKEN, TokenManager.getInstance().getAuthModel().getRefreshToken());
     }
 
-    //签名规则：POST+url+参数的拼装+secret
+    //可以根据自己规则来签名
     private String sign(String path, TreeMap<String, String> dynamicMap) {
-        StringBuilder sb = new StringBuilder("POST");
-        sb.append(path);
-        for (Map.Entry<String, String> entry : dynamicMap.entrySet()) {
-            sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
-        }
-
-        sb.append(AppConstant.APP_SECRET);
-        HttpLog.i(sb.toString());
-        return MD5.encode(sb.toString());
+        //写签名逻辑...........
+        return "";
     }
 
     /**
