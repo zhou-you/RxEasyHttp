@@ -2,7 +2,6 @@ package com.zhouyou.http.demo.token;
 
 import android.text.TextUtils;
 
-import com.zhouyou.http.demo.MyApplication;
 import com.zhouyou.http.demo.constant.ComParamContact;
 import com.zhouyou.http.demo.model.AuthModel;
 import com.zhouyou.http.demo.utils.ACache;

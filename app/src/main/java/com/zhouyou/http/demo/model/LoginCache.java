@@ -1,7 +1,6 @@
 package com.zhouyou.http.demo.model;
 
 
-import com.zhouyou.http.demo.MyApplication;
 import com.zhouyou.http.demo.utils.ACache;
 
 
