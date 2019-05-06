@@ -6,14 +6,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.SimpleCallBack;
-import com.zhouyou.http.demo.constant.AppConstant;
 import com.zhouyou.http.demo.constant.ComParamContact;
 import com.zhouyou.http.demo.model.AuthModel;
 import com.zhouyou.http.demo.model.LoginCache;
 import com.zhouyou.http.demo.model.LoginInfo;
 import com.zhouyou.http.demo.token.TokenManager;
 import com.zhouyou.http.demo.utils.DateTimeUtils;
-import com.zhouyou.http.demo.utils.MD5;
 import com.zhouyou.http.exception.ApiException;
 import com.zhouyou.http.interceptor.BaseExpiredInterceptor;
 import com.zhouyou.http.model.ApiResult;
@@ -23,7 +21,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import okhttp3.FormBody;
@@ -37,7 +34,7 @@ import okhttp3.Response;
  * 日期： 2017/5/4 21:02 <br>
  * 版本： v1.0<br>
  */
-public class TokenInterceptor extends BaseExpiredInterceptor {
+public class MyTokenInterceptor extends BaseExpiredInterceptor {
     private ApiResult apiResult;
 
     @Override
