@@ -1,7 +1,7 @@
 package com.zhouyou.http.demo.token;
 
 import android.text.TextUtils;
-
+import com.zhouyou.http.demo.MApplication;
 import com.zhouyou.http.demo.constant.ComParamContact;
 import com.zhouyou.http.demo.model.AuthModel;
 import com.zhouyou.http.demo.utils.ACache;
@@ -20,7 +20,7 @@ public class TokenManager {
     private Long timestamp = System.currentTimeMillis();
 
     public TokenManager() {
-        aCache = ACache.get(MyApplication.getAppContext(), key);
+        aCache = ACache.get(MApplication.getAppContext(), key);
         this.authModel = new AuthModel();
         this.authModel.setAccessToken("");
     }
