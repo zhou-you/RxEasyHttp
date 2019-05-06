@@ -1,7 +1,3 @@
-<<<<<<< 524f1f69a20469b6c59732b225eaf0b8fcbcade3
-=======
-<<<<<<< 524f1f69a20469b6c59732b225eaf0b8fcbcade3
->>>>>>> first commit
 # Built application files
 *.apk
 *.ap_
@@ -57,10 +53,7 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
-<<<<<<< 524f1f69a20469b6c59732b225eaf0b8fcbcade3
-=======
-=======
-*.iml
+
 .gradle
 /local.properties
 /.idea/workspace.xml
@@ -68,6 +61,5 @@ freeline_project_description.json
 .DS_Store
 /build
 /captures
-.externalNativeBuild
->>>>>>> first commit
->>>>>>> first commit
+/app/src/main/java/com/zhouyou/http/demo/MyApplication.java
+/.idea/
