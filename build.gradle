@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         //classpath 'me.tatarka:gradle-retrolambda:3.2.0'
         // 添加上传到jcenter所需的插件
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
