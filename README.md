@@ -40,8 +40,11 @@
 本群旨在为使用我github项目的人提供方便，如果遇到问题欢迎在群里提问。
 
 #### 欢迎加入QQ交流群（Q1群已满，请加入Q2群）
+
 [![](https://img.shields.io/badge/%E7%82%B9%E6%88%91%E4%B8%80%E9%94%AE%E5%8A%A0%E5%85%A5Q1%E7%BE%A4-581235049%28%E5%B7%B2%E6%BB%A1%29-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=1e1f4bcfd8775a55e6cf6411f6ff0e7058ff469ef87c4d1e67890c27f0c5a390)
+
 [![](https://img.shields.io/badge/%E7%82%B9%E6%88%91%E4%B8%80%E9%94%AE%E5%8A%A0%E5%85%A5Q2%E7%BE%A4-832887601-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=f3c997d1c3cc6a8c9fa46d3fde0d663f50e4e6d0e6441b8cc276bef39befd24c)
+
 ![](http://img.blog.csdn.net/20170601165330238)![](https://img-blog.csdnimg.cn/20190627164802234.jpg)
 ## 演示（请star支持）
 ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/1.gif) ![](https://github.com/zhou-you/RxEasyHttp/raw/master/screenshot/2.gif)
