@@ -28,7 +28,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -60,80 +59,39 @@ public class ApiResultFunc<T> implements Function<ResponseBody, ApiResult<T>> {
     public ApiResult<T> apply(@NonNull ResponseBody responseBody) throws Exception {
         ApiResult<T> apiResult = new ApiResult<>();
         apiResult.setCode(-1);
-        if (type instanceof ParameterizedType) {//自定义ApiResult
-            final Class<T> cls = (Class) ((ParameterizedType) type).getRawType();
-            if (ApiResult.class.isAssignableFrom(cls)) {
-                final Type[] params = ((ParameterizedType) type).getActualTypeArguments();
-                final Class clazz = Utils.getClass(params[0], 0);
-                final Class rawType = Utils.getClass(type, 0);
-                try {
-                    String json = responseBody.string();
-                    //增加是List<String>判断错误的问题
-                    if (!List.class.isAssignableFrom(rawType) && clazz.equals(String.class)) {
+
+        try {
+            String json = responseBody.string();
+            final ApiResult result = parseApiResult(json, apiResult);
+
+            if (result == null) {
+                apiResult.setMsg("data is null");
+            } else {
+                apiResult.setCode(result.getCode());
+                apiResult.setMsg(result.getMsg());
+
+                final Class<T> clazz = Utils.getClass(type, 0);
+                //增加是List<String>判断错误的问题
+                if (apiResult.isOk()) {
+                    if (!List.class.isAssignableFrom(clazz) && clazz.equals(String.class)) {
                         apiResult.setData((T) json);
                         apiResult.setCode(0);
-                       /* final Type type = Utils.getType(cls, 0);
-                        ApiResult result = gson.fromJson(json, type);
-                        if (result != null) {
-                            apiResult = result;
-                            apiResult.setData((T) json);
-                        } else {
-                            apiResult.setMsg("json is null");
-                        }*/
                     } else {
-                        ApiResult result = gson.fromJson(json, type);
-                        if (result != null) {
-                            apiResult = result;
-                        } else {
-                            apiResult.setMsg("json is null");
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    apiResult.setMsg(e.getMessage());
-                } finally {
-                    responseBody.close();
-                }
-            } else {
-                apiResult.setMsg("ApiResult.class.isAssignableFrom(cls) err!!");
-            }
-        } else {//默认Apiresult
-            try {
-                final String json = responseBody.string();
-                final Class<T> clazz = Utils.getClass(type, 0);
-                if (clazz.equals(String.class)) {
-                    //apiResult.setData((T) json);
-                    //apiResult.setCode(0);
-                    final ApiResult result = parseApiResult(json, apiResult);
-                    if (result != null) {
-                        apiResult = result;
-                        apiResult.setData((T) json);
-                    } else {
-                        apiResult.setMsg("json is null");
-                    }
-                } else {
-                    final ApiResult result = parseApiResult(json, apiResult);
-                    if (result != null) {
-                        apiResult = result;
-                        if (apiResult.getData() != null) {
-                            T data = gson.fromJson(apiResult.getData().toString(), clazz);
-                            apiResult.setData(data);
-                        } else {
-                            apiResult.setMsg("ApiResult's data is null");
-                        }
-                    } else {
-                        apiResult.setMsg("json is null");
+                        apiResult = gson.fromJson(json, type);
                     }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                apiResult.setMsg(e.getMessage());
-            } catch (IOException e) {
-                e.printStackTrace();
-                apiResult.setMsg(e.getMessage());
-            } finally {
-                responseBody.close();
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            apiResult.setMsg(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            apiResult.setMsg(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            apiResult.setMsg(e.getMessage());
+        } finally {
+            responseBody.close();
         }
         return apiResult;
     }
