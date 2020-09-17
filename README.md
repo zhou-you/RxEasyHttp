@@ -60,7 +60,7 @@
 ## 版本说明
 
 ### 当前版本
-[![release](https://img.shields.io/badge/release-V2.1.5-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
+[![release](https://img.shields.io/badge/release-V2.1.2-orange.svg)](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)
 
 **[历史版本，点我、点我、点我>>](https://github.com/zhou-you/RxEasyHttp/blob/master/update.md)**
 
