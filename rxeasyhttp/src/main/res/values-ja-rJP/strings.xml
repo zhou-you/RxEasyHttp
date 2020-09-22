@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">rxeasyhttp</string>
+
+    <string name="parsing_error">解析エラー</string>
+    <string name="type_conversion_error">型変換エラー</string>
+    <string name="connection_failed">接続に失敗しました</string>
+    <string name="certificate_verification_failed">証明書の検証に失敗しました</string>
+    <string name="time_out">接続がタイムアウトしました</string>
+    <string name="cannot_be_resolved">ドメイン名を解決できません</string>
+    <string name="unknown_error">不明な間違い</string>
+</resources>
