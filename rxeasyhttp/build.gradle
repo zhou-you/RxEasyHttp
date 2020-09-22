@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 29
@@ -46,4 +45,3 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.5.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
 }
-apply from: '../bintray.gradle'
