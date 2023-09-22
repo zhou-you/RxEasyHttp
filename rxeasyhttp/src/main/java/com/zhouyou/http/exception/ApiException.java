@@ -21,6 +21,8 @@ import android.net.ParseException;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
+import com.zhouyou.http.EasyHttp;
+import com.zhouyou.http.R;
 import com.zhouyou.http.model.ApiResult;
 
 import org.apache.http.conn.ConnectTimeoutException;
@@ -121,31 +123,32 @@ public class ApiException extends Exception {
                 || e instanceof NotSerializableException
                 || e instanceof ParseException) {
             ex = new ApiException(e, ERROR.PARSE_ERROR);
-            ex.message = "解析错误";
+
+            ex.message = EasyHttp.getContext().getString(R.string.parsing_error);
             return ex;
         } else if (e instanceof ClassCastException) {
             ex = new ApiException(e, ERROR.CAST_ERROR);
-            ex.message = "类型转换错误";
+            ex.message = EasyHttp.getContext().getString(R.string.type_conversion_error);
             return ex;
         } else if (e instanceof ConnectException) {
             ex = new ApiException(e, ERROR.NETWORD_ERROR);
-            ex.message = "连接失败";
+            ex.message = EasyHttp.getContext().getString(R.string.connection_failed);
             return ex;
         } else if (e instanceof javax.net.ssl.SSLHandshakeException) {
             ex = new ApiException(e, ERROR.SSL_ERROR);
-            ex.message = "证书验证失败";
+            ex.message = EasyHttp.getContext().getString(R.string.certificate_verification_failed);
             return ex;
         } else if (e instanceof ConnectTimeoutException) {
             ex = new ApiException(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex.message = EasyHttp.getContext().getString(R.string.time_out);
             return ex;
         } else if (e instanceof java.net.SocketTimeoutException) {
             ex = new ApiException(e, ERROR.TIMEOUT_ERROR);
-            ex.message = "连接超时";
+            ex.message = EasyHttp.getContext().getString(R.string.time_out);
             return ex;
         } else if (e instanceof UnknownHostException) {
             ex = new ApiException(e, ERROR.UNKNOWNHOST_ERROR);
-            ex.message = "无法解析该域名";
+            ex.message = EasyHttp.getContext().getString(R.string.cannot_be_resolved);
             return ex;
         } else if (e instanceof NullPointerException) {
             ex = new ApiException(e, ERROR.NULLPOINTER_EXCEPTION);
@@ -153,7 +156,7 @@ public class ApiException extends Exception {
             return ex;
         } else {
             ex = new ApiException(e, ERROR.UNKNOWN);
-            ex.message = "未知错误";
+            ex.message = EasyHttp.getContext().getString(R.string.unknown_error);
             return ex;
         }
     }

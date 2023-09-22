@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">rxeasyhttp</string>
+
+    <string name="parsing_error">解析错误</string>
+    <string name="type_conversion_error">类型转换错误</string>
+    <string name="connection_failed">连接失败</string>
+    <string name="certificate_verification_failed">证书验证失败</string>
+    <string name="time_out">连接超时</string>
+    <string name="cannot_be_resolved">无法解析该域名</string>
+    <string name="unknown_error">未知错误</string>
+</resources>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">rxeasyhttp</string>
+    <string name="parsing_error">Parsing error</string>
+    <string name="type_conversion_error">Type conversion error</string>
+    <string name="connection_failed">Connection failed</string>
+    <string name="certificate_verification_failed">Certificate verification failed</string>
+    <string name="time_out">Connection timed out</string>
+    <string name="cannot_be_resolved">The domain name cannot be resolved</string>
+    <string name="unknown_error">Unknown</string>
 </resources>
